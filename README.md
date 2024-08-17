@@ -1,4 +1,7 @@
 Dev
+
+NodeJS: 18 LTS
+
 ```js
 npm run dev
 ```
