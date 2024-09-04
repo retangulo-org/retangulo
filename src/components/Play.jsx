@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import { InputCalc } from "./Input";
 
 export default function Play() {
@@ -49,7 +50,7 @@ export default function Play() {
       calcContainer.calculoString = `${calculoStringNegativeFormat(
         math.n1
       )} + ${calculoStringNegativeFormat(math.n2)}`;
-      calcContainer.anterior = `Anterior${"\n"}${stored.n1} + ${stored.n2} = ${
+      calcContainer.anterior = `${"\n"}${stored.n1} + ${stored.n2} = ${
         stored.n3
       }`;
       break;
@@ -58,7 +59,7 @@ export default function Play() {
       calcContainer.calculoString = `${calculoStringNegativeFormat(
         math.n1
       )} - ${calculoStringNegativeFormat(math.n2)}`;
-      calcContainer.anterior = `Anterior${"\n"}${stored.n1} - ${stored.n2} = ${
+      calcContainer.anterior = `${"\n"}${stored.n1} - ${stored.n2} = ${
         stored.n3
       }`;
       break;
@@ -67,7 +68,7 @@ export default function Play() {
       calcContainer.calculoString = `${calculoStringNegativeFormat(
         math.n1
       )} × ${calculoStringNegativeFormat(math.n2)}`;
-      calcContainer.anterior = `Anterior${"\n"}${stored.n1} × ${stored.n2} = ${
+      calcContainer.anterior = `${"\n"}${stored.n1} × ${stored.n2} = ${
         stored.n3
       }`;
       break;
@@ -78,7 +79,7 @@ export default function Play() {
       calcContainer.calculoString = `${calculoStringNegativeFormat(
         math.n1
       )} ÷ ${calculoStringNegativeFormat(math.n2)}`;
-      calcContainer.anterior = `Anterior${"\n"}${stored.n1} ÷ ${stored.n2} = ${
+      calcContainer.anterior = `${"\n"}${stored.n1} ÷ ${stored.n2} = ${
         stored.n3
       }`;
       calcContainer.texto =
@@ -89,19 +90,19 @@ export default function Play() {
         ? Math.sqrt(math.n1)
         : Math.sqrt(math.n1).toFixed(2);
       calcContainer.calculoString = `√${math.n1}`;
-      calcContainer.anterior = `Anterior${"\n"}√${stored.n1} = ${stored.n3}`;
+      calcContainer.anterior = `${"\n"}√${stored.n1} = ${stored.n3}`;
       calcContainer.texto =
         "Máximo de 2 Casas Decimais depois do ponto (.) - padrão americano. Ex.: √5 = 2.24, √10 = 3.16. Esse modo pode ter contas erradas!";
       break;
     case "expo2":
       calcContainer.calculo = math.n1 * math.n1;
       calcContainer.calculoString = `${calculoStringNegativeFormat(math.n1)}²`;
-      calcContainer.anterior = `Anterior${"\n"}${stored.n1}² = ${stored.n3}`;
+      calcContainer.anterior = `${"\n"}${stored.n1}² = ${stored.n3}`;
       break;
     case "expo3":
       calcContainer.calculo = math.n2 * math.n2 * math.n2;
       calcContainer.calculoString = `${calculoStringNegativeFormat(math.n2)}³`;
-      calcContainer.anterior = `Anterior${"\n"}${stored.n2}³ = ${stored.n3}`;
+      calcContainer.anterior = `${"\n"}${stored.n2}³ = ${stored.n3}`;
       break;
   }
 
@@ -149,20 +150,20 @@ export default function Play() {
   function Tag({ texto, tipo }) {
     if (tipo == "pontos") {
       return (
-        <span className="p-1 bg-green-500 font-bold text-white rounded">
-          {texto}
+        <span className="p-1 bg-green-500 font-bold text-white space-x-6 rounded">
+          <i className="fa-solid fa-check"></i> {texto}
         </span>
       );
     } else if (tipo == "erros") {
       return (
         <span className="p-1 bg-red-500 font-bold text-white rounded">
-          {texto}
+          <i className="fa-solid fa-xmark"></i> {texto}
         </span>
       );
     } else if (tipo == "anterior") {
       return (
         <span className="p-1 bg-blue-500 font-bold text-white rounded">
-          {texto}
+          <i className="fa-solid fa-arrow-left"></i> {texto}
         </span>
       );
     }
