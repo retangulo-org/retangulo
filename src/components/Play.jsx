@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { InputCalc } from "./Input";
 
 export default function Play() {
   const [input, setInput] = useState("");
@@ -169,33 +170,51 @@ export default function Play() {
 
   function Calc() {
     return (
-      <h1 className="text-4xl font-bold">{calcContainer.calculoString}</h1>
+      <h1 className="text-4xl font-bold text-black dark:text-white">
+        {calcContainer.calculoString}
+      </h1>
+    );
+  }
+
+  function LinkCalc({ text }) {
+    const navigate = useNavigate();
+    const handleConfirm = () => {
+      const isConfirmed = window.confirm(
+        "Você tem certeza que deseja voltar ao menu?"
+      );
+
+      if (isConfirmed) {
+        console.log("voltar ao menu: ação confirmada!");
+        return navigate("/");
+      } else {
+        return console.log("voltar ao menu: ação cancelada.");
+      }
+    };
+
+    return (
+      <button
+        onClick={handleConfirm}
+        className="w-full h-14 flex justify-center items-center text-white rounded-lg bg-red-500 hover:bg-red-800 active:bg-red-700"
+      >
+        {text}
+      </button>
     );
   }
 
   return (
     <>
-      <div className="flex flex-col space-y-3 items-center p-5">
+      <div className="flex flex-col gap-3 items-center">
         <Calc />
-        <div className="flex-row space-x-3">
+        <div className="flex-row space-x-3 my-3">
           <Tag texto={pontos} tipo="pontos" />
           <Tag texto={erros} tipo="erros" />
           <Tag texto={calcContainer.anterior} tipo="anterior" />
         </div>
-        <form className="w-full flex-col space-y-3 items-center">
-          <input
-            className="w-full h-20 rounded-lg border-4 text-center text-xl"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            type="number"
-            inputMode="numeric"
-            autoFocus={true}
-          />
-          <div className="flex flex-col space-y-3">
-            <ButtonCalc text="Calcular" />
-          </div>
+        <form className="flex flex-col gap-3 items-center w-full">
+          <InputCalc value={input} onChange={(e) => setInput(e.target.value)} />
+          <ButtonCalc text="Calcular" />
         </form>
-        <Link to="/">Home</Link>
+        <LinkCalc text="Voltar" />
       </div>
     </>
   );

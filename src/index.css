@@ -5,3 +5,13 @@
 * {
   box-sizing: border-box;
 }
+
+@layer base {
+  html {
+    @apply bg-white dark:bg-black;
+  }
+
+  input {
+    @apply appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none;
+  }
+}

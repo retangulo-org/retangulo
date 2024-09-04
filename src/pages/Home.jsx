@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { InputSizeCalc } from "../components/Input";
 
 export default function Home() {
-  const [size, setSize] = useState(() => {
-    return localStorage.getItem("calcSize") || 100;
+  const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
+    return localStorage.getItem("calcSizeValue") || 100;
   });
   const [negative, setNegative] = useState(() => {
     const storedValue = localStorage.getItem("isNegative");
@@ -13,13 +14,13 @@ export default function Home() {
 
   useEffect(() => {
     localStorage.setItem("isNegative", negative.toString());
-    localStorage.setItem("calcSize", size);
-  }, [negative, size]);
+    localStorage.setItem("calcSizeValue", calcSizeInputValue);
+  }, [negative, calcSizeInputValue]);
 
-  const calcSize = (event) => {
-    localStorage.setItem("calcSize", event.target.value);
+  const calcSizeStorage = (event) => {
+    localStorage.setItem("calcSizeValue", event.target.value);
 
-    setSize(event.target.value);
+    setCalcSizeInputValue(event.target.value);
   };
 
   function Negative() {
@@ -31,26 +32,34 @@ export default function Home() {
       <>
         <button
           onClick={toggleChecked}
-          className="flex flex-row gap-2 justify-between items-center w-full h-12 p-3 bg-slate-200 rounded-md cursor-pointer"
+          className="flex flex-row gap-2 justify-between items-center w-full h-14 p-3 bg-slate-200 rounded-md cursor-pointer transition-all ease-in-out delay-150"
         >
           Números negativos
           <i
-            className={
+            className={`fa-solid text-3xl transition-all ease-in-out delay-200 ${
               negative
-                ? "fa-solid fa-toggle-on text-2xl"
-                : "fa-solid fa-toggle-off text-2xl"
-            }
+                ? "fa-toggle-on text-green-500"
+                : "fa-toggle-off text-red-500"
+            }`}
           ></i>
         </button>
       </>
     );
   }
 
-  function LinkButton({ text, type }) {
+  function LinkCalc({ text, type }) {
+    const inputIsEmpty = (event) => {
+      if (calcSizeInputValue.trim() === "") {
+        event.preventDefault();
+        alert("Preencha o campo antes de continuar.");
+      }
+    };
+
     return (
       <Link
         to="/play"
-        state={{ type: type, negativo: negative, maximo: size }}
+        state={{ type: type, negativo: negative, maximo: calcSizeInputValue }}
+        onClick={inputIsEmpty}
         className="w-full h-14 flex justify-center items-center text-white rounded-lg bg-blue-500 hover:bg-blue-800 active:bg-blue-700"
       >
         {text}
@@ -60,23 +69,16 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center p-5 gap-4">
-        Valor máximo:
-        <input
-          className="w-full h-20 rounded-lg border-4 text-center text-xl"
-          value={size}
-          onChange={calcSize}
-          type="number"
-          inputMode="numeric"
-        />
+      <div className="flex flex-col justify-center items-center gap-4">
+        <InputSizeCalc value={calcSizeInputValue} onChange={calcSizeStorage} />
         <Negative />
-        <LinkButton text="Soma" type="soma" />
-        <LinkButton text="Subtração" type="subt" />
-        <LinkButton text="Multiplicação" type="mult" />
-        <LinkButton text="Divisão" type="divi" />
-        <LinkButton text="Raiz Quadrada" type="raiz2" />
-        <LinkButton text="Expoente 2" type="expo2" />
-        <LinkButton text="Expoente 3" type="expo3" />
+        <LinkCalc text="Soma" type="soma" />
+        <LinkCalc text="Subtração" type="subt" />
+        <LinkCalc text="Multiplicação" type="mult" />
+        <LinkCalc text="Divisão" type="divi" />
+        <LinkCalc text="Raiz Quadrada" type="raiz2" />
+        <LinkCalc text="Expoente 2" type="expo2" />
+        <LinkCalc text="Expoente 3" type="expo3" />
       </div>
     </>
   );

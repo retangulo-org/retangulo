@@ -6,7 +6,7 @@ export default function Root() {
   return (
     <>
       <Header />
-      <div className="flex justify-center w-screen">
+      <div className="flex justify-center w-full p-5">
         <div className="w-full sm:max-w-xl">
           <Outlet />
           {/* <Footer /> */}
