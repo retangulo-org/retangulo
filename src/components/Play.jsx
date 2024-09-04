@@ -175,19 +175,19 @@ export default function Play() {
 
   return (
     <>
-      <div className="flex flex-col space-y-3 items-center p-5 w-screen">
+      <div className="flex flex-col space-y-3 items-center p-5">
         <Calc />
         <div className="flex-row space-x-3">
           <Tag texto={pontos} tipo="pontos" />
           <Tag texto={erros} tipo="erros" />
           <Tag texto={calcContainer.anterior} tipo="anterior" />
         </div>
-        <form className="w-full sm:w-[460px] flex-col space-y-3 items-center">
+        <form className="w-full flex-col space-y-3 items-center">
           <input
             className="w-full h-20 rounded-lg border-4 text-center text-xl"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            type="text"
+            type="number"
             inputMode="numeric"
             autoFocus={true}
           />

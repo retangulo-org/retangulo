@@ -6,8 +6,12 @@ export default function Root() {
   return (
     <>
       <Header />
-      <Outlet />
-      {/* <Footer /> */}
+      <div className="flex justify-center w-screen">
+        <div className="w-full sm:max-w-xl">
+          <Outlet />
+          {/* <Footer /> */}
+        </div>
+      </div>
     </>
   );
 }
