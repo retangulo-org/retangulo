@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { InputCalc } from "./Input";
 
@@ -13,7 +12,21 @@ export default function Play() {
   // const [color, setColor] = useState();
   const [stored, setStored] = useState({ n1: 0, n2: 0, n3: 0 });
 
-  const { state } = useLocation();
+  const { type, negative, max } = useParams();
+  
+  const state = {
+    type: String(type) || "soma",
+    negativo: String(negative) || "false",
+    maximo: Number(max) || 10,
+  }
+
+  // useEffect(() => {
+  //   setState({
+  //     type: String(type),
+  //     negativo: String(negative),
+  //     maximo: Number(max),
+  //   })
+  // }, [])
 
   useEffect(() => {
     setMath({
@@ -23,15 +36,17 @@ export default function Play() {
   }, [change]);
 
   function handleRandomNumber() {
-    let maximo = state.maximo;
+    const maximo = state.maximo;
+
     if (state.type === "raiz2") {
       return Math.floor(Math.random() * (maximo - 1 + 1)) + 1;
     }
-    if (state.negativo) {
+
+    if (state.negativo === "true") {
       return Math.floor(Math.random() * (maximo - -maximo + 1)) + -maximo;
-    } else {
-      return Math.floor(Math.random() * (maximo - 1 + 1)) + 1;
-    }
+    } 
+    
+    return Math.floor(Math.random() * (maximo - 1 + 1)) + 1;
   }
 
   const calcContainer = new Object();
@@ -39,9 +54,9 @@ export default function Play() {
   function calculoStringNegativeFormat(number) {
     if (number < 0) {
       return `(${number})`;
-    } else {
-      return `${number}`;
-    }
+    } 
+
+    return `${number}`;
   }
 
   switch (state.type) {
@@ -140,7 +155,7 @@ export default function Play() {
     return (
       <button
         onClick={valueCheck}
-        className="w-full h-14 text-white rounded-lg bg-blue-500 hover:bg-blue-800 active:bg-blue-700"
+        className="w-full h-14 text-white rounded-lg hover:font-bold bg-blue-500 hover:bg-blue-800 active:bg-blue-700"
       >
         {text}
       </button>
@@ -150,19 +165,19 @@ export default function Play() {
   function Tag({ texto, tipo }) {
     if (tipo == "pontos") {
       return (
-        <span className="p-1 bg-green-500 font-bold text-white space-x-6 rounded">
+        <span className="p-1 bg-green-500 font-bold text-white space-x-6 rounded leading-none">
           <i className="fa-solid fa-check"></i> {texto}
         </span>
       );
     } else if (tipo == "erros") {
       return (
-        <span className="p-1 bg-red-500 font-bold text-white rounded">
+        <span className="p-1 bg-red-500 font-bold text-white rounded leading-none">
           <i className="fa-solid fa-xmark"></i> {texto}
         </span>
       );
     } else if (tipo == "anterior") {
       return (
-        <span className="p-1 bg-blue-500 font-bold text-white rounded">
+        <span className="p-1 bg-blue-500 font-bold text-white rounded leading-none">
           <i className="fa-solid fa-arrow-left"></i> {texto}
         </span>
       );
@@ -179,6 +194,7 @@ export default function Play() {
 
   function LinkCalc({ text }) {
     const navigate = useNavigate();
+
     const handleConfirm = () => {
       const isConfirmed = window.confirm(
         "Você tem certeza que deseja voltar ao menu?"
@@ -195,7 +211,7 @@ export default function Play() {
     return (
       <button
         onClick={handleConfirm}
-        className="w-full h-14 flex justify-center items-center text-white rounded-lg bg-red-500 hover:bg-red-800 active:bg-red-700"
+        className="w-full h-14 flex justify-center items-center text-white rounded-lg hover:font-bold bg-red-500 hover:bg-red-800 active:bg-red-700"
       >
         {text}
       </button>

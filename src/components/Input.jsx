@@ -6,7 +6,7 @@ export const InputCalc = ({ onChange, value, className }) => {
       className={
         className
           ? className
-          : "w-full h-16 border-2 border-gray-400 px-4 py-2 bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg text-center font-bold"
+          : "w-full h-16 border-2 border-gray-400 px-4 py-2 bg-white dark:bg-black text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md text-center font-bold"
       }
       value={value}
       onChange={onChange}

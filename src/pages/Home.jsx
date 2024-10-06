@@ -1,47 +1,31 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { InputSizeCalc } from "../components/Input";
 
 export default function Home() {
-  const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
-    if (localStorage.getItem("calcSizeValue") === null) {
-      return 100;
-    } else {
-      return localStorage.getItem("calcSizeValue");
-    }
-  });
-  const [negative, setNegative] = useState(() => {
-    return localStorage.getItem("isNegative") || false;
-  });
-
-  console.log(calcSizeInputValue);
-
-  useEffect(() => {
-    localStorage.setItem("isNegative", negative.toString());
-    localStorage.setItem("calcSizeValue", Number(calcSizeInputValue));
-  }, [negative, calcSizeInputValue]);
-
-  const calcSizeStorage = (event) => {
-    localStorage.setItem("calcSizeValue", event.target.value);
-
-    setCalcSizeInputValue(event.target.value);
-  };
+  const [calcSizeInputValue, setCalcSizeInputValue] = useState(100);
+  const [negative, setNegative] = useState(false);
 
   function Negative() {
     const toggleChecked = () => {
-      setNegative((prevState) => !prevState);
+      setNegative(!negative);
+      console.log(negative)
     };
 
     return (
       <>
         <button
           onClick={toggleChecked}
-          className="flex flex-row gap-2 justify-between items-center w-full h-14 p-3 bg-slate-200 rounded-md cursor-pointer transition-all ease-in-out delay-150"
+          className={`flex flex-row gap-2 justify-between items-center w-full h-14 p-3 text-white rounded-md cursor-pointer hover:font-bold ${
+            negative
+              ? "bg-green-800 hover:bg-green-900"
+              : "bg-red-800 hover:bg-red-900"
+          }`}
         >
           Números negativos
           <i
-            className={`fa-solid text-3xl transition-all ease-in-out delay-200 ${
+            className={`fa-solid text-3xl ${
               negative
                 ? "fa-toggle-on text-green-500"
                 : "fa-toggle-off text-red-500"
@@ -62,10 +46,9 @@ export default function Home() {
 
     return (
       <Link
-        to="/play"
-        state={{ type: type, negativo: negative, maximo: calcSizeInputValue }}
+        to={`/play/${type}/${negative}/${calcSizeInputValue}`}
         onClick={inputIsEmpty}
-        className="w-full h-14 flex justify-center items-center text-white rounded-lg bg-blue-500 hover:bg-blue-800 active:bg-blue-700"
+        className="w-full h-14 flex justify-center items-center text-white rounded-lg hover:font-bold bg-blue-500 hover:bg-blue-800 active:bg-blue-700"
       >
         {text}
       </Link>
@@ -77,9 +60,10 @@ export default function Home() {
       <div className="flex flex-col justify-center items-center gap-4">
         <InputSizeCalc
           value={calcSizeInputValue}
-          onChange={() => calcSizeStorage}
+          onChange={(e) => setCalcSizeInputValue(e.target.value)}
         />
         <Negative />
+        <hr className="border-t-white/20 border-1 w-full" />
         <LinkCalc text="Soma" type="soma" />
         <LinkCalc text="Subtração" type="subt" />
         <LinkCalc text="Multiplicação" type="mult" />
