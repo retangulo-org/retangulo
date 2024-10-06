@@ -216,6 +216,7 @@ export default function Play() {
           <ButtonCalc text="Calcular" />
         </form>
         <LinkCalc text="Voltar" />
+        <p className="text-black dark:text-white">{calcContainer.texto}</p>
       </div>
     </>
   );

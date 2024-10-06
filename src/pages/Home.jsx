@@ -5,16 +5,21 @@ import { InputSizeCalc } from "../components/Input";
 
 export default function Home() {
   const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
-    return localStorage.getItem("calcSizeValue") || 100;
+    if (localStorage.getItem("calcSizeValue") === null) {
+      return 100;
+    } else {
+      return localStorage.getItem("calcSizeValue");
+    }
   });
   const [negative, setNegative] = useState(() => {
-    const storedValue = localStorage.getItem("isNegative");
-    return storedValue === "true";
+    return localStorage.getItem("isNegative") || false;
   });
+
+  console.log(calcSizeInputValue);
 
   useEffect(() => {
     localStorage.setItem("isNegative", negative.toString());
-    localStorage.setItem("calcSizeValue", calcSizeInputValue);
+    localStorage.setItem("calcSizeValue", Number(calcSizeInputValue));
   }, [negative, calcSizeInputValue]);
 
   const calcSizeStorage = (event) => {
@@ -70,7 +75,10 @@ export default function Home() {
   return (
     <>
       <div className="flex flex-col justify-center items-center gap-4">
-        <InputSizeCalc value={calcSizeInputValue} onChange={calcSizeStorage} />
+        <InputSizeCalc
+          value={calcSizeInputValue}
+          onChange={() => calcSizeStorage}
+        />
         <Negative />
         <LinkCalc text="Soma" type="soma" />
         <LinkCalc text="Subtração" type="subt" />
