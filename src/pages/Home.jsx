@@ -17,7 +17,7 @@ export default function Home() {
       <>
         <button
           onClick={toggleChecked}
-          className={`flex flex-row gap-2 justify-between items-center w-full h-14 p-3 text-white rounded-md cursor-pointer hover:font-bold ${
+          className={`flex flex-row gap-2 justify-between items-center w-full h-14 p-3 text-white rounded-md cursor-pointer hover:font-bold select-none ${
             negative
               ? "bg-green-800 hover:bg-green-900"
               : "bg-red-800 hover:bg-red-900"
@@ -48,7 +48,7 @@ export default function Home() {
       <Link
         to={`/play/${type}/${negative}/${calcSizeInputValue}`}
         onClick={inputIsEmpty}
-        className="w-full h-14 flex justify-center items-center text-white rounded-lg hover:font-bold bg-blue-500 hover:bg-blue-800 active:bg-blue-700"
+        className="w-full h-14 flex justify-center items-center text-white rounded-lg hover:font-bold bg-blue-500 hover:bg-blue-800 active:bg-blue-700 select-none"
       >
         {text}
       </Link>
@@ -63,7 +63,7 @@ export default function Home() {
           onChange={(e) => setCalcSizeInputValue(e.target.value)}
         />
         <Negative />
-        <hr className="border-t-white/20 border-1 w-full" />
+        <hr className="border-t-black/20 dark:border-t-white/20 border-1 w-full" />
         <LinkCalc text="Soma" type="soma" />
         <LinkCalc text="Subtração" type="subt" />
         <LinkCalc text="Multiplicação" type="mult" />
