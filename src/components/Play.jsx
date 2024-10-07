@@ -207,7 +207,7 @@ export default function Play() {
 
       if (isConfirmed) {
         console.log("voltar ao menu: ação confirmada!");
-        return navigate("/");
+        return navigate("/play");
       } else {
         return console.log("voltar ao menu: ação cancelada.");
       }
