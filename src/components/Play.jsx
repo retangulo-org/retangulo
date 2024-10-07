@@ -13,8 +13,8 @@ export default function Play() {
   const [stored, setStored] = useState({ n1: 0, n2: 0, n3: 0 });
 
   const { type, negative, max } = useParams();
-  
-  const state = {
+
+  const configCalc = {
     type: String(type) || "soma",
     negativo: String(negative) || "false",
     maximo: Number(max) || 10,
@@ -36,13 +36,13 @@ export default function Play() {
   }, [change]);
 
   function handleRandomNumber() {
-    const maximo = state.maximo;
+    const maximo = configCalc.maximo;
 
-    if (state.type === "raiz2") {
+    if (configCalc.type === "raiz2") {
       return Math.floor(Math.random() * (maximo - 1 + 1)) + 1;
     }
 
-    if (state.negativo === "true") {
+    if (configCalc.negativo === "true") {
       return Math.floor(Math.random() * (maximo - -maximo + 1)) + -maximo;
     } 
     
@@ -59,7 +59,7 @@ export default function Play() {
     return `${number}`;
   }
 
-  switch (state.type) {
+  switch (configCalc.type) {
     case "soma":
       calcContainer.calculo = math.n1 + math.n2;
       calcContainer.calculoString = `${calculoStringNegativeFormat(
@@ -68,6 +68,7 @@ export default function Play() {
       calcContainer.anterior = `${"\n"}${stored.n1} + ${stored.n2} = ${
         stored.n3
       }`;
+      calcContainer.texto = null;
       break;
     case "subt":
       calcContainer.calculo = math.n1 - math.n2;
@@ -77,6 +78,7 @@ export default function Play() {
       calcContainer.anterior = `${"\n"}${stored.n1} - ${stored.n2} = ${
         stored.n3
       }`;
+      calcContainer.texto = null;
       break;
     case "mult":
       calcContainer.calculo = math.n1 * math.n2;
@@ -86,6 +88,7 @@ export default function Play() {
       calcContainer.anterior = `${"\n"}${stored.n1} × ${stored.n2} = ${
         stored.n3
       }`;
+      calcContainer.texto = null;
       break;
     case "divi":
       calcContainer.calculo = Number.isInteger(math.n1 / math.n2)
@@ -113,11 +116,13 @@ export default function Play() {
       calcContainer.calculo = math.n1 * math.n1;
       calcContainer.calculoString = `${calculoStringNegativeFormat(math.n1)}²`;
       calcContainer.anterior = `${"\n"}${stored.n1}² = ${stored.n3}`;
+      calcContainer.texto = null;
       break;
     case "expo3":
       calcContainer.calculo = math.n2 * math.n2 * math.n2;
       calcContainer.calculoString = `${calculoStringNegativeFormat(math.n2)}³`;
       calcContainer.anterior = `${"\n"}${stored.n2}³ = ${stored.n3}`;
+      calcContainer.texto = null;
       break;
   }
 
@@ -155,7 +160,7 @@ export default function Play() {
     return (
       <button
         onClick={valueCheck}
-        className="w-full h-14 text-white rounded-lg hover:font-bold bg-blue-500 hover:bg-blue-800 active:bg-blue-700"
+        className="w-full h-14 text-white rounded-lg hover:font-bold bg-blue-500 hover:bg-blue-800 active:bg-blue-700 select-none"
       >
         {text}
       </button>
@@ -232,7 +237,8 @@ export default function Play() {
           <ButtonCalc text="Calcular" />
         </form>
         <LinkCalc text="Voltar" />
-        <p className="text-black dark:text-white">{calcContainer.texto}</p>
+        <textarea placeholder="Rascunho..." className="w-full p-2 border-2 border-black dark:border-white bg-transparent text-black dark:text-white rounded-md focus:outline-none"></textarea>
+        { calcContainer.text != null ? <p className="text-black dark:text-white">{calcContainer.texto}</p> : "" }
       </div>
     </>
   );
