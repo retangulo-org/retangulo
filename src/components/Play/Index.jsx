@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { InputCalc } from "../Input";
-import Tag from  "./Tag";
-
+import Tag from "./Tag";
+import Modal from "./Modal";
 
 export default function Play() {
   const [input, setInput] = useState("");
@@ -15,7 +15,8 @@ export default function Play() {
   const [stored, setStored] = useState({ n1: 0, n2: 0, n3: 0 });
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(true);
-  
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const { modo, type, negativo, maximo } = useParams();
@@ -25,34 +26,36 @@ export default function Play() {
     tipo: type || "soma",
     negativo: negativo || false,
     maximo: maximo || 100,
-  }
+  };
 
   useEffect(() => {
     let interval = null;
     if (isActive) {
       interval = setInterval(() => {
-        setSeconds(prev => prev + 1);
+        setSeconds((prev) => prev + 1);
       }, 1000);
     }
     return () => clearInterval(interval);
   }, [isActive]);
 
-  if (configCalc.modo === "speedrun") {
+  if (configCalc.modo === "tempo") {
     useEffect(() => {
-      if (seconds >= 4) {
-          const isConfirmed = window.confirm(
-            "Você tem certeza que deseja voltar ao menu?"
-          );
-    
-          if (isConfirmed) {
-            console.log("voltar ao menu: ação confirmada!");
-            return navigate("/jogar");
-          } else {
-            return console.log("voltar ao menu: ação cancelada.");
-          }
-        };
-    }, [seconds])
+      if (seconds >= 60) {
+        openModal();
+        setIsActive(false);
+      }
+    }, [seconds]);
   }
+
+  const openModal = () => {
+    setIsModalOpen(true);
+    document.activeElement.blur();
+  };
+
+  // Função para fechar o modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     setMath({
@@ -70,16 +73,14 @@ export default function Play() {
 
     if (configCalc.negativo === "true") {
       return Math.floor(Math.random() * (maximo - -maximo + 1)) + -maximo;
-    } 
-    
+    }
+
     return Math.floor(Math.random() * (maximo - 1 + 1)) + 1;
   }
 
   function calculoStringNegativeFormat(number) {
-    if (number < 0) {
-      return `(${number})`;
-    } 
-    
+    if (number < 0) return `(${number})`;
+
     return `${number}`;
   }
 
@@ -94,7 +95,6 @@ export default function Play() {
       calcContainer.anterior = `${"\n"}${stored.n1} + ${stored.n2} = ${
         stored.n3
       }`;
-      calcContainer.texto = null;
       break;
     case "subt":
       calcContainer.calculo = math.n1 - math.n2;
@@ -104,7 +104,6 @@ export default function Play() {
       calcContainer.anterior = `${"\n"}${stored.n1} - ${stored.n2} = ${
         stored.n3
       }`;
-      calcContainer.texto = null;
       break;
     case "mult":
       calcContainer.calculo = math.n1 * math.n2;
@@ -114,7 +113,6 @@ export default function Play() {
       calcContainer.anterior = `${"\n"}${stored.n1} × ${stored.n2} = ${
         stored.n3
       }`;
-      calcContainer.texto = null;
       break;
     case "divi":
       calcContainer.calculo = Number.isInteger(math.n1 / math.n2)
@@ -142,32 +140,25 @@ export default function Play() {
       calcContainer.calculo = math.n1 * math.n1;
       calcContainer.calculoString = `${calculoStringNegativeFormat(math.n1)}²`;
       calcContainer.anterior = `${"\n"}${stored.n1}² = ${stored.n3}`;
-      calcContainer.texto = null;
       break;
     case "expo3":
       calcContainer.calculo = math.n2 * math.n2 * math.n2;
       calcContainer.calculoString = `${calculoStringNegativeFormat(math.n2)}³`;
       calcContainer.anterior = `${"\n"}${stored.n2}³ = ${stored.n3}`;
-      calcContainer.texto = null;
       break;
   }
 
   function valueCheck() {
     const value = calcContainer.calculo;
-    try {
-      if (input != value) {
-        // errado
-        valueChange();
-        setErros(erros + 1);
-        // setColor(false);
-      } else if (input == value) {
-        // certo
-        valueChange();
-        setPontos(pontos + 1);
-        // setColor(true);
-      }
-    } catch (e) {
-      alert(e);
+
+    if (input != value) {
+      valueChange();
+      setErros(erros + 1);
+    }
+
+    if (input == value) {
+      valueChange();
+      setPontos(pontos + 1);
     }
   }
 
@@ -179,7 +170,6 @@ export default function Play() {
       n2: calculoStringNegativeFormat(math.n2),
       n3: calcContainer.calculo,
     });
-    // setColor();
   }
 
   function ButtonCalc({ text }) {
@@ -207,12 +197,7 @@ export default function Play() {
         "Você tem certeza que deseja voltar ao menu?"
       );
 
-      if (isConfirmed) {
-        console.log("voltar ao menu: ação confirmada!");
-        return navigate("/jogar");
-      } else {
-        return console.log("voltar ao menu: ação cancelada.");
-      }
+      if (isConfirmed) return navigate("/");
     };
 
     return (
@@ -240,7 +225,36 @@ export default function Play() {
           <ButtonCalc text="Calcular" />
         </form>
         <LinkCalc text="Voltar" />
-        { calcContainer.text != null ? <p className="text-black dark:text-white">{calcContainer.texto}</p> : "" }
+        {calcContainer.text ? (
+          ""
+        ) : (
+          <p className="text-black dark:text-white">{calcContainer.texto}</p>
+        )}
+        {isModalOpen && (
+          <Modal onClose={closeModal}>
+            <h2 className="text-xl font-semibold">Pontuação</h2>
+            <p className="mt-2">Acertos: {pontos}</p>
+            <p className="mt-2">Erros: {erros}</p>
+            <p className="mt-2">Tempo: {seconds}</p>
+            <div className="flex flex-row gap-4">
+              <button
+                className="mt-4 px-4 py-2 w-full bg-green-500 text-white rounded-md hover:bg-red-600"
+                onClick={() => {
+                  closeModal;
+                  window.location.reload();
+                }}
+              >
+                Jogar Novamente
+              </button>
+              <button
+                className="mt-4 px-4 py-2 w-full bg-red-500 text-white rounded-md hover:bg-red-600"
+                onClick={() => navigate("/")}
+              >
+                Menu
+              </button>
+            </div>
+          </Modal>
+        )}
       </div>
     </>
   );

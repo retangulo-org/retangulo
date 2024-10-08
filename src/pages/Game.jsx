@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { InputSizeCalc } from "../components/Input";
 
 export default function Game() {
   const [calcSizeInputValue, setCalcSizeInputValue] = useState(100);
   const [negative, setNegative] = useState(false);
-  const [mode, setMode] = useState("livre");
+  const [mode, setMode] = useState("tempo");
+
+  const navigate = useNavigate();
 
   function SelectMode() {
     const handleChange = (event) => {
@@ -15,8 +17,8 @@ export default function Game() {
   
     return (
       <select className="w-full h-14 p-3 rounded-md" value={mode} onChange={handleChange}>
+        <option value="tempo">MODO TEMPO LIMITE</option>
         <option value="livre">MODO LIVRE</option>
-        <option value="speedrun">MODO SPEEDRUN</option>
       </select>
     );
   }
@@ -50,21 +52,21 @@ export default function Game() {
   }
 
   function LinkCalc({ text, type }) {
-    const inputIsEmpty = (event) => {
-      if (calcSizeInputValue.trim() === "") {
-        event.preventDefault();
-        alert("Preencha o campo antes de continuar.");
+    const inputIsEmpty = () => {
+      if (calcSizeInputValue === "") {
+        return alert("Preencha o campo antes de continuar.");
       }
+
+      return navigate(`/${type}/${mode}/${negative}/${calcSizeInputValue}`)
     };
 
     return (
-      <Link
-        to={`/jogar/${type}/${mode}/${negative}/${calcSizeInputValue}`}
-        onClick={inputIsEmpty}
+      <button
+        onClick={() => { inputIsEmpty() }}
         className="w-full h-14 flex justify-center items-center text-white rounded-lg hover:font-bold bg-blue-500 hover:bg-blue-800 active:bg-blue-700 select-none"
       >
         {text}
-      </Link>
+      </button>
     );
   }
 
