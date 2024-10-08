@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { InputSizeCalc } from "../components/Input";
@@ -6,11 +6,24 @@ import { InputSizeCalc } from "../components/Input";
 export default function Game() {
   const [calcSizeInputValue, setCalcSizeInputValue] = useState(100);
   const [negative, setNegative] = useState(false);
+  const [mode, setMode] = useState("livre");
+
+  function SelectMode() {
+    const handleChange = (event) => {
+      setMode(event.target.value);
+    };
+  
+    return (
+      <select className="w-full h-14 p-3 rounded-md" value={mode} onChange={handleChange}>
+        <option value="livre">MODO LIVRE</option>
+        <option value="speedrun">MODO SPEEDRUN</option>
+      </select>
+    );
+  }
 
   function Negative() {
     const toggleChecked = () => {
       setNegative(!negative);
-      console.log(negative)
     };
 
     return (
@@ -46,7 +59,7 @@ export default function Game() {
 
     return (
       <Link
-        to={`/play/${type}/${negative}/${calcSizeInputValue}`}
+        to={`/jogar/${type}/${mode}/${negative}/${calcSizeInputValue}`}
         onClick={inputIsEmpty}
         className="w-full h-14 flex justify-center items-center text-white rounded-lg hover:font-bold bg-blue-500 hover:bg-blue-800 active:bg-blue-700 select-none"
       >
@@ -57,20 +70,24 @@ export default function Game() {
 
   return (
     <>
+
       <div className="flex flex-col justify-center items-center gap-4">
         <InputSizeCalc
           value={calcSizeInputValue}
           onChange={(e) => setCalcSizeInputValue(e.target.value)}
         />
         <Negative />
+        <SelectMode />
         <hr className="border-t-black/20 dark:border-t-white/20 border-1 w-full" />
-        <LinkCalc text="Soma" type="soma" />
-        <LinkCalc text="Subtração" type="subt" />
-        <LinkCalc text="Multiplicação" type="mult" />
-        <LinkCalc text="Divisão" type="divi" />
-        <LinkCalc text="Raiz Quadrada" type="raiz2" />
-        <LinkCalc text="Expoente 2" type="expo2" />
-        <LinkCalc text="Expoente 3" type="expo3" />
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <LinkCalc text="Soma" type="soma" />
+          <LinkCalc text="Subtração" type="subt" />
+          <LinkCalc text="Multiplicação" type="mult" />
+          <LinkCalc text="Divisão" type="divi" />
+          <LinkCalc text="Raiz Quadrada" type="raiz2" />
+          <LinkCalc text="Expoente 2" type="expo2" />
+          <LinkCalc text="Expoente 3" type="expo3" />
+        </div>
       </div>
     </>
   );

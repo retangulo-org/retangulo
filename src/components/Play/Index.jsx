@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { InputCalc } from "./Input";
+import { InputCalc } from "../Input";
+import Tag from  "./Tag";
+
 
 export default function Play() {
   const [input, setInput] = useState("");
@@ -11,22 +13,46 @@ export default function Play() {
   const [erros, setErros] = useState(0);
   // const [color, setColor] = useState();
   const [stored, setStored] = useState({ n1: 0, n2: 0, n3: 0 });
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(true);
+  
+  const navigate = useNavigate();
 
-  const { type, negative, max } = useParams();
+  const { modo, type, negativo, maximo } = useParams();
 
   const configCalc = {
-    type: String(type) || "soma",
-    negativo: String(negative) || "false",
-    maximo: Number(max) || 10,
+    modo: modo || "livre",
+    tipo: type || "soma",
+    negativo: negativo || false,
+    maximo: maximo || 100,
   }
 
-  // useEffect(() => {
-  //   setState({
-  //     type: String(type),
-  //     negativo: String(negative),
-  //     maximo: Number(max),
-  //   })
-  // }, [])
+  useEffect(() => {
+    let interval = null;
+    if (isActive) {
+      interval = setInterval(() => {
+        setSeconds(prev => prev + 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [isActive]);
+
+  if (configCalc.modo === "speedrun") {
+    useEffect(() => {
+      if (seconds >= 4) {
+          const isConfirmed = window.confirm(
+            "Você tem certeza que deseja voltar ao menu?"
+          );
+    
+          if (isConfirmed) {
+            console.log("voltar ao menu: ação confirmada!");
+            return navigate("/jogar");
+          } else {
+            return console.log("voltar ao menu: ação cancelada.");
+          }
+        };
+    }, [seconds])
+  }
 
   useEffect(() => {
     setMath({
@@ -38,7 +64,7 @@ export default function Play() {
   function handleRandomNumber() {
     const maximo = configCalc.maximo;
 
-    if (configCalc.type === "raiz2") {
+    if (configCalc.tipo === "raiz2") {
       return Math.floor(Math.random() * (maximo - 1 + 1)) + 1;
     }
 
@@ -49,17 +75,17 @@ export default function Play() {
     return Math.floor(Math.random() * (maximo - 1 + 1)) + 1;
   }
 
-  const calcContainer = new Object();
-
   function calculoStringNegativeFormat(number) {
     if (number < 0) {
       return `(${number})`;
     } 
-
+    
     return `${number}`;
   }
 
-  switch (configCalc.type) {
+  const calcContainer = new Object();
+
+  switch (configCalc.tipo) {
     case "soma":
       calcContainer.calculo = math.n1 + math.n2;
       calcContainer.calculoString = `${calculoStringNegativeFormat(
@@ -167,28 +193,6 @@ export default function Play() {
     );
   }
 
-  function Tag({ texto, tipo }) {
-    if (tipo == "pontos") {
-      return (
-        <span className="p-1 bg-green-500 font-bold text-white space-x-6 rounded leading-none">
-          <i className="fa-solid fa-check"></i> {texto}
-        </span>
-      );
-    } else if (tipo == "erros") {
-      return (
-        <span className="p-1 bg-red-500 font-bold text-white rounded leading-none">
-          <i className="fa-solid fa-xmark"></i> {texto}
-        </span>
-      );
-    } else if (tipo == "anterior") {
-      return (
-        <span className="p-1 bg-blue-500 font-bold text-white rounded leading-none">
-          <i className="fa-solid fa-arrow-left"></i> {texto}
-        </span>
-      );
-    }
-  }
-
   function Calc() {
     return (
       <h1 className="text-4xl font-bold text-black dark:text-white">
@@ -198,8 +202,6 @@ export default function Play() {
   }
 
   function LinkCalc({ text }) {
-    const navigate = useNavigate();
-
     const handleConfirm = () => {
       const isConfirmed = window.confirm(
         "Você tem certeza que deseja voltar ao menu?"
@@ -207,7 +209,7 @@ export default function Play() {
 
       if (isConfirmed) {
         console.log("voltar ao menu: ação confirmada!");
-        return navigate("/play");
+        return navigate("/jogar");
       } else {
         return console.log("voltar ao menu: ação cancelada.");
       }
@@ -231,13 +233,13 @@ export default function Play() {
           <Tag texto={pontos} tipo="pontos" />
           <Tag texto={erros} tipo="erros" />
           <Tag texto={calcContainer.anterior} tipo="anterior" />
+          <Tag texto={seconds} tipo="time" />
         </div>
         <form className="flex flex-col gap-3 items-center w-full">
           <InputCalc value={input} onChange={(e) => setInput(e.target.value)} />
           <ButtonCalc text="Calcular" />
         </form>
         <LinkCalc text="Voltar" />
-        <textarea placeholder="Rascunho..." className="w-full p-2 border-2 border-black dark:border-white bg-transparent text-black dark:text-white rounded-md focus:outline-none"></textarea>
         { calcContainer.text != null ? <p className="text-black dark:text-white">{calcContainer.texto}</p> : "" }
       </div>
     </>

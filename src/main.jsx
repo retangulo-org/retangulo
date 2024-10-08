@@ -11,15 +11,15 @@ import "./index.css";
 import Root from "./Root";
 import Home from "./pages/Home";
 import Game from "./pages/Game";
-import Play from "./components/Play";
+import Play from "./components/Play/Index";
 import ErrorPage from "./pages/ErrorPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
       <Route index element={<Home />} />
-      <Route path="play" element={<Game />} />
-      <Route path="/play/:type/:negative/:max" element={<Play />} />
+      <Route path="/jogar" element={<Game />} />
+      <Route path="/jogar/:type/:modo/:negativo/:maximo" element={<Play type={"soma"}/>} />
       <Route path="/*" element={<ErrorPage />} />
     </Route>
   )
