@@ -8,7 +8,7 @@ export default function Root() {
     <>
       <Header />
       <div className="flex justify-center w-full p-5">
-        <div className="w-full sm:max-w-xl">
+        <div className="w-full sm:max-w-2xl md:max-w-4xl lg:max-w-6xl">
           <Outlet />
           {/* <Footer /> */}
         </div>
