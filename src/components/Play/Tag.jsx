@@ -19,7 +19,7 @@ export default function Tag({ texto, tipo }) {
     );
   } else if (tipo == "time") {
     return (
-      <span className="p-1 bg-yellow-500 font-bold text-white rounded leading-none">
+      <span className="p-1 bg-orange-500 font-bold text-white rounded leading-none">
         <i className="fa-solid fa-clock"></i> {texto}
       </span>
     );
