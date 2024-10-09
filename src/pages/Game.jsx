@@ -14,10 +14,14 @@ export default function Game() {
     const handleChange = (event) => {
       setTimeLimit(event.target.value);
     };
-  
+
     return (
-      <select className="appearance-none w-full h-14 p-3 rounded-md cursor-pointer text-white hover:font-bold bg-orange-500 hover:bg-orange-600 text-center after:fa-solid after:fa-clock" value={timeLimit} onChange={handleChange}>
-        <option value="30s"><i class="fa-solid fa-clock"></i>30 segundos</option>
+      <select
+        className="appearance-none w-full h-14 p-3 rounded-md cursor-pointer text-white hover:font-bold bg-orange-500 hover:bg-orange-600 text-center after:fa-solid after:fa-clock"
+        value={timeLimit}
+        onChange={handleChange}
+      >
+        <option value="30s">30 segundos</option>
         <option value="1m">1 minuto</option>
         <option value="5m">5 minutos</option>
         <option value="10m">10 minutos</option>
@@ -61,12 +65,16 @@ export default function Game() {
         return alert("Preencha o campo antes de continuar.");
       }
 
-      return navigate(`/${type}/${timeLimit}/${negative}/${calcSizeInputValue}`)
+      return navigate(
+        `/${type}/${timeLimit}/${negative}/${calcSizeInputValue}`
+      );
     };
 
     return (
       <button
-        onClick={() => { inputIsEmpty() }}
+        onClick={() => {
+          inputIsEmpty();
+        }}
         className="w-full h-14 flex justify-center items-center text-white rounded-lg hover:font-bold bg-blue-600 hover:bg-blue-800 active:bg-blue-700 select-none"
       >
         {text}
