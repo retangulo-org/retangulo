@@ -14,16 +14,16 @@ export default function Play() {
   // const [color, setColor] = useState();
   const [stored, setStored] = useState({ n1: 0, n2: 0, n3: 0 });
   const [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(true);
+  const [isActive, setIsActive] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const navigate = useNavigate();
 
-  const { modo, type, negativo, maximo } = useParams();
+  const { type, time, negativo, maximo } = useParams();
 
   const configCalc = {
-    modo: modo || "livre",
     tipo: type || "soma",
+    time: time || "1m",
     negativo: negativo || false,
     maximo: maximo || 100,
   };
@@ -38,14 +38,40 @@ export default function Play() {
     return () => clearInterval(interval);
   }, [isActive]);
 
-  if (configCalc.modo === "tempo") {
-    useEffect(() => {
-      if (seconds >= 60) {
-        openModal();
-        setIsActive(false);
-      }
-    }, [seconds]);
-  }
+  useEffect(() => {
+    let timer;
+
+    switch (configCalc.time) {
+      case "30s":
+        timer = 30;
+        break;
+      case "1m":
+        timer = 60;
+        break;
+      case "5m":
+        timer = 300;
+        break;
+      case "5m":
+        timer = 300;
+        break;
+      case "10m":
+        timer = 600;
+        break;
+      case "30m":
+        timer = 1800;
+        break;
+      case "infinito":
+        timer = Infinity;
+        break;
+      default:
+        break;
+    }
+
+    if (seconds >= timer) {
+      openModal();
+      setIsActive(false);
+    }
+  }, [seconds]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -163,6 +189,7 @@ export default function Play() {
   }
 
   function valueChange() {
+    setIsActive(true);
     setChange(!change);
     setInput("");
     setStored({
@@ -176,7 +203,7 @@ export default function Play() {
     return (
       <button
         onClick={valueCheck}
-        className="w-full h-14 text-white rounded-lg hover:font-bold bg-blue-500 hover:bg-blue-800 active:bg-blue-700 select-none"
+        className="w-full h-14 text-white rounded-lg hover:font-bold bg-blue-600 hover:bg-blue-800 active:bg-blue-700 select-none"
       >
         {text}
       </button>
@@ -232,13 +259,13 @@ export default function Play() {
         )}
         {isModalOpen && (
           <Modal onClose={closeModal}>
-            <h2 className="text-xl font-semibold">Pontuação</h2>
-            <p className="mt-2">Acertos: {pontos}</p>
-            <p className="mt-2">Erros: {erros}</p>
-            <p className="mt-2">Tempo: {seconds}</p>
+            <h2 className="text-3xl font-semibold">Pontuação</h2>
+            <p className="mt-2"><strong>Acertos</strong>: {pontos}</p>
+            <p className="mt-2"><strong>Erros</strong>: {erros}</p>
+            <p className="mt-2"><strong>Tempo</strong>: {seconds}</p>
             <div className="flex flex-row gap-4">
               <button
-                className="mt-4 px-4 py-2 w-full bg-green-500 text-white rounded-md hover:bg-red-600"
+                className="mt-4 px-4 py-2 w-full bg-green-500 text-white rounded-md hover:bg-green-600 hover:font-bold"
                 onClick={() => {
                   closeModal;
                   window.location.reload();
@@ -247,7 +274,7 @@ export default function Play() {
                 Jogar Novamente
               </button>
               <button
-                className="mt-4 px-4 py-2 w-full bg-red-500 text-white rounded-md hover:bg-red-600"
+                className="mt-4 px-4 py-2 w-full bg-red-500 text-white rounded-md hover:bg-red-600 hover:font-bold"
                 onClick={() => navigate("/")}
               >
                 Menu
