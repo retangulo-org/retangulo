@@ -51,9 +51,6 @@ export default function Play() {
       case "5m":
         timer = 300;
         break;
-      case "5m":
-        timer = 300;
-        break;
       case "10m":
         timer = 600;
         break;
@@ -260,9 +257,15 @@ export default function Play() {
         {isModalOpen && (
           <Modal onClose={closeModal}>
             <h2 className="text-3xl font-semibold">Pontuação</h2>
-            <p className="mt-2"><strong>Acertos</strong>: {pontos}</p>
-            <p className="mt-2"><strong>Erros</strong>: {erros}</p>
-            <p className="mt-2"><strong>Tempo</strong>: {seconds}</p>
+            <p className="mt-2">
+              <strong>Acertos</strong>: {pontos}
+            </p>
+            <p className="mt-2">
+              <strong>Erros</strong>: {erros}
+            </p>
+            <p className="mt-2">
+              <strong>Tempo</strong>: {seconds}
+            </p>
             <div className="flex flex-row gap-4">
               <button
                 className="mt-4 px-4 py-2 w-full bg-green-500 text-white rounded-md hover:bg-green-600 hover:font-bold"

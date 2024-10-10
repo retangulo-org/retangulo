@@ -1,0 +1,22 @@
+{
+  "name": "Retangulo.org",
+  "short_name": "Retangulo.org",
+  "description": "Gerador de cálculos matemáticos",
+  "id": "/",
+  "start_url": "/",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "standalone",
+  "icons": [
+    {
+      "sizes": "57x57",
+      "type": "image/png",
+      "src": "/apple-touch-icon.png"
+    },
+    {
+      "src": "/favicon-mobile.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
