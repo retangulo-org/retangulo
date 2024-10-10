@@ -1,24 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { InputSizeCalc } from "../components/Input";
 
 export default function Game() {
-  const [calcSizeInputValue, setCalcSizeInputValue] = useState(100);
-  const [negative, setNegative] = useState(false);
-  const [timeLimit, setTimeLimit] = useState("1m");
+  const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
+    return localStorage.getItem("calcSizeValue") || 100;
+  });
+
+  const [calcNegative, setCalcNegative] = useState(() => {
+    return localStorage.getItem("calcNegative") || false;
+  });
+
+  const [calcTime, setCalcTime] = useState(() => {
+    return localStorage.getItem("timerValue") || "1m"
+  });
+
+  useEffect(() => {
+    localStorage.setItem("calcNegative", calcNegative.toString());
+    localStorage.setItem("calcSizeValue", Number(calcSizeInputValue));
+    localStorage.setItem("timerValue", calcTime.toString());
+  }, [calcNegative, calcSizeInputValue, calcTime]);
+
+  const calcSizeStorage = (event) => {
+    localStorage.setItem("calcSizeValue", event.target.value);
+
+    setCalcSizeInputValue(event.target.value);
+  };
 
   const navigate = useNavigate();
 
-  function TimerSelect() {
+  function CalcTimeToggle() {
     const handleChange = (event) => {
-      setTimeLimit(event.target.value);
+      setCalcTime(event.target.value);
     };
 
     return (
       <select
         className="appearance-none w-full h-14 p-3 rounded-md cursor-pointer text-white hover:font-bold bg-orange-500 hover:bg-orange-600 text-center after:fa-solid after:fa-clock"
-        value={timeLimit}
+        value={calcTime}
         onChange={handleChange}
       >
         <option value="30s">30 segundos</option>
@@ -31,9 +51,9 @@ export default function Game() {
     );
   }
 
-  function Negative() {
+  function CalcNegativeToggle() {
     const toggleChecked = () => {
-      setNegative(!negative);
+      setCalcNegative(!calcNegative);
     };
 
     return (
@@ -41,7 +61,7 @@ export default function Game() {
         <button
           onClick={toggleChecked}
           className={`flex flex-row gap-2 justify-between items-center w-full h-14 p-3 text-white rounded-md cursor-pointer hover:font-bold select-none ${
-            negative
+            calcNegative
               ? "bg-green-500 hover:bg-green-600"
               : "bg-red-500 hover:bg-red-600"
           }`}
@@ -49,7 +69,7 @@ export default function Game() {
           Números negativos
           <i
             className={`fa-solid text-3xl ${
-              negative
+              calcNegative
                 ? "fa-toggle-on text-green-900"
                 : "fa-toggle-off text-red-900"
             }`}
@@ -66,7 +86,7 @@ export default function Game() {
       }
 
       return navigate(
-        `/${type}/${timeLimit}/${negative}/${calcSizeInputValue}`
+        `/${type}/${calcTime}/${calcNegative}/${calcSizeInputValue}`
       );
     };
 
@@ -87,11 +107,11 @@ export default function Game() {
       <div className="flex flex-col justify-center items-center gap-4">
         <InputSizeCalc
           value={calcSizeInputValue}
-          onChange={(e) => setCalcSizeInputValue(e.target.value)}
+          onChange={calcSizeStorage}
         />
         <div className="flex flex-col sm:flex-row w-full gap-4">
-          <Negative />
-          <TimerSelect />
+          <CalcNegativeToggle />
+          <CalcTimeToggle />
         </div>
         <hr className="border-t-black/40 dark:border-t-white/40 border-1 w-full" />
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
