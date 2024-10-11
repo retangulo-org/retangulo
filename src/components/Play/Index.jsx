@@ -4,6 +4,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { InputCalc } from "../Input";
 import Tag from "./Tag";
 import Modal from "./Modal";
+import Button from "./Button";
 
 export default function Play() {
   const [input, setInput] = useState("");
@@ -196,16 +197,6 @@ export default function Play() {
     });
   }
 
-  function ButtonCalc({ text }) {
-    return (
-      <button
-        onClick={valueCheck}
-        className="w-full h-14 text-white rounded-lg hover:font-bold bg-blue-600 hover:bg-blue-800 active:bg-blue-700 select-none"
-      >
-        {text}
-      </button>
-    );
-  }
 
   function Calc() {
     return (
@@ -246,7 +237,7 @@ export default function Play() {
         </div>
         <form className="flex flex-col gap-3 items-center w-full">
           <InputCalc value={input} onChange={(e) => setInput(e.target.value)} />
-          <ButtonCalc text="Calcular" />
+          <Button text="Calcular" onClick={valueCheck} />
         </form>
         <LinkCalc text="Voltar" />
         {calcContainer.text ? (
