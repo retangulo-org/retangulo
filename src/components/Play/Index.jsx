@@ -17,6 +17,7 @@ export default function Play() {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalExitOpen, setIsModalExitOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -74,11 +75,6 @@ export default function Play() {
   const openModal = () => {
     setIsModalOpen(true);
     document.activeElement.blur();
-  };
-
-  // Função para fechar o modal
-  const closeModal = () => {
-    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -206,18 +202,15 @@ export default function Play() {
     );
   }
 
-  function LinkCalc({ text }) {
-    const handleConfirm = () => {
-      const isConfirmed = window.confirm(
-        "Você tem certeza que deseja voltar ao menu?"
-      );
-
-      if (isConfirmed) return navigate("/");
+  function BackToMenu({ text }) {
+    let openModal = () => {
+      setIsModalExitOpen(true);
+      document.activeElement.blur();
     };
 
     return (
       <button
-        onClick={handleConfirm}
+        onClick={openModal}
         className="w-full h-14 flex justify-center items-center text-white rounded-lg hover:font-bold bg-red-500 hover:bg-red-800 active:bg-red-700"
       >
         {text}
@@ -239,7 +232,7 @@ export default function Play() {
           <InputCalc value={input} onChange={(e) => setInput(e.target.value)} />
           <Button text="Calcular" onClick={valueCheck} />
         </form>
-        <LinkCalc text="Voltar" />
+        <BackToMenu text="Voltar" />
         {calcContainer.text ? (
           ""
         ) : (
@@ -272,6 +265,36 @@ export default function Play() {
                 onClick={() => navigate("/")}
               >
                 Menu
+              </button>
+            </div>
+          </Modal>
+        )}
+        {isModalExitOpen && (
+          <Modal>
+            <h2 className="text-3xl font-semibold">Tem certeza?</h2>
+            <p className="mt-2">
+              <strong>Acertos</strong>: {pontos}
+            </p>
+            <p className="mt-2">
+              <strong>Erros</strong>: {erros}
+            </p>
+            <p className="mt-2">
+              <strong>Tempo</strong>: {seconds}
+            </p>
+            <div className="flex flex-row gap-4">
+              <button
+                className="mt-4 px-4 py-2 w-full bg-green-500 text-white rounded-md hover:bg-green-600 hover:font-bold"
+                onClick={() => {
+                  setIsModalExitOpen(false);
+                }}
+              >
+                Cancelar
+              </button>
+              <button
+                className="mt-4 px-4 py-2 w-full bg-red-500 text-white rounded-md hover:bg-red-600 hover:font-bold"
+                onClick={() => navigate("/")}
+              >
+                Confirmar
               </button>
             </div>
           </Modal>
