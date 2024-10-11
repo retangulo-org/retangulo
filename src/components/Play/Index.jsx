@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { InputCalc } from "../Input";
+import Calculo from "./Calculo";
 import Tag from "./Tag";
 import Modal from "./Modal";
 import Button from "./Button";
@@ -193,15 +194,6 @@ export default function Play() {
     });
   }
 
-
-  function Calc() {
-    return (
-      <h1 className="text-4xl font-bold text-black dark:text-white">
-        {calcContainer.calculoString}
-      </h1>
-    );
-  }
-
   function BackToMenu({ text }) {
     let openModal = () => {
       setIsModalExitOpen(true);
@@ -221,7 +213,7 @@ export default function Play() {
   return (
     <>
       <div className="flex flex-col gap-3 items-center">
-        <Calc />
+        <Calculo text={calcContainer.calculoString} />
         <div className="flex-row space-x-3 my-3">
           <Tag texto={pontos} tipo="pontos" />
           <Tag texto={erros} tipo="erros" />
