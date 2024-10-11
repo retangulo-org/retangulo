@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { InputCalc } from "../Input";
+import Input from "../Input";
+import Calculo from "./Calculo";
 import Tag from "./Tag";
 import Modal from "./Modal";
+import Button from "./Button";
 
 export default function Play() {
   const [input, setInput] = useState("");
@@ -16,6 +18,7 @@ export default function Play() {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalExitOpen, setIsModalExitOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -73,11 +76,6 @@ export default function Play() {
   const openModal = () => {
     setIsModalOpen(true);
     document.activeElement.blur();
-  };
-
-  // Função para fechar o modal
-  const closeModal = () => {
-    setIsModalOpen(false);
   };
 
   useEffect(() => {
@@ -196,37 +194,16 @@ export default function Play() {
     });
   }
 
-  function ButtonCalc({ text }) {
-    return (
-      <button
-        onClick={valueCheck}
-        className="w-full h-14 text-white rounded-lg hover:font-bold bg-blue-600 hover:bg-blue-800 active:bg-blue-700 select-none"
-      >
-        {text}
-      </button>
-    );
-  }
-
-  function Calc() {
-    return (
-      <h1 className="text-4xl font-bold text-black dark:text-white">
-        {calcContainer.calculoString}
-      </h1>
-    );
-  }
-
-  function LinkCalc({ text }) {
-    const handleConfirm = () => {
-      const isConfirmed = window.confirm(
-        "Você tem certeza que deseja voltar ao menu?"
-      );
-
-      if (isConfirmed) return navigate("/");
+  function BackToMenu({ text }) {
+    let openModal = () => {
+      setIsModalExitOpen(true);
+      setIsActive(false)
+      document.activeElement.blur();
     };
 
     return (
       <button
-        onClick={handleConfirm}
+        onClick={openModal}
         className="w-full h-14 flex justify-center items-center text-white rounded-lg hover:font-bold bg-red-500 hover:bg-red-800 active:bg-red-700"
       >
         {text}
@@ -237,7 +214,7 @@ export default function Play() {
   return (
     <>
       <div className="flex flex-col gap-3 items-center">
-        <Calc />
+        <Calculo text={calcContainer.calculoString} />
         <div className="flex-row space-x-3 my-3">
           <Tag texto={pontos} tipo="pontos" />
           <Tag texto={erros} tipo="erros" />
@@ -245,17 +222,17 @@ export default function Play() {
           <Tag texto={seconds} tipo="time" />
         </div>
         <form className="flex flex-col gap-3 items-center w-full">
-          <InputCalc value={input} onChange={(e) => setInput(e.target.value)} />
-          <ButtonCalc text="Calcular" />
+          <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Resultado..." required autoFocus />
+          <Button text="Calcular" onClick={valueCheck} />
         </form>
-        <LinkCalc text="Voltar" />
+        <BackToMenu text="Voltar" />
         {calcContainer.text ? (
           ""
         ) : (
           <p className="text-black dark:text-white">{calcContainer.texto}</p>
         )}
         {isModalOpen && (
-          <Modal onClose={closeModal}>
+          <Modal>
             <h2 className="text-3xl font-semibold">Pontuação</h2>
             <p className="mt-2">
               <strong>Acertos</strong>: {pontos}
@@ -270,7 +247,6 @@ export default function Play() {
               <button
                 className="mt-4 px-4 py-2 w-full bg-green-500 text-white rounded-md hover:bg-green-600 hover:font-bold"
                 onClick={() => {
-                  closeModal;
                   window.location.reload();
                 }}
               >
@@ -281,6 +257,37 @@ export default function Play() {
                 onClick={() => navigate("/")}
               >
                 Menu
+              </button>
+            </div>
+          </Modal>
+        )}
+        {isModalExitOpen && (
+          <Modal>
+            <h2 className="text-3xl font-semibold">Tem certeza?</h2>
+            <p className="mt-2">
+              <strong>Acertos</strong>: {pontos}
+            </p>
+            <p className="mt-2">
+              <strong>Erros</strong>: {erros}
+            </p>
+            <p className="mt-2">
+              <strong>Tempo</strong>: {seconds}
+            </p>
+            <div className="flex flex-row gap-4">
+              <button
+                className="mt-4 px-4 py-2 w-full bg-green-500 text-white rounded-md hover:bg-green-600 hover:font-bold"
+                onClick={() => {
+                  setIsModalExitOpen(false);
+                  setIsActive(true);
+                }}
+              >
+                Cancelar
+              </button>
+              <button
+                className="mt-4 px-4 py-2 w-full bg-red-500 text-white rounded-md hover:bg-red-600 hover:font-bold"
+                onClick={() => navigate("/")}
+              >
+                Confirmar
               </button>
             </div>
           </Modal>

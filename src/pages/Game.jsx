@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { InputSizeCalc } from "../components/Input";
+import Input from "../components/Input";
 
 export default function Game() {
   const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
@@ -37,7 +37,7 @@ export default function Game() {
 
     return (
       <select
-        className="appearance-none w-full h-14 p-3 rounded-md cursor-pointer text-white hover:font-bold bg-orange-500 hover:bg-orange-600 text-center after:fa-solid after:fa-clock"
+        className="appearance-none w-full h-14 p-3 rounded-md cursor-pointer text-white hover:font-bold bg-orange-500 hover:bg-orange-600 text-center select-none"
         value={calcTime}
         onChange={handleChange}
       >
@@ -105,9 +105,11 @@ export default function Game() {
   return (
     <>
       <div className="flex flex-col justify-center items-center gap-4">
-        <InputSizeCalc
+        <Input
           value={calcSizeInputValue}
           onChange={calcSizeStorage}
+          placeholder="Valor máximo"
+          span="Valor máximo:"
         />
         <div className="flex flex-col sm:flex-row w-full gap-4">
           <CalcNegativeToggle />
