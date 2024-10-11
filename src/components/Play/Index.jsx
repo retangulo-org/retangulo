@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { InputCalc } from "../Input";
+import Input from "../Input";
 import Calculo from "./Calculo";
 import Tag from "./Tag";
 import Modal from "./Modal";
@@ -222,7 +222,7 @@ export default function Play() {
           <Tag texto={seconds} tipo="time" />
         </div>
         <form className="flex flex-col gap-3 items-center w-full">
-          <InputCalc value={input} onChange={(e) => setInput(e.target.value)} />
+          <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Resultado..." required autoFocus />
           <Button text="Calcular" onClick={valueCheck} />
         </form>
         <BackToMenu text="Voltar" />
