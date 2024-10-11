@@ -197,6 +197,7 @@ export default function Play() {
   function BackToMenu({ text }) {
     let openModal = () => {
       setIsModalExitOpen(true);
+      setIsActive(false)
       document.activeElement.blur();
     };
 
@@ -277,6 +278,7 @@ export default function Play() {
                 className="mt-4 px-4 py-2 w-full bg-green-500 text-white rounded-md hover:bg-green-600 hover:font-bold"
                 onClick={() => {
                   setIsModalExitOpen(false);
+                  setIsActive(true);
                 }}
               >
                 Cancelar
