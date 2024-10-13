@@ -211,6 +211,11 @@ export default function Play() {
     );
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    valueCheck()
+  };
+
   return (
     <>
       <div className="flex flex-col gap-3 items-center">
@@ -221,7 +226,7 @@ export default function Play() {
           <Tag texto={calcContainer.anterior} tipo="anterior" />
           <Tag texto={seconds} tipo="time" />
         </div>
-        <form className="flex flex-col gap-3 items-center w-full">
+        <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
           <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Resultado..." required={false} autoFocus={true} />
           <Button text="Calcular" onClick={valueCheck} />
         </form>
