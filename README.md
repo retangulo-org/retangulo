@@ -7,17 +7,19 @@ O [Retangulo.org](https://retangulo.org) é um gerador de cálculos matemáticos
 - [retangulo.org](https://retangulo.org): site principal
 - [dev.retangulo.org](https://dev.retangulo.org): site preview
 
-## Dependências globais
+## Dev
+
+### Dependências globais
 
 - Node.js LTS v18
 
-## Dependências locais
+### Dependências locais
 
 ```bash
 npm install
 ```
 
-# Rodar o projeto
+### Rodar o projeto
 
 ```bash
 npm run dev
