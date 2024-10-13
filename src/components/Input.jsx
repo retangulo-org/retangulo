@@ -28,7 +28,6 @@ export default function Input({
         type="number"
         inputMode="numeric"
         autoFocus={autoFocus}
-        required={required}
       />
     </div>
   );

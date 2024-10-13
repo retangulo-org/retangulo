@@ -222,7 +222,7 @@ export default function Play() {
           <Tag texto={seconds} tipo="time" />
         </div>
         <form className="flex flex-col gap-3 items-center w-full">
-          <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Resultado..." required autoFocus />
+          <Input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Resultado..." required={false} autoFocus={true} />
           <Button text="Calcular" onClick={valueCheck} />
         </form>
         <BackToMenu text="Voltar" />
