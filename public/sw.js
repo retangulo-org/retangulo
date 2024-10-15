@@ -1,18 +1,20 @@
-const CACHE_NAME = "my-pwa-cache-v1";
+const CACHE_NAME = 'my-pwa-cache-v1';
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/index.css",
-  "/sw.js",
-  "/src/assets/logo.svg",
-  "/assets/*",
-  "/apple-touch-icon.png",
-  "/favicon-mobile.png",
-  "/manifest.json",
-  "/robots.txt",
+  '/',
+  '/index.html',
+  '/index.css',
+  '/sw.js',
+  '/src/assets/logo.svg',
+  '/src/assets/logotipo.svg',
+  '/apple-touch-icon.png',
+  '/favicon-16x16.png',
+  '/favicon-32x32.png',
+  '/favicon.ico',
+  '/manifest.json',
+  '/robots.txt',
 ];
 
-self.addEventListener("install", (event) => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(urlsToCache);
@@ -20,7 +22,7 @@ self.addEventListener("install", (event) => {
   );
 });
 
-self.addEventListener("activate", (event) => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -34,7 +36,7 @@ self.addEventListener("activate", (event) => {
   );
 });
 
-self.addEventListener("fetch", (event) => {
+self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
       return response || fetch(event.request);
