@@ -239,7 +239,7 @@ export default function Play() {
               </button>
               <button
                 className="mt-4 px-4 py-2 w-full bg-red-500 text-white rounded-md hover:bg-red-600 hover:font-bold"
-                onClick={() => navigate('/')}>
+                onClick={() => navigate('/jogar')}>
                 Menu
               </button>
             </div>
@@ -268,7 +268,7 @@ export default function Play() {
               </button>
               <button
                 className="mt-4 px-4 py-2 w-full bg-red-500 text-white rounded-md hover:bg-red-600 hover:font-bold"
-                onClick={() => navigate('/')}>
+                onClick={() => navigate('/jogar')}>
                 Confirmar
               </button>
             </div>

@@ -1,10 +1,9 @@
-// import { Link } from "react-router-dom";
-import logotipo from '../assets/logotipo.svg';
+import { LogoTipo } from '../assets/LogoTipo';
 
 export default function Header() {
   return (
-    <header className="h-16 p-4 flex justify-center items-center text-white font-bold text-3xl">
-      <img className="w-24" src={logotipo} alt="Retângulo Logo" />
+    <header className="w-full h-16 p-4 flex justify-center items-center font-bold text-3xl">
+      <LogoTipo className="w-20 h-auto fill-neutral-950 dark:fill-neutral-100" />
     </header>
   );
 }
