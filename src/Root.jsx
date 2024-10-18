@@ -6,8 +6,8 @@ export default function Root() {
   return (
     <>
       <Header />
-      <main className="flex justify-center w-full p-5 bg-white dark:bg-black">
-        <div className="w-full sm:max-w-2xl">
+      <main className="flex justify-center w-full p-5 bg-neutral-100 dark:bg-neutral-950">
+        <div className="w-full sm:max-w-3xl">
           <Outlet />
         </div>
       </main>

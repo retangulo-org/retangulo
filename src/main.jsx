@@ -4,6 +4,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 
 import './index.css';
 import Root from './Root';
+import Home from './pages/Home';
 import Game from './pages/Game';
 import Play from './components/Play/Index';
 import ErrorPage from './pages/ErrorPage';
@@ -22,13 +23,16 @@ if ('serviceWorker' in navigator) {
 }
 
 const router = createBrowserRouter(
-	createRoutesFromElements(
-		<Route path="/" element={<Root />}>
-			<Route index element={<Game />} />
-			<Route path="/:type/:time/:negativo/:maximo" element={<Play />} />
-			<Route path="/*" element={<ErrorPage />} />
-		</Route>
-	)
+  createRoutesFromElements(
+    <>
+      <Route path="/" element={<Home />} />
+      <Route path="/jogar" element={<Root />}>
+        <Route index element={<Game />} />
+        <Route path="/jogar/:type/:time/:negativo/:maximo" element={<Play />} />
+      </Route>
+      <Route path="/*" element={<ErrorPage />} />
+    </>
+  )
 );
 
 ReactDOM.createRoot(document.getElementById('root')).render(

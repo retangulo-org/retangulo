@@ -78,9 +78,7 @@ export default function Game() {
         return alert('Preencha o campo antes de continuar.');
       }
 
-      return navigate(
-        `/${type}/${calcTime}/${calcNegative}/${calcSizeInputValue}`
-      );
+      return navigate(`/jogar/${type}/${calcTime}/${calcNegative}/${calcSizeInputValue}`);
     };
 
     return (
