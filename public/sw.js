@@ -4,8 +4,6 @@ const urlsToCache = [
   '/index.html',
   '/index.css',
   '/sw.js',
-  '/src/assets/logo.svg',
-  '/src/assets/logotipo.svg',
   '/apple-touch-icon.png',
   '/favicon-16x16.png',
   '/favicon-32x32.png',
