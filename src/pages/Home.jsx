@@ -15,8 +15,8 @@ export default function Home() {
             Resolva exercícios <br /> matématicos
           </h1>
           <p className="text-center w-full sm:w-1/2">
-            Gere contas matemáticas infinitamente, resolva-os no menor tempo possível & decore e resolva cálculos de
-            cabeça.
+            Gere contas matemáticas infinitamente, <br /> resolva-os no menor tempo possível & decore e <br /> resolva
+            cálculos de cabeça.
           </p>
           <div className="w-full sm:w-96">
             <Button onClick={() => navigate('/jogar')} text="Jogar" />
