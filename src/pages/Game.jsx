@@ -1,29 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import Input from "../components/Input";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import Input from '../components/Input';
 
 export default function Game() {
   const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
-    return localStorage.getItem("calcSizeValue") || 100;
+    return localStorage.getItem('calcSizeValue') || 100;
   });
 
   const [calcNegative, setCalcNegative] = useState(() => {
-    return localStorage.getItem("calcNegative") || false;
+    return localStorage.getItem('calcNegative') || false;
   });
 
   const [calcTime, setCalcTime] = useState(() => {
-    return localStorage.getItem("timerValue") || "1m"
+    return localStorage.getItem('timerValue') || '1m';
   });
 
   useEffect(() => {
-    localStorage.setItem("calcNegative", calcNegative.toString());
-    localStorage.setItem("calcSizeValue", Number(calcSizeInputValue));
-    localStorage.setItem("timerValue", calcTime.toString());
+    localStorage.setItem('calcNegative', calcNegative.toString());
+    localStorage.setItem('calcSizeValue', Number(calcSizeInputValue));
+    localStorage.setItem('timerValue', calcTime.toString());
   }, [calcNegative, calcSizeInputValue, calcTime]);
 
   const calcSizeStorage = (event) => {
-    localStorage.setItem("calcSizeValue", event.target.value);
+    localStorage.setItem('calcSizeValue', event.target.value);
 
     setCalcSizeInputValue(event.target.value);
   };
@@ -37,10 +37,9 @@ export default function Game() {
 
     return (
       <select
-        className="appearance-none w-full h-14 p-3 rounded-md cursor-pointer text-white hover:font-bold bg-orange-500 hover:bg-orange-600 text-center select-none"
+        className="appearance-none w-full h-14 p-4 rounded-md cursor-pointer text-white hover:font-bold bg-orange-500 hover:bg-orange-600 text-center select-none"
         value={calcTime}
-        onChange={handleChange}
-      >
+        onChange={handleChange}>
         <option value="30s">30 segundos</option>
         <option value="1m">1 minuto</option>
         <option value="5m">5 minutos</option>
@@ -60,20 +59,14 @@ export default function Game() {
       <>
         <button
           onClick={toggleChecked}
-          className={`flex flex-row gap-2 justify-between items-center w-full h-14 p-3 text-white rounded-md cursor-pointer hover:font-bold select-none ${
-            calcNegative
-              ? "bg-green-500 hover:bg-green-600"
-              : "bg-red-500 hover:bg-red-600"
-          }`}
-        >
+          className={`flex flex-row gap-2 justify-between items-center w-full h-14 p-4 text-white rounded-md cursor-pointer hover:font-bold select-none ${
+            calcNegative ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'
+          }`}>
           Números negativos
           <i
             className={`fa-solid text-3xl ${
-              calcNegative
-                ? "fa-toggle-on text-green-900"
-                : "fa-toggle-off text-red-900"
-            }`}
-          ></i>
+              calcNegative ? 'fa-toggle-on text-green-900' : 'fa-toggle-off text-red-900'
+            }`}></i>
         </button>
       </>
     );
@@ -81,8 +74,8 @@ export default function Game() {
 
   function LinkCalc({ text, type }) {
     const inputIsEmpty = () => {
-      if (calcSizeInputValue === "") {
-        return alert("Preencha o campo antes de continuar.");
+      if (calcSizeInputValue === '') {
+        return alert('Preencha o campo antes de continuar.');
       }
 
       return navigate(
@@ -95,29 +88,22 @@ export default function Game() {
         onClick={() => {
           inputIsEmpty();
         }}
-        className="w-full h-14 flex justify-center items-center text-white rounded-lg hover:font-bold bg-blue-600 hover:bg-blue-800 active:bg-blue-700 select-none"
-      >
+        className="w-full h-14 flex justify-center items-center text-white rounded-lg hover:font-bold bg-blue-600 hover:bg-blue-800 active:bg-blue-700 select-none">
         {text}
       </button>
     );
   }
 
   return (
-    <>
-      <div className="flex flex-col justify-center items-center gap-4">
-        <Input
-          value={calcSizeInputValue}
-          onChange={calcSizeStorage}
-          placeholder="Valor máximo"
-          span="Valor máximo:"
-        />
-        <div className="flex flex-col sm:flex-row w-full gap-4">
-          <CalcNegativeToggle />
-          <CalcTimeToggle />
-        </div>
-        <hr className="border-t-black/40 dark:border-t-white/40 border-1 w-full" />
+    <div className="flex flex-col justify-center items-center gap-4">
+      <Input value={calcSizeInputValue} onChange={calcSizeStorage} placeholder="Valor máximo" span="Valor máximo:" />
+      <div className="flex flex-col sm:flex-row w-full gap-4">
+        <CalcNegativeToggle />
+        <CalcTimeToggle />
+      </div>
+      <div className="w-full p-4 bg-neutral-200 dark:bg-neutral-800 rounded-md">
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          <LinkCalc text="Soma" type="soma" />
+          <LinkCalc text="Adição" type="soma" />
           <LinkCalc text="Subtração" type="subt" />
           <LinkCalc text="Multiplicação" type="mult" />
           <LinkCalc text="Divisão" type="divi" />
@@ -126,6 +112,6 @@ export default function Game() {
           <LinkCalc text="Expoente 3" type="expo3" />
         </div>
       </div>
-    </>
+    </div>
   );
 }

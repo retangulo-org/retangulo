@@ -3,16 +3,29 @@
 @tailwind utilities;
 
 * {
-	box-sizing: border-box;
-	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  box-sizing: border-box;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 @layer base {
-	html {
-		@apply bg-blue-600;
-	}
+  html {
+    @apply bg-neutral-200 dark:bg-neutral-800;
+  }
 
-	input {
-		@apply appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none;
-	}
+  input {
+    @apply appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-neutral-950 dark:text-neutral-100;
+  }
+
+  p {
+    @apply text-neutral-950 dark:text-neutral-100;
+  }
 }
