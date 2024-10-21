@@ -1,15 +1,16 @@
-const CACHE_NAME = 'my-pwa-cache-v1';
+const CACHE_NAME = 'v1';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/index.css',
-  '/sw.js',
-  '/apple-touch-icon.png',
-  '/favicon-16x16.png',
-  '/favicon-32x32.png',
-  '/favicon.ico',
   '/manifest.json',
   '/robots.txt',
+  '/sw.js',
+  '/favicon.ico',
+  '/favicon-16x16.png',
+  '/favicon-32x32.png',
+  '/apple-touch-icon.png',
+  '/android-chrome-192x192.png',
+  '/android-chrome-512x512.png',
 ];
 
 self.addEventListener('install', (event) => {
@@ -20,24 +21,30 @@ self.addEventListener('install', (event) => {
   );
 });
 
+this.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches
+      .match(event.request)
+      .then((response) => {
+        return response || fetch(event.request);
+      })
+      .catch(() => {
+        return caches.match('/index.html');
+      })
+  );
+});
+
 self.addEventListener('activate', (event) => {
+  const cacheWhitelist = [CACHE_NAME];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
+          if (!cacheWhitelist.includes(cacheName)) {
             return caches.delete(cacheName);
           }
         })
       );
-    })
-  );
-});
-
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
     })
   );
 });
