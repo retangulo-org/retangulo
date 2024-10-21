@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import Input from '../Input';
 import Calculo from './Calculo';
+import InputCalc from './InputCalc';
 import Tag from './Tag';
 import Modal from './Modal';
 import Button from './Button';
@@ -13,7 +13,7 @@ export default function Play() {
   const [change, setChange] = useState(true);
   const [pontos, setPontos] = useState(0);
   const [erros, setErros] = useState(0);
-  // const [color, setColor] = useState();
+  const [color, setColor] = useState('');
   const [stored, setStored] = useState({ n1: 0, n2: 0, n3: 0 });
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
@@ -155,11 +155,13 @@ export default function Play() {
     if (input != value) {
       valueChange();
       setErros(erros + 1);
+      setColor('red');
     }
 
     if (input == value) {
       valueChange();
       setPontos(pontos + 1);
+      setColor('green');
     }
   }
 
@@ -206,12 +208,13 @@ export default function Play() {
           <Tag texto={seconds} tipo="time" />
         </div>
         <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
-          <Input
+          <InputCalc
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Resultado..."
             required={false}
             autoFocus={true}
+            color={color}
           />
           <Button text="Calcular" onClick={valueCheck} />
         </form>
