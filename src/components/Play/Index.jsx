@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import Calculo from './Calculo';
 import InputCalc from './InputCalc';
 import Tag from './Tag';
 import Modal from './Modal';
@@ -26,7 +25,7 @@ export default function Play() {
 
   const configCalc = {
     tipo: type || 'soma',
-    time: time || '1m',
+    time: time || 'infinito',
     negativo: negativo || false,
     maximo: maximo || 100,
   };
@@ -199,9 +198,9 @@ export default function Play() {
 
   return (
     <>
-      <div className="flex flex-col gap-3 items-center">
-        <Calculo text={calcContainer.calculoString} />
-        <div className="flex-row space-x-3 my-3">
+      <div className="flex flex-col gap-4 items-center">
+        <h1>{calcContainer.calculoString}</h1>
+        <div className="flex flex-row gap-2 my-3 justify-center flex-wrap">
           <Tag texto={pontos} tipo="pontos" />
           <Tag texto={erros} tipo="erros" />
           <Tag texto={calcContainer.anterior} tipo="anterior" />
@@ -222,7 +221,7 @@ export default function Play() {
         {calcContainer.text ? '' : <p className="text-black dark:text-white">{calcContainer.texto}</p>}
         {isModalOpen && (
           <Modal>
-            <h2 className="text-3xl font-semibold">Pontuação</h2>
+            <h2>Pontuação</h2>
             <p className="mt-2">
               <strong>Acertos</strong>: {pontos}
             </p>
@@ -250,7 +249,7 @@ export default function Play() {
         )}
         {isModalExitOpen && (
           <Modal>
-            <h2 className="text-3xl font-semibold">Tem certeza?</h2>
+            <h2>Tem certeza?</h2>
             <p className="mt-2">
               <strong>Acertos</strong>: {pontos}
             </p>
