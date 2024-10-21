@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import Input from '../Input';
-import Calculo from './Calculo';
+import InputCalc from './InputCalc';
 import Tag from './Tag';
 import Modal from './Modal';
 import Button from './Button';
@@ -13,7 +12,7 @@ export default function Play() {
   const [change, setChange] = useState(true);
   const [pontos, setPontos] = useState(0);
   const [erros, setErros] = useState(0);
-  // const [color, setColor] = useState();
+  const [color, setColor] = useState('');
   const [stored, setStored] = useState({ n1: 0, n2: 0, n3: 0 });
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
@@ -26,7 +25,7 @@ export default function Play() {
 
   const configCalc = {
     tipo: type || 'soma',
-    time: time || '1m',
+    time: time || 'infinito',
     negativo: negativo || false,
     maximo: maximo || 100,
   };
@@ -155,11 +154,13 @@ export default function Play() {
     if (input != value) {
       valueChange();
       setErros(erros + 1);
+      setColor('red');
     }
 
     if (input == value) {
       valueChange();
       setPontos(pontos + 1);
+      setColor('green');
     }
   }
 
@@ -197,21 +198,22 @@ export default function Play() {
 
   return (
     <>
-      <div className="flex flex-col gap-3 items-center">
-        <Calculo text={calcContainer.calculoString} />
-        <div className="flex-row space-x-3 my-3">
+      <div className="flex flex-col gap-4 items-center">
+        <h1>{calcContainer.calculoString}</h1>
+        <div className="flex flex-row gap-2 my-3 justify-center flex-wrap">
           <Tag texto={pontos} tipo="pontos" />
           <Tag texto={erros} tipo="erros" />
           <Tag texto={calcContainer.anterior} tipo="anterior" />
           <Tag texto={seconds} tipo="time" />
         </div>
         <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
-          <Input
+          <InputCalc
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Resultado..."
             required={false}
             autoFocus={true}
+            color={color}
           />
           <Button text="Calcular" onClick={valueCheck} />
         </form>
@@ -219,7 +221,7 @@ export default function Play() {
         {calcContainer.text ? '' : <p className="text-black dark:text-white">{calcContainer.texto}</p>}
         {isModalOpen && (
           <Modal>
-            <h2 className="text-3xl font-semibold">Pontuação</h2>
+            <h2>Pontuação</h2>
             <p className="mt-2">
               <strong>Acertos</strong>: {pontos}
             </p>
@@ -247,7 +249,7 @@ export default function Play() {
         )}
         {isModalExitOpen && (
           <Modal>
-            <h2 className="text-3xl font-semibold">Tem certeza?</h2>
+            <h2>Tem certeza?</h2>
             <p className="mt-2">
               <strong>Acertos</strong>: {pontos}
             </p>
