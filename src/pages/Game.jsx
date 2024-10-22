@@ -9,12 +9,22 @@ export default function Game() {
   });
 
   const [calcNegative, setCalcNegative] = useState(() => {
-    return localStorage.getItem('calcNegative') || false;
+    if (localStorage.getItem('calcNegative').toString().toLowerCase() == 'true') {
+      return true;
+    }
+
+    if (localStorage.getItem('calcNegative').toString().toLowerCase() == 'false') {
+      return false;
+    }
+
+    return false;
   });
 
   const [calcTime, setCalcTime] = useState(() => {
     return localStorage.getItem('timerValue') || '1m';
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.setItem('calcNegative', calcNegative.toString());
@@ -27,8 +37,6 @@ export default function Game() {
 
     setCalcSizeInputValue(event.target.value);
   };
-
-  const navigate = useNavigate();
 
   function CalcTimeToggle() {
     const handleChange = (event) => {
