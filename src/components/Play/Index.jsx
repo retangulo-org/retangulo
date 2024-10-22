@@ -199,7 +199,7 @@ export default function Play() {
   return (
     <>
       <div className="flex flex-col gap-4 items-center">
-        <h1>{calcContainer.calculoString}</h1>
+        <h1 className="my-4">{calcContainer.calculoString}</h1>
         <div className="flex flex-row gap-2 my-3 justify-center flex-wrap">
           <Tag texto={pontos} tipo="pontos" />
           <Tag texto={erros} tipo="erros" />
