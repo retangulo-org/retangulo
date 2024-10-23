@@ -1,4 +1,5 @@
 import { Logo } from '../assets/Logo';
+import Button from '../components/Play/Button';
 
 export default function Footer() {
   return (
@@ -23,6 +24,13 @@ export default function Footer() {
             </a>
           </span>
         </div>
+        <Button
+          onClick={() => {
+            localStorage.clear();
+            window.location.reload(true);
+          }}
+          text="Limpar cache"
+        />
       </div>
     </footer>
   );
