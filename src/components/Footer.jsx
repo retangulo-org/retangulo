@@ -36,7 +36,7 @@ export default function Footer() {
         <Button
           onClick={() => {
             localStorage.clear();
-            window.location.reload(true);
+            window.location.href = window.location.href;
           }}
           text="Limpar cache"
         />
