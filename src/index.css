@@ -43,4 +43,8 @@
   p {
     @apply mb-4 text-base text-neutral-800 dark:text-neutral-200;
   }
+
+  a {
+    @apply hover:underline font-semibold text-blue-600 hover:text-blue-800 active:text-blue-700;
+  }
 }
