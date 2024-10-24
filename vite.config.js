@@ -7,10 +7,14 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate',
+      injectRegister: 'script',
+      registerType: 'prompt',
       workbox: {
         globPatterns: ['**/*'],
-        cleanupOutdatedCaches: false,
+        sourcemap: true,
+      },
+      devOptions: {
+        enabled: true,
       },
       includeAssets: ['**/*'],
       manifest: {
@@ -22,6 +26,7 @@ export default defineConfig({
         scope: '/',
         start_url: '/',
         theme_color: '#2563EB',
+        orientation: 'any',
         icons: [
           {
             src: '/android-chrome-192x192.png',
@@ -34,9 +39,6 @@ export default defineConfig({
             type: 'image/png',
           },
         ],
-      },
-      devOptions: {
-        enabled: true,
       },
     }),
   ],

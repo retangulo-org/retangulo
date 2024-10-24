@@ -9,19 +9,10 @@ import Game from './pages/Game';
 import Play from './components/Play/Index';
 import Ui from './pages/Ui';
 import ErrorPage from './pages/ErrorPage';
-import { registerSW } from 'virtual:pwa-register';
-
-const updateSW = registerSW({
-  onNeedRefresh() {
-    if (confirm('Novo conteúdo disponível. Recarregar?')) {
-      updateSW(true);
-    }
-  },
-});
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <>
+    <Route>
       <Route path="/" element={<Home />} />
       <Route path="/jogar" element={<Root />}>
         <Route index element={<Game />} />
@@ -29,7 +20,7 @@ const router = createBrowserRouter(
       </Route>
       <Route path="/ui" element={<Ui />} />
       <Route path="/*" element={<ErrorPage />} />
-    </>
+    </Route>
   )
 );
 
