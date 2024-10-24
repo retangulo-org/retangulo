@@ -26,7 +26,7 @@ export default function Play() {
   const configCalc = {
     tipo: type || 'soma',
     time: time || 'infinito',
-    negativo: negativo || false,
+    negativo: negativo || 'false',
     maximo: maximo || 100,
   };
 
