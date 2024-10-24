@@ -9,19 +9,15 @@ import Game from './pages/Game';
 import Play from './components/Play/Index';
 import Ui from './pages/Ui';
 import ErrorPage from './pages/ErrorPage';
+import { registerSW } from 'virtual:pwa-register';
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/sw.js')
-      .then((registration) => {
-        console.log('Service Worker registrado com sucesso:', registration);
-      })
-      .catch((error) => {
-        console.log('Falha ao registrar o Service Worker:', error);
-      });
-  });
-}
+const updateSW = registerSW({
+  onNeedRefresh() {
+    if (confirm('Novo conteúdo disponível. Recarregar?')) {
+      updateSW(true);
+    }
+  },
+});
 
 const router = createBrowserRouter(
   createRoutesFromElements(
