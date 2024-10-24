@@ -2,6 +2,11 @@ import { Logo } from '../assets/Logo';
 import Button from '../components/Play/Button';
 
 export default function Footer() {
+  function deleteAllCookies() {
+    var c = document.cookie.split('; ');
+    for (i in c) document.cookie = /^[^=]+/.exec(c[i])[0] + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  }
+
   return (
     <footer className="w-full px-6 py-12 flex justify-center items-center text-white">
       <div className="w-full sm:max-w-2xl flex flex-col justify-center items-center gap-8">
@@ -36,6 +41,8 @@ export default function Footer() {
         <Button
           onClick={() => {
             localStorage.clear();
+            deleteAllCookies();
+            storage.clear();
             window.location.href = window.location.href;
           }}
           text="Limpar cache"
