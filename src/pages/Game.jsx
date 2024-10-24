@@ -9,17 +9,7 @@ export default function Game() {
   });
 
   const [calcNegative, setCalcNegative] = useState(() => {
-    if (localStorage.getItem('calcNegative') == 'null') {
-      return false;
-    }
-
-    if (localStorage.getItem('calcNegative') == 'true') {
-      return true;
-    }
-
-    if (localStorage.getItem('calcNegative') == 'false') {
-      return false;
-    }
+    return localStorage.getItem('calcNegative') == 'true' ? 'true' : false || false;
   });
 
   const [calcTime, setCalcTime] = useState(() => {

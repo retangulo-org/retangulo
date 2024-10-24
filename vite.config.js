@@ -10,6 +10,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       workbox: {
         globPatterns: ['**/*'],
+        cleanupOutdatedCaches: false,
       },
       includeAssets: ['**/*'],
       manifest: {
@@ -33,9 +34,6 @@ export default defineConfig({
             type: 'image/png',
           },
         ],
-      },
-      workbox: {
-        cleanupOutdatedCaches: false,
       },
       devOptions: {
         enabled: true,
