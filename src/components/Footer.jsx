@@ -1,5 +1,5 @@
 import { Logo } from '../assets/Logo';
-import Button from '../components/Play/Button';
+import Button from '../components/Button';
 
 export default function Footer() {
   return (

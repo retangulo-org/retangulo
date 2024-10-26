@@ -5,6 +5,8 @@ import InputCalc from './InputCalc';
 import Tag from './Tag';
 import Modal from './Modal';
 import Button from './Button';
+import { RandomNumber } from '../scripts/RandomNumber';
+import { StringNegativeFormat } from '../scripts/StringNegativeFormat';
 
 export default function Play() {
   const [input, setInput] = useState('');
@@ -79,52 +81,32 @@ export default function Play() {
 
   useEffect(() => {
     setMath({
-      n1: handleRandomNumber(),
-      n2: handleRandomNumber(),
+      n1: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
+      n2: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
     });
   }, [change]);
-
-  function handleRandomNumber() {
-    const maximo = configCalc.maximo;
-
-    if (configCalc.tipo === 'raiz2') {
-      return Math.floor(Math.random() * (maximo - 1 + 1)) + 1;
-    }
-
-    if (configCalc.negativo === 'true') {
-      return Math.floor(Math.random() * (maximo - -maximo + 1)) + -maximo;
-    }
-
-    return Math.floor(Math.random() * (maximo - 1 + 1)) + 1;
-  }
-
-  function calculoStringNegativeFormat(number) {
-    if (number < 0) return `(${number})`;
-
-    return `${number}`;
-  }
 
   const calcContainer = new Object();
 
   switch (configCalc.tipo) {
     case 'soma':
       calcContainer.calculo = math.n1 + math.n2;
-      calcContainer.calculoString = `${calculoStringNegativeFormat(math.n1)} + ${calculoStringNegativeFormat(math.n2)}`;
+      calcContainer.calculoString = `${StringNegativeFormat(math.n1)} + ${StringNegativeFormat(math.n2)}`;
       calcContainer.anterior = `${'\n'}${stored.n1} + ${stored.n2} = ${stored.n3}`;
       break;
     case 'subt':
       calcContainer.calculo = math.n1 - math.n2;
-      calcContainer.calculoString = `${calculoStringNegativeFormat(math.n1)} - ${calculoStringNegativeFormat(math.n2)}`;
+      calcContainer.calculoString = `${StringNegativeFormat(math.n1)} - ${StringNegativeFormat(math.n2)}`;
       calcContainer.anterior = `${'\n'}${stored.n1} - ${stored.n2} = ${stored.n3}`;
       break;
     case 'mult':
       calcContainer.calculo = math.n1 * math.n2;
-      calcContainer.calculoString = `${calculoStringNegativeFormat(math.n1)} × ${calculoStringNegativeFormat(math.n2)}`;
+      calcContainer.calculoString = `${StringNegativeFormat(math.n1)} × ${StringNegativeFormat(math.n2)}`;
       calcContainer.anterior = `${'\n'}${stored.n1} × ${stored.n2} = ${stored.n3}`;
       break;
     case 'divi':
       calcContainer.calculo = Number.isInteger(math.n1 / math.n2) ? math.n1 / math.n2 : (math.n1 / math.n2).toFixed(2);
-      calcContainer.calculoString = `${calculoStringNegativeFormat(math.n1)} ÷ ${calculoStringNegativeFormat(math.n2)}`;
+      calcContainer.calculoString = `${StringNegativeFormat(math.n1)} ÷ ${StringNegativeFormat(math.n2)}`;
       calcContainer.anterior = `${'\n'}${stored.n1} ÷ ${stored.n2} = ${stored.n3}`;
       calcContainer.texto =
         'Máximo de 2 Casas Decimais depois do ponto (.) - padrão americano. Ex.: 3÷2 = 1.5, 8÷3 = 2.67';
@@ -138,12 +120,12 @@ export default function Play() {
       break;
     case 'expo2':
       calcContainer.calculo = math.n1 * math.n1;
-      calcContainer.calculoString = `${calculoStringNegativeFormat(math.n1)}²`;
+      calcContainer.calculoString = `${StringNegativeFormat(math.n1)}²`;
       calcContainer.anterior = `${'\n'}${stored.n1}² = ${stored.n3}`;
       break;
     case 'expo3':
       calcContainer.calculo = math.n2 * math.n2 * math.n2;
-      calcContainer.calculoString = `${calculoStringNegativeFormat(math.n2)}³`;
+      calcContainer.calculoString = `${StringNegativeFormat(math.n2)}³`;
       calcContainer.anterior = `${'\n'}${stored.n2}³ = ${stored.n3}`;
       break;
   }
@@ -169,8 +151,8 @@ export default function Play() {
     setChange(!change);
     setInput('');
     setStored({
-      n1: calculoStringNegativeFormat(math.n1),
-      n2: calculoStringNegativeFormat(math.n2),
+      n1: StringNegativeFormat(math.n1),
+      n2: StringNegativeFormat(math.n2),
       n3: calcContainer.calculo,
     });
   }

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Input from '../components/Input';
 
-export default function Game() {
+export default function Selector() {
   const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
     return localStorage.getItem('calcSizeValue') || 100;
   });

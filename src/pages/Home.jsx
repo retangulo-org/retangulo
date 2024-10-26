@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import Button from '../components/Play/Button';
+import Button from '../components/Button';
 import Card from '../components/Card';
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import InputCalc from '../components/Play/InputCalc';
-import Tag from '../components/Play/Tag';
+import InputCalc from '../components/InputCalc';
+import Tag from '../components/Tag';
 
 export default function Home() {
   const navigate = useNavigate();
