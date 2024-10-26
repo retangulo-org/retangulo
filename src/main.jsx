@@ -5,8 +5,8 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import './index.css';
 import Root from './Root';
 import Home from './pages/Home';
-import Game from './pages/Game';
-import Play from './components/Play/Index';
+import Selector from './pages/Selector';
+import Play from './components/Play';
 import Ui from './pages/Ui';
 import ErrorPage from './pages/ErrorPage';
 
@@ -15,7 +15,7 @@ const router = createBrowserRouter(
     <Route>
       <Route path="/" element={<Home />} />
       <Route path="/jogar" element={<Root />}>
-        <Route index element={<Game />} />
+        <Route index element={<Selector />} />
         <Route path="/jogar/:type/:time/:negativo/:maximo" element={<Play />} />
       </Route>
       <Route path="/ui" element={<Ui />} />

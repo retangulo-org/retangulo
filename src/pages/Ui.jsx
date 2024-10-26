@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
 import Input from '../components/Input';
-import Button from '../components/Play/Button';
-import Tag from '../components/Play/Tag';
-import Modal from '../components/Play/Modal';
+import Button from '../components/Button';
+import Tag from '../components/Tag';
+import Modal from '../components/Modal';
 import Card from '../components/Card';
 
 export default function Ui() {
