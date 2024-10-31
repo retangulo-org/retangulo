@@ -12,6 +12,14 @@ export default function Selector() {
     return localStorage.getItem('calcNegative') == 'true' ? 'true' : false || false;
   });
 
+  const [calcMode, setCalcMode] = useState(() => {
+    return localStorage.getItem('modeValue') || 'speedrun';
+  });
+
+  const [speedInputValue, setSpeedInputValue] = useState(() => {
+    return localStorage.getItem('speedValue') || 10;
+  });
+
   const [calcTime, setCalcTime] = useState(() => {
     return localStorage.getItem('timerValue') || '1m';
   });
@@ -19,10 +27,12 @@ export default function Selector() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.setItem('calcNegative', calcNegative);
     localStorage.setItem('calcSizeValue', Number(calcSizeInputValue));
+    localStorage.setItem('calcNegative', calcNegative);
+    localStorage.setItem('modeValue', calcMode.toString());
+    localStorage.setItem('speedValue', Number(speedInputValue));
     localStorage.setItem('timerValue', calcTime.toString());
-  }, [calcNegative, calcSizeInputValue, calcTime]);
+  }, [calcNegative, calcSizeInputValue, calcMode, speedInputValue, calcTime]);
 
   const calcSizeStorage = (event) => {
     localStorage.setItem('calcSizeValue', event.target.value);
@@ -30,14 +40,36 @@ export default function Selector() {
     setCalcSizeInputValue(event.target.value);
   };
 
-  function CalcTimeToggle() {
-    const handleChange = (event) => {
+  const calcSpeedStorage = (event) => {
+    localStorage.setItem('speedValue', event.target.value);
+
+    setSpeedInputValue(event.target.value);
+  };
+
+  const CalcModeToggle = () => {
+    let handleChange = (event) => {
+      setCalcMode(event.target.value);
+    };
+
+    return (
+      <select
+        className="appearance-none w-full h-14 p-4 rounded-md cursor-pointer text-white hover:font-bold bg-blue-600 hover:bg-blue-700 text-center select-none"
+        value={calcMode}
+        onChange={handleChange}>
+        <option value="timer">Tempo limite</option>
+        <option value="speedrun">Número de acertos</option>
+      </select>
+    );
+  };
+
+  const CalcTimeToggle = () => {
+    let handleChange = (event) => {
       setCalcTime(event.target.value);
     };
 
     return (
       <select
-        className="appearance-none w-full h-14 p-4 rounded-md cursor-pointer text-white hover:font-bold bg-orange-500 hover:bg-orange-600 text-center select-none"
+        className="appearance-none w-full h-14 p-4 rounded-md cursor-pointer text-white hover:font-bold bg-orange-500 hover:bg-orange-600 text-center select-none "
         value={calcTime}
         onChange={handleChange}>
         <option value="30s">30 segundos</option>
@@ -48,9 +80,9 @@ export default function Selector() {
         <option value="infinito">Sem limite</option>
       </select>
     );
-  }
+  };
 
-  function CalcNegativeToggle() {
+  const CalcNegativeToggle = () => {
     const toggleChecked = () => {
       setCalcNegative(!calcNegative);
     };
@@ -70,15 +102,19 @@ export default function Selector() {
         </button>
       </>
     );
-  }
+  };
 
-  function LinkCalc({ text, type }) {
+  const LinkCalc = ({ text, type }) => {
     const inputIsEmpty = () => {
-      if (calcSizeInputValue === '') {
-        return alert('Preencha o campo antes de continuar.');
+      if (calcSizeInputValue === '' || speedInputValue === '') {
+        return alert('Preencha todos os campo antes de continuar.');
       }
 
-      return navigate(`/jogar/${type}/${calcTime}/${calcNegative}/${calcSizeInputValue}`);
+      if (calcMode === 'timer') {
+        return navigate(`/jogar/${type}/${calcMode}/${calcTime}/${calcNegative}/${calcSizeInputValue}`);
+      }
+
+      return navigate(`/jogar/${type}/${calcMode}/${speedInputValue}/${calcNegative}/${calcSizeInputValue}`);
     };
 
     return (
@@ -90,15 +126,28 @@ export default function Selector() {
         {text}
       </button>
     );
-  }
+  };
 
   return (
     <div className="flex flex-col justify-center items-center gap-4">
-      <Input value={calcSizeInputValue} onChange={calcSizeStorage} placeholder="Valor máximo" span="Valor máximo:" />
-      <div className="flex flex-col sm:flex-row w-full gap-4">
-        <CalcNegativeToggle />
-        <CalcTimeToggle />
-      </div>
+      <details className="w-full flex flex-col bg-neutral-200 dark:bg-neutral-800 rounded-md cursor-pointer">
+        <summary className="p-4 hover:bg-neutral-300 dark:hover:bg-neutral-700 rounded-md hover:font-bold select-none">
+          Configuração da geração do cálculo
+        </summary>
+        <div className="mt-4 px-4 pb-4 space-y-4">
+          <h4>Valor máximo:</h4>
+          <Input value={calcSizeInputValue} onChange={calcSizeStorage} placeholder="Valor..." />
+          <CalcNegativeToggle />
+          <h4>Modos:</h4>
+          <CalcModeToggle />
+          {calcMode === 'timer' && <h4>Tempo máximo:</h4>}
+          {calcMode === 'timer' && <CalcTimeToggle />}
+          {calcMode === 'speedrun' && <h4>Número máximo de acertos:</h4>}
+          {calcMode === 'speedrun' && (
+            <Input value={speedInputValue} onChange={calcSpeedStorage} placeholder="Valor..." />
+          )}
+        </div>
+      </details>
       <div className="w-full p-4 bg-neutral-200 dark:bg-neutral-800 rounded-md">
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <LinkCalc text="Adição" type="soma" />

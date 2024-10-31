@@ -12,7 +12,7 @@ import Tag from '../components/Tag';
 export default function Home() {
   const navigate = useNavigate();
 
-  function PlayHome() {
+  const PlayHome = () => {
     const [input, setInput] = useState('');
     const [math, setMath] = useState({ n1: 0, n2: 0 });
     const [change, setChange] = useState(true);
@@ -46,7 +46,7 @@ export default function Home() {
     calcContainer.calculoString = `${math.n1} + ${math.n2}`;
     calcContainer.anterior = `${'\n'}${stored.n1} + ${stored.n2} = ${stored.n3}`;
 
-    function valueCheck() {
+    const valueCheck = () => {
       const value = calcContainer.calculo;
 
       if (input != value) {
@@ -60,7 +60,7 @@ export default function Home() {
         setPontos(pontos + 1);
         setColor('green');
       }
-    }
+    };
 
     function valueChange() {
       setChange(!change);
@@ -99,7 +99,7 @@ export default function Home() {
         </div>
       </>
     );
-  }
+  };
 
   return (
     <>
