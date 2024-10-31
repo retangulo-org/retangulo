@@ -15,22 +15,50 @@ export default function Play() {
   const [pontos, setPontos] = useState(0);
   const [erros, setErros] = useState(0);
   const [color, setColor] = useState('');
-  const [stored, setStored] = useState({ n1: 0, n2: 0, n3: 0 });
+  const [timer, setTimer] = useState(false);
+  const [timerStorage, setTimerStorage] = useState(0);
+  const [timerEnd, setTimerEnd] = useState('');
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
+  const [stored, setStored] = useState({ n1: 0, n2: 0, n3: 0 });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalExitOpen, setIsModalExitOpen] = useState(false);
 
   const navigate = useNavigate();
 
-  const { type, time, negativo, maximo } = useParams();
+  const { type, mode, mode_config, negativo, maximo } = useParams();
 
   const configCalc = {
     tipo: type || 'soma',
-    time: time || 'infinito',
+    mode: mode || 'speedrun',
+    mode_config: mode_config || '10',
     negativo: negativo || 'false',
     maximo: maximo || 100,
   };
+
+  useEffect(() => {
+    setTimerStorage(Date.now());
+  }, [timer]);
+
+  const TimeTracker = () => {
+    const currentTime = Date.now();
+    const elapsedMilliseconds = currentTime - timerStorage;
+    const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
+
+    const minutes = Math.floor(elapsedSeconds / 60);
+    const seconds = elapsedSeconds % 60;
+    const milliseconds = elapsedMilliseconds % 1000;
+
+    setTimerEnd(`${minutes}:${seconds}.${milliseconds}`);
+  };
+
+  if (configCalc.mode === 'speedrun') {
+    useEffect(() => {
+      if (pontos >= Number(configCalc.mode_config)) {
+        openModal();
+      }
+    }, [pontos]);
+  }
 
   useEffect(() => {
     let interval = null;
@@ -42,39 +70,42 @@ export default function Play() {
     return () => clearInterval(interval);
   }, [isActive]);
 
-  useEffect(() => {
-    let timer;
+  if (configCalc.mode === 'timer') {
+    useEffect(() => {
+      let timerSelect;
 
-    switch (configCalc.time) {
-      case '30s':
-        timer = 30;
-        break;
-      case '1m':
-        timer = 60;
-        break;
-      case '5m':
-        timer = 300;
-        break;
-      case '10m':
-        timer = 600;
-        break;
-      case '30m':
-        timer = 1800;
-        break;
-      case 'infinito':
-        timer = Infinity;
-        break;
-      default:
-        break;
-    }
+      switch (configCalc.mode_config) {
+        case '30s':
+          timerSelect = 30;
+          break;
+        case '1m':
+          timerSelect = 60;
+          break;
+        case '5m':
+          timerSelect = 300;
+          break;
+        case '10m':
+          timerSelect = 600;
+          break;
+        case '30m':
+          timerSelect = 1800;
+          break;
+        case 'infinito':
+          timerSelect = Infinity;
+          break;
+        default:
+          break;
+      }
 
-    if (seconds >= timer) {
-      openModal();
-      setIsActive(false);
-    }
-  }, [seconds]);
+      if (seconds >= timerSelect) {
+        openModal();
+      }
+    }, [seconds]);
+  }
 
   const openModal = () => {
+    TimeTracker();
+    setIsActive(false);
     setIsModalOpen(true);
     document.activeElement.blur();
   };
@@ -92,41 +123,41 @@ export default function Play() {
     case 'soma':
       calcContainer.calculo = math.n1 + math.n2;
       calcContainer.calculoString = `${StringNegativeFormat(math.n1)} + ${StringNegativeFormat(math.n2)}`;
-      calcContainer.anterior = `${'\n'}${stored.n1} + ${stored.n2} = ${stored.n3}`;
+      calcContainer.anterior = `${stored.n1} + ${stored.n2} = ${stored.n3}`;
       break;
     case 'subt':
       calcContainer.calculo = math.n1 - math.n2;
       calcContainer.calculoString = `${StringNegativeFormat(math.n1)} - ${StringNegativeFormat(math.n2)}`;
-      calcContainer.anterior = `${'\n'}${stored.n1} - ${stored.n2} = ${stored.n3}`;
+      calcContainer.anterior = `${stored.n1} - ${stored.n2} = ${stored.n3}`;
       break;
     case 'mult':
       calcContainer.calculo = math.n1 * math.n2;
       calcContainer.calculoString = `${StringNegativeFormat(math.n1)} × ${StringNegativeFormat(math.n2)}`;
-      calcContainer.anterior = `${'\n'}${stored.n1} × ${stored.n2} = ${stored.n3}`;
+      calcContainer.anterior = `${stored.n1} × ${stored.n2} = ${stored.n3}`;
       break;
     case 'divi':
       calcContainer.calculo = Number.isInteger(math.n1 / math.n2) ? math.n1 / math.n2 : (math.n1 / math.n2).toFixed(2);
       calcContainer.calculoString = `${StringNegativeFormat(math.n1)} ÷ ${StringNegativeFormat(math.n2)}`;
-      calcContainer.anterior = `${'\n'}${stored.n1} ÷ ${stored.n2} = ${stored.n3}`;
+      calcContainer.anterior = `${stored.n1} ÷ ${stored.n2} = ${stored.n3}`;
       calcContainer.texto =
         'Máximo de 2 Casas Decimais depois do ponto (.) - padrão americano. Ex.: 3÷2 = 1.5, 8÷3 = 2.67';
       break;
     case 'raiz2':
       calcContainer.calculo = Number.isInteger(Math.sqrt(math.n1)) ? Math.sqrt(math.n1) : Math.sqrt(math.n1).toFixed(2);
       calcContainer.calculoString = `√${math.n1}`;
-      calcContainer.anterior = `${'\n'}√${stored.n1} = ${stored.n3}`;
+      calcContainer.anterior = `√${stored.n1} = ${stored.n3}`;
       calcContainer.texto =
         'Máximo de 2 Casas Decimais depois do ponto (.) - padrão americano. Ex.: √5 = 2.24, √10 = 3.16. Esse modo pode ter contas erradas!';
       break;
     case 'expo2':
       calcContainer.calculo = math.n1 * math.n1;
       calcContainer.calculoString = `${StringNegativeFormat(math.n1)}²`;
-      calcContainer.anterior = `${'\n'}${stored.n1}² = ${stored.n3}`;
+      calcContainer.anterior = `${stored.n1}² = ${stored.n3}`;
       break;
     case 'expo3':
       calcContainer.calculo = math.n2 * math.n2 * math.n2;
       calcContainer.calculoString = `${StringNegativeFormat(math.n2)}³`;
-      calcContainer.anterior = `${'\n'}${stored.n2}³ = ${stored.n3}`;
+      calcContainer.anterior = `${stored.n2}³ = ${stored.n3}`;
       break;
   }
 
@@ -147,6 +178,7 @@ export default function Play() {
   }
 
   function valueChange() {
+    setTimer(true);
     setIsActive(true);
     setChange(!change);
     setInput('');
@@ -160,7 +192,6 @@ export default function Play() {
   function BackToMenu({ text }) {
     let openModal = () => {
       setIsModalExitOpen(true);
-      setIsActive(false);
       document.activeElement.blur();
     };
 
@@ -204,15 +235,10 @@ export default function Play() {
         {isModalOpen && (
           <Modal>
             <h2>Pontuação</h2>
-            <p className="mt-2">
-              <strong>Acertos</strong>: {pontos}
-            </p>
-            <p className="mt-2">
-              <strong>Erros</strong>: {erros}
-            </p>
-            <p className="mt-2">
-              <strong>Tempo</strong>: {seconds}
-            </p>
+            <p>Acertos: {pontos}</p>
+            <p>Erros: {erros}</p>
+            {configCalc.mode === 'timer' && <p>Tempo: {seconds}</p>}
+            {configCalc.mode === 'speedrun' && <p>Tempo: {timerEnd}</p>}
             <div className="flex flex-row gap-4">
               <button
                 className="mt-4 px-4 py-2 w-full bg-green-500 text-white rounded-md hover:bg-green-600 hover:font-bold"
@@ -232,21 +258,14 @@ export default function Play() {
         {isModalExitOpen && (
           <Modal>
             <h2>Tem certeza?</h2>
-            <p className="mt-2">
-              <strong>Acertos</strong>: {pontos}
-            </p>
-            <p className="mt-2">
-              <strong>Erros</strong>: {erros}
-            </p>
-            <p className="mt-2">
-              <strong>Tempo</strong>: {seconds}
-            </p>
+            <p>Acertos: {pontos}</p>
+            <p>Erros: {erros}</p>
+            <p>Tempo: {seconds}</p>
             <div className="flex flex-row gap-4">
               <button
                 className="mt-4 px-4 py-2 w-full bg-green-500 text-white rounded-md hover:bg-green-600 hover:font-bold"
                 onClick={() => {
                   setIsModalExitOpen(false);
-                  setIsActive(true);
                 }}>
                 Cancelar
               </button>
