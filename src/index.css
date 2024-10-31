@@ -47,4 +47,8 @@
   a {
     @apply hover:underline font-semibold text-blue-600 hover:text-blue-800 active:text-blue-700;
   }
+
+  summary {
+    @apply text-neutral-800 dark:text-neutral-200;
+  }
 }
