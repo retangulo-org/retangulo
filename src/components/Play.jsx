@@ -13,6 +13,7 @@ export default function Play() {
   const [math, setMath] = useState({ n1: 0, n2: 0 });
   const [change, setChange] = useState(true);
   const [pontos, setPontos] = useState(0);
+  const [score, setScore] = useState(0);
   const [erros, setErros] = useState(0);
   const [color, setColor] = useState('');
   const [timer, setTimer] = useState(false);
@@ -41,20 +42,20 @@ export default function Play() {
   }, [timer]);
 
   const TimeTracker = () => {
-    const currentTime = Date.now();
-    const elapsedMilliseconds = currentTime - timerStorage;
-    const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
+    let currentTime = Date.now();
+    let elapsedMilliseconds = currentTime - timerStorage;
+    let elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
 
-    const minutes = Math.floor(elapsedSeconds / 60);
-    const seconds = elapsedSeconds % 60;
-    const milliseconds = elapsedMilliseconds % 1000;
+    let minutes = Math.floor(elapsedSeconds / 60);
+    let seconds = elapsedSeconds % 60;
+    let milliseconds = elapsedMilliseconds % 1000;
 
     setTimerEnd(`${minutes}:${seconds}.${milliseconds}`);
   };
 
   if (configCalc.mode === 'speedrun') {
     useEffect(() => {
-      if (pontos >= Number(configCalc.mode_config)) {
+      if (score >= Number(configCalc.mode_config)) {
         openModal();
       }
     }, [pontos]);
@@ -162,22 +163,40 @@ export default function Play() {
   }
 
   function valueCheck() {
-    const value = calcContainer.calculo;
+    let value = calcContainer.calculo;
+    let result = Number(input);
 
-    if (input != value) {
-      valueChange();
-      setErros(erros + 1);
-      setColor('red');
+    if (configCalc.mode === 'speedrun') {
+      if (result != value) {
+        valueChange();
+        setErros(erros + 1);
+        setScore(score - 1);
+        setColor('red');
+      }
+
+      if (result === value) {
+        valueChange();
+        setScore(score + 1);
+        setPontos(pontos + 1);
+        setColor('green');
+      }
     }
+    if (configCalc.mode === 'timer') {
+      if (result != value) {
+        valueChange();
+        setErros(erros + 1);
+        setColor('red');
+      }
 
-    if (input == value) {
-      valueChange();
-      setPontos(pontos + 1);
-      setColor('green');
+      if (result === value) {
+        valueChange();
+        setPontos(pontos + 1);
+        setColor('green');
+      }
     }
   }
 
-  function valueChange() {
+  const valueChange = () => {
     setTimer(true);
     setIsActive(true);
     setChange(!change);
@@ -187,9 +206,9 @@ export default function Play() {
       n2: StringNegativeFormat(math.n2),
       n3: calcContainer.calculo,
     });
-  }
+  };
 
-  function BackToMenu({ text }) {
+  const BackToMenu = ({ text }) => {
     let openModal = () => {
       setIsModalExitOpen(true);
       document.activeElement.blur();
@@ -202,7 +221,7 @@ export default function Play() {
         {text}
       </button>
     );
-  }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -214,8 +233,15 @@ export default function Play() {
       <div className="flex flex-col gap-4 items-center">
         <h1 className="my-4">{calcContainer.calculoString}</h1>
         <div className="flex flex-row gap-2 my-3 justify-center flex-wrap">
-          <Tag texto={pontos} tipo="pontos" />
-          <Tag texto={erros} tipo="erros" />
+          {configCalc.mode === 'speedrun' && (
+            <Tag texto={`${score} / ${configCalc.mode_config}`} tipo="score" color={color} />
+          )}
+          {configCalc.mode === 'timer' && (
+            <>
+              <Tag texto={pontos} tipo="pontos" />
+              <Tag texto={erros} tipo="erros" />
+            </>
+          )}
           <Tag texto={calcContainer.anterior} tipo="anterior" />
           <Tag texto={seconds} tipo="time" />
         </div>

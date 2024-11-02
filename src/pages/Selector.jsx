@@ -56,8 +56,8 @@ export default function Selector() {
         className="appearance-none w-full h-14 p-4 rounded-md cursor-pointer text-white hover:font-bold bg-blue-600 hover:bg-blue-700 text-center select-none"
         value={calcMode}
         onChange={handleChange}>
-        <option value="timer">Tempo limite</option>
         <option value="speedrun">Número de acertos</option>
+        <option value="timer">Tempo limite</option>
       </select>
     );
   };
@@ -140,11 +140,17 @@ export default function Selector() {
           <CalcNegativeToggle />
           <h4>Modos:</h4>
           <CalcModeToggle />
-          {calcMode === 'timer' && <h4>Tempo máximo:</h4>}
-          {calcMode === 'timer' && <CalcTimeToggle />}
-          {calcMode === 'speedrun' && <h4>Número máximo de acertos:</h4>}
+          {calcMode === 'timer' && (
+            <>
+              <h4>Tempo máximo:</h4>
+              <CalcTimeToggle />
+            </>
+          )}
           {calcMode === 'speedrun' && (
-            <Input value={speedInputValue} onChange={calcSpeedStorage} placeholder="Valor..." />
+            <>
+              <h4>Número máximo de acertos:</h4>
+              <Input value={speedInputValue} onChange={calcSpeedStorage} placeholder="Valor..." />
+            </>
           )}
         </div>
       </details>
