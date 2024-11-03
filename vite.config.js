@@ -22,19 +22,18 @@ export default defineConfig({
         description:
           'O Retangulo.org é uma plataforma de exercícios matemáticos projetada para desafiar suas habilidades de cálculo. Melhore suas habilidades de resolução de cálculo mental e resolva as questões o mais rápido possível sem cometer erros. Atualmente, o Retangulo.org, conta com a possibilidade de gerar cálculos aleatórios com ou sem negativo nas seguintes operações matemáticas: adição, subtração, divisão, multiplicação, raiz quadrada, expoente 2 e expoente 3.',
         display: 'standalone',
-        id: '/',
+        id: '/jogar',
         lang: 'ptbr',
-        start_url: '/',
+        start_url: '/jogar',
         theme_color: '#2563EB',
-        orientation: 'any',
+        orientation: 'natural',
         icons: [
           {
-            src: '/android-chrome-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
+            src: '/apple-touch-icon.png',
+            sizes: '180x180',
           },
           {
-            src: '/android-chrome-512x512.png',
+            src: '/android-icon-512x512.png',
             sizes: '512x512',
             type: 'image/png',
           },
