@@ -163,6 +163,8 @@ export default function Selector() {
           <LinkCalc text="Raiz Quadrada" type="raiz2" />
           <LinkCalc text="Expoente 2" type="expo2" />
           <LinkCalc text="Expoente 3" type="expo3" />
+          <LinkCalc text="Maior" type="maior" />
+          <LinkCalc text="Menor" type="menor" />
         </div>
       </div>
     </div>

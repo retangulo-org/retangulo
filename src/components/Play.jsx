@@ -7,6 +7,7 @@ import Modal from './Modal';
 import Button from './Button';
 import { RandomNumber } from '../scripts/RandomNumber';
 import { StringNegativeFormat } from '../scripts/StringNegativeFormat';
+import { Calc } from '../scripts/Calc';
 
 export default function Play() {
   const [input, setInput] = useState('');
@@ -111,56 +112,45 @@ export default function Play() {
     document.activeElement.blur();
   };
 
-  useEffect(() => {
-    setMath({
-      n1: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
-      n2: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
-    });
-  }, [change]);
-
-  const calcContainer = new Object();
-
-  switch (configCalc.tipo) {
-    case 'soma':
-      calcContainer.calculo = math.n1 + math.n2;
-      calcContainer.calculoString = `${StringNegativeFormat(math.n1)} + ${StringNegativeFormat(math.n2)}`;
-      calcContainer.anterior = `${stored.n1} + ${stored.n2} = ${stored.n3}`;
-      break;
-    case 'subt':
-      calcContainer.calculo = math.n1 - math.n2;
-      calcContainer.calculoString = `${StringNegativeFormat(math.n1)} - ${StringNegativeFormat(math.n2)}`;
-      calcContainer.anterior = `${stored.n1} - ${stored.n2} = ${stored.n3}`;
-      break;
-    case 'mult':
-      calcContainer.calculo = math.n1 * math.n2;
-      calcContainer.calculoString = `${StringNegativeFormat(math.n1)} × ${StringNegativeFormat(math.n2)}`;
-      calcContainer.anterior = `${stored.n1} × ${stored.n2} = ${stored.n3}`;
-      break;
-    case 'divi':
-      calcContainer.calculo = Number.isInteger(math.n1 / math.n2) ? math.n1 / math.n2 : (math.n1 / math.n2).toFixed(2);
-      calcContainer.calculoString = `${StringNegativeFormat(math.n1)} ÷ ${StringNegativeFormat(math.n2)}`;
-      calcContainer.anterior = `${stored.n1} ÷ ${stored.n2} = ${stored.n3}`;
-      calcContainer.texto =
-        'Máximo de 2 Casas Decimais depois do ponto (.) - padrão americano. Ex.: 3÷2 = 1.5, 8÷3 = 2.67';
-      break;
-    case 'raiz2':
-      calcContainer.calculo = Number.isInteger(Math.sqrt(math.n1)) ? Math.sqrt(math.n1) : Math.sqrt(math.n1).toFixed(2);
-      calcContainer.calculoString = `√${math.n1}`;
-      calcContainer.anterior = `√${stored.n1} = ${stored.n3}`;
-      calcContainer.texto =
-        'Máximo de 2 Casas Decimais depois do ponto (.) - padrão americano. Ex.: √5 = 2.24, √10 = 3.16. Esse modo pode ter contas erradas!';
-      break;
-    case 'expo2':
-      calcContainer.calculo = math.n1 * math.n1;
-      calcContainer.calculoString = `${StringNegativeFormat(math.n1)}²`;
-      calcContainer.anterior = `${stored.n1}² = ${stored.n3}`;
-      break;
-    case 'expo3':
-      calcContainer.calculo = math.n2 * math.n2 * math.n2;
-      calcContainer.calculoString = `${StringNegativeFormat(math.n2)}³`;
-      calcContainer.anterior = `${stored.n2}³ = ${stored.n3}`;
-      break;
+  if (configCalc.tipo === ('maior' || 'menor')) {
+    useEffect(() => {
+      setMath({
+        n1: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
+        n2: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
+      });
+    }, [change]);
+  } else {
+    useEffect(() => {
+      setMath({
+        n1: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
+        n2: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
+      });
+    }, [change]);
   }
+
+  const calcContainer = Calc(
+    configCalc.tipo,
+    { n1: math.n1, n2: math.n2 },
+    { n1: stored.n1, n2: stored.n2, n3: stored.n3 }
+  );
+
+  const valueCheckDouble = (result) => {
+    let value = calcContainer.calculo;
+
+    if (result != value) {
+      valueChange();
+      setErros(erros + 1);
+      setScore(score - 1);
+      setColor('red');
+    }
+
+    if (result === value) {
+      valueChange();
+      setScore(score + 1);
+      setPontos(pontos + 1);
+      setColor('green');
+    }
+  };
 
   function valueCheck() {
     let value = calcContainer.calculo;
@@ -234,28 +224,50 @@ export default function Play() {
         <h1 className="my-4">{calcContainer.calculoString}</h1>
         <div className="flex flex-row gap-2 my-3 justify-center flex-wrap">
           {configCalc.mode === 'speedrun' && (
-            <Tag texto={`${score} / ${configCalc.mode_config}`} tipo="score" color={color} />
+            <Tag text={`${score} / ${configCalc.mode_config}`} tipo="score" color={color} />
           )}
           {configCalc.mode === 'timer' && (
             <>
-              <Tag texto={pontos} tipo="pontos" />
-              <Tag texto={erros} tipo="erros" />
+              <Tag text={pontos} tipo="pontos" />
+              <Tag text={erros} tipo="erros" />
             </>
           )}
-          <Tag texto={calcContainer.anterior} tipo="anterior" />
-          <Tag texto={seconds} tipo="time" />
+          <Tag text={calcContainer.anterior} tipo="anterior" />
+          <Tag text={seconds} tipo="time" />
         </div>
-        <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
-          <InputCalc
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Resultado..."
-            required={false}
-            autoFocus={true}
-            color={color}
-          />
-          <Button text="Calcular" onClick={valueCheck} />
-        </form>
+        {!['maior', 'menor'].includes(configCalc.tipo) && (
+          <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
+            <InputCalc
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Resultado..."
+              required={false}
+              autoFocus={true}
+              color={color}
+            />
+            <Button text="Calcular" onClick={valueCheck} />
+          </form>
+        )}
+        {['maior', 'menor'].includes(configCalc.tipo) && (
+          <form className="flex flex-row gap-3 items-center w-full" onSubmit={handleSubmit}>
+            <Button
+              text={
+                <>
+                  <i className="fa-solid fa-arrow-up"></i> Maior
+                </>
+              }
+              onClick={() => valueCheckDouble('maior')}
+            />
+            <Button
+              text={
+                <>
+                  <i className="fa-solid fa-arrow-down"></i> Menor
+                </>
+              }
+              onClick={() => valueCheckDouble('menor')}
+            />
+          </form>
+        )}
         <BackToMenu text="Voltar" />
         {calcContainer.text ? '' : <p className="text-black dark:text-white">{calcContainer.texto}</p>}
         {isModalOpen && (
