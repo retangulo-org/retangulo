@@ -4,7 +4,6 @@ const RandomNumber = (tipo, negativo, maximo) => {
   }
 
   if (negativo === 'true') {
-    console.log('RandomNumber negativo');
     return Math.floor(Math.random() * (maximo - -maximo + 1)) + -maximo;
   }
 
