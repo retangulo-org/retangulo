@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Button from '../components/Button';
 import Card from '../components/Card';
 
@@ -102,36 +100,32 @@ export default function Home() {
   };
 
   return (
-    <>
-      <Header />
-      <main>
-        <div className="flex justify-center w-full p-5 bg-neutral-100 dark:bg-neutral-950">
-          <div className="w-full sm:max-w-3xl">
-            <div className="w-full px-4 py-24 flex flex-col justify-center items-center">
-              <h1 className="text-5xl text-center mb-4">
-                Resolva exercícios <br /> matématicos
-              </h1>
-              <p className="text-center mb-12">
-                Gere contas matemáticas infinitamente, <br /> resolva-as no menor tempo possível & <br />
-                treine seu cálculo mental.
-              </p>
-              <div className="w-full sm:w-96">
-                <Button onClick={() => navigate('/jogar')} text="Jogar" />
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Card title="Desafio" text="Resolva a máximo de questões possíveis antes do tempo acabar." />
-              <Card title="Memória" text="Melhore seu cálculo mental, resolva aqueles contas chatas rapidamente." />
-              <Card title="Satisfatório" text="Acertar diversas contas em seguida é extremamente satisfatório." />
-            </div>
-            <div className="w-full my-24">
-              <PlayHome />
-              <p className="mt-4">*Apenas uma demonstração.</p>
+    <main>
+      <div className="flex justify-center w-full p-5 bg-neutral-100 dark:bg-neutral-950">
+        <div className="w-full sm:max-w-3xl">
+          <div className="w-full px-4 py-24 flex flex-col justify-center items-center">
+            <h1 className="text-5xl text-center mb-4">
+              Resolva exercícios <br /> matématicos
+            </h1>
+            <p className="text-center mb-12">
+              Gere contas matemáticas infinitamente, <br /> resolva-as no menor tempo possível & <br />
+              treine seu cálculo mental.
+            </p>
+            <div className="w-full sm:w-96">
+              <Button onClick={() => navigate('/menu')} text="Jogar" />
             </div>
           </div>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Card title="Desafio" text="Resolva a máximo de questões possíveis antes do tempo acabar." />
+            <Card title="Memória" text="Melhore seu cálculo mental, resolva aqueles contas chatas rapidamente." />
+            <Card title="Satisfatório" text="Acertar diversas contas em seguida é extremamente satisfatório." />
+          </div>
+          <div className="w-full my-24">
+            <PlayHome />
+            <p className="mt-4">*Apenas uma demonstração.</p>
+          </div>
         </div>
-      </main>
-      <Footer />
-    </>
+      </div>
+    </main>
   );
 }

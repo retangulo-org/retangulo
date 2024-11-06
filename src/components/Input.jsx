@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Input({ onChange, value, placeholder, autoFocus }) {
+export default function Input({ onChange, value, placeholder, autoFocus, type }) {
   return (
     <div className="flex flex-col w-full">
       <input
@@ -8,7 +8,7 @@ export default function Input({ onChange, value, placeholder, autoFocus }) {
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        type="number"
+        type={type ? type : 'number'}
         inputMode="numeric"
         autoFocus={autoFocus}
       />

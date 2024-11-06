@@ -131,7 +131,7 @@ export default function Selector() {
   return (
     <div className="flex flex-col justify-center items-center gap-4">
       <details className="w-full flex flex-col bg-neutral-200 dark:bg-neutral-800 rounded-md cursor-pointer">
-        <summary className="p-4 hover:bg-neutral-300 dark:hover:bg-neutral-700 rounded-md hover:font-bold select-none">
+        <summary className="p-4 hover:bg-neutral-30  dark:hover:bg-neutral-700 rounded-md hover:font-bold select-none">
           Configuração da geração do cálculo
         </summary>
         <div className="mt-4 px-4 pb-4 space-y-4">

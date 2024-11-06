@@ -9,15 +9,15 @@ import Selector from './pages/Selector';
 import Play from './components/Play';
 import Ui from './pages/Ui';
 import ErrorPage from './pages/ErrorPage';
+import { Contact } from './pages/Contact';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route>
-      <Route path="/" element={<Home />} />
-      <Route path="/jogar" element={<Root />}>
-        <Route index element={<Selector />} />
-        <Route path="/jogar/:type/:mode/:mode_config/:negativo/:maximo" element={<Play />} />
-      </Route>
+    <Route path="/" element={<Root />}>
+      <Route index element={<Home />} />
+      <Route path="/menu" element={<Selector />} />
+      <Route path="/jogar/:type/:mode/:mode_config/:negativo/:maximo" element={<Play />} />
+      <Route path="contato" element={<Contact />} />
       <Route path="/ui" element={<Ui />} />
       <Route path="/*" element={<ErrorPage />} />
     </Route>

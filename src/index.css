@@ -45,7 +45,7 @@
   }
 
   a {
-    @apply hover:underline font-semibold text-blue-600 hover:text-blue-800 active:text-blue-700;
+    @apply hover:underline font-semibold dark:text-neutral-200 dark:hover:text-neutral-300 dark:active:text-neutral-200 text-neutral-800 hover:text-neutral-950 active:text-neutral-800;
   }
 
   summary {
