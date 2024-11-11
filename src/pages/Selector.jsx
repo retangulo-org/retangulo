@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import Input from '../components/Input';
+import Button from '../components/Button';
+import { ToggleRight, ToggleLeft } from 'lucide-react';
+import { Collapse } from '../components/Collapse';
 
 export default function Selector() {
   const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
@@ -27,10 +29,10 @@ export default function Selector() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.setItem('calcSizeValue', Number(calcSizeInputValue));
-    localStorage.setItem('calcNegative', calcNegative);
+    localStorage.setItem('calcSizeValue', calcSizeInputValue.toString());
+    localStorage.setItem('calcNegative', calcNegative.toString());
     localStorage.setItem('modeValue', calcMode.toString());
-    localStorage.setItem('speedValue', Number(speedInputValue));
+    localStorage.setItem('speedValue', speedInputValue.toString());
     localStorage.setItem('timerValue', calcTime.toString());
   }, [calcNegative, calcSizeInputValue, calcMode, speedInputValue, calcTime]);
 
@@ -53,7 +55,7 @@ export default function Selector() {
 
     return (
       <select
-        className="appearance-none w-full h-14 p-4 rounded-md cursor-pointer text-white hover:font-bold bg-blue-600 hover:bg-blue-700 text-center select-none"
+        className="appearance-none w-full h-12 rounded-sm cursor-pointer text-textAlt font-semibold bg-secundary text-center select-none"
         value={calcMode}
         onChange={handleChange}>
         <option value="speedrun">Número de acertos</option>
@@ -69,7 +71,7 @@ export default function Selector() {
 
     return (
       <select
-        className="appearance-none w-full h-14 p-4 rounded-md cursor-pointer text-white hover:font-bold bg-orange-500 hover:bg-orange-600 text-center select-none "
+        className="appearance-none w-full h-12 rounded-sm cursor-pointer text-textAlt font-semibold bg-secundary text-center select-none"
         value={calcTime}
         onChange={handleChange}>
         <option value="30s">30 segundos</option>
@@ -89,17 +91,16 @@ export default function Selector() {
 
     return (
       <>
-        <button
+        <Button
           onClick={toggleChecked}
-          className={`flex flex-row gap-2 justify-between items-center w-full h-14 p-4 text-white rounded-md cursor-pointer hover:font-bold select-none ${
-            calcNegative ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'
-          }`}>
+          className={`flex flex-row gap-2 justify-between items-center h-12 p-4 rounded-sm cursor-pointer font-semibold select-none`}>
           Números negativos
-          <i
-            className={`fa-solid text-3xl ${
-              calcNegative ? 'fa-toggle-on text-green-900' : 'fa-toggle-off text-red-900'
-            }`}></i>
-        </button>
+          {calcNegative ? (
+            <ToggleRight className="w-10 h-10 text-neutral-100 dark:text-neutral-900" />
+          ) : (
+            <ToggleLeft className="w-10 h-10 text-primary text-neutral-600 dark:text-neutral-400" />
+          )}
+        </Button>
       </>
     );
   };
@@ -118,25 +119,22 @@ export default function Selector() {
     };
 
     return (
-      <button
+      <Button
         onClick={() => {
           inputIsEmpty();
-        }}
-        className="w-full h-14 flex justify-center items-center text-white rounded-lg hover:font-bold bg-blue-600 hover:bg-blue-800 active:bg-blue-700 select-none">
+        }}>
         {text}
-      </button>
+      </Button>
     );
   };
 
   return (
     <div className="flex flex-col justify-center items-center gap-4">
-      <details className="w-full flex flex-col bg-neutral-200 dark:bg-neutral-800 rounded-md cursor-pointer">
-        <summary className="p-4 hover:bg-neutral-300 dark:hover:bg-neutral-700 rounded-md hover:font-bold select-none">
-          Configuração da geração do cálculo
-        </summary>
-        <div className="mt-4 px-4 pb-4 space-y-4">
+      <Collapse.Root>
+        <Collapse.Title>Configuração da geração do cálculo</Collapse.Title>
+        <Collapse.Content className="flex flex-col gap-4">
           <h4>Valor máximo:</h4>
-          <Input value={calcSizeInputValue} onChange={calcSizeStorage} placeholder="Valor..." />
+          <Input value={calcSizeInputValue} onChange={calcSizeStorage} placeholder="Valor..." type="number" />
           <CalcNegativeToggle />
           <h4>Modos:</h4>
           <CalcModeToggle />
@@ -149,12 +147,12 @@ export default function Selector() {
           {calcMode === 'speedrun' && (
             <>
               <h4>Número máximo de acertos:</h4>
-              <Input value={speedInputValue} onChange={calcSpeedStorage} placeholder="Valor..." />
+              <Input value={speedInputValue} onChange={calcSpeedStorage} placeholder="Valor..." type="number" />
             </>
           )}
-        </div>
-      </details>
-      <div className="w-full p-4 bg-neutral-200 dark:bg-neutral-800 rounded-md">
+        </Collapse.Content>
+      </Collapse.Root>
+      <div className="w-full p-4 bg-foreground rounded-md">
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           <LinkCalc text="Adição" type="soma" />
           <LinkCalc text="Subtração" type="subt" />

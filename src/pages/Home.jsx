@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Button from '../components/Button';
-import Card from '../components/Card';
-
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import { Card } from '../components/Card/index';
 import InputCalc from '../components/InputCalc';
 import Tag from '../components/Tag';
 
@@ -40,7 +36,7 @@ export default function Home() {
       return Math.floor(Math.random() * (maximo - 1 + 1)) + 1;
     }
 
-    const calcContainer = new Object();
+    const calcContainer = {};
 
     calcContainer.calculo = math.n1 + math.n2;
     calcContainer.calculoString = `${math.n1} + ${math.n2}`;
@@ -49,13 +45,13 @@ export default function Home() {
     const valueCheck = () => {
       const value = calcContainer.calculo;
 
-      if (input != value) {
+      if (input != value.toString()) {
         valueChange();
         setErros(erros + 1);
         setColor('red');
       }
 
-      if (input == value) {
+      if (input === value.toString()) {
         valueChange();
         setPontos(pontos + 1);
         setColor('green');
@@ -82,9 +78,9 @@ export default function Home() {
         <div className="flex flex-col gap-4 items-center">
           <h1>{calcContainer.calculoString}</h1>
           <div className="flex flex-row gap-2 my-3 justify-center flex-wrap">
-            <Tag texto={pontos} tipo="pontos" />
-            <Tag texto={erros} tipo="erros" />
-            <Tag texto={calcContainer.anterior} tipo="anterior" />
+            <Tag text={pontos.toString()} tipo="pontos" />
+            <Tag text={erros} tipo="erros" />
+            <Tag text={calcContainer.anterior} tipo="anterior" />
           </div>
           <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
             <InputCalc
@@ -94,7 +90,7 @@ export default function Home() {
               required={false}
               color={color}
             />
-            <Button text="Calcular" onClick={valueCheck} />
+            <Button onClick={valueCheck}>Calcular</Button>
           </form>
         </div>
       </>
@@ -102,36 +98,43 @@ export default function Home() {
   };
 
   return (
-    <>
-      <Header />
-      <main>
-        <div className="flex justify-center w-full p-5 bg-neutral-100 dark:bg-neutral-950">
-          <div className="w-full sm:max-w-3xl">
-            <div className="w-full px-4 py-24 flex flex-col justify-center items-center">
-              <h1 className="text-5xl text-center mb-4">
-                Resolva exercícios <br /> matématicos
-              </h1>
-              <p className="text-center mb-12">
-                Gere contas matemáticas infinitamente, <br /> resolva-as no menor tempo possível & <br />
-                treine seu cálculo mental.
-              </p>
-              <div className="w-full sm:w-96">
-                <Button onClick={() => navigate('/jogar')} text="Jogar" />
-              </div>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Card title="Desafio" text="Resolva a máximo de questões possíveis antes do tempo acabar." />
-              <Card title="Memória" text="Melhore seu cálculo mental, resolva aqueles contas chatas rapidamente." />
-              <Card title="Satisfatório" text="Acertar diversas contas em seguida é extremamente satisfatório." />
-            </div>
-            <div className="w-full my-24">
-              <PlayHome />
-              <p className="mt-4">*Apenas uma demonstração.</p>
-            </div>
-          </div>
+    <div className="w-full flex flex-col justify-center gap-24 bg-neutral-100 dark:bg-neutral-950">
+      <div className="w-full h-[50svh] flex flex-col justify-center items-center">
+        <h1 className="text-5xl text-center mt-24 mb-4">
+          Resolva exercícios <br /> matématicos
+        </h1>
+        <p className="text-center mb-12">
+          Gere contas matemáticas infinitamente, <br /> resolva-as no menor tempo possível & <br />
+          treine seu cálculo mental.
+        </p>
+        <div className="w-full sm:w-96">
+          <Button onClick={() => navigate('/gerador')}>Jogar</Button>
         </div>
-      </main>
-      <Footer />
-    </>
+      </div>
+      <div className="flex flex-col sm:flex-row gap-4">
+        <Card.Root>
+          <Card.Header>
+            <Card.Title>Desafio</Card.Title>
+            <Card.Description>Resolva a máximo de questões possíveis antes do tempo acabar.</Card.Description>
+          </Card.Header>
+        </Card.Root>
+        <Card.Root>
+          <Card.Header>
+            <Card.Title>Memória</Card.Title>
+            <Card.Description>Melhore seu cálculo mental, resolva aqueles contas chatas rapidamente.</Card.Description>
+          </Card.Header>
+        </Card.Root>
+        <Card.Root>
+          <Card.Header>
+            <Card.Title>Satisfatório</Card.Title>
+            <Card.Description>Acertar diversas contas em seguida é extremamente satisfatório.</Card.Description>
+          </Card.Header>
+        </Card.Root>
+      </div>
+      <div className="w-full">
+        <PlayHome />
+        <p className="mt-4">*Apenas uma demonstração.</p>
+      </div>
+    </div>
   );
 }
