@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import InputCalc from './InputCalc';
-import Tag from './Tag';
-import Modal from './Modal';
-import Button from './Button';
+import InputCalc from '../components/InputCalc';
+import Tag from '../components/Tag';
+import Modal from '../components/Modal';
+import Button from '../components/Button';
 import { RandomNumber } from '../scripts/RandomNumber';
 import { StringNegativeFormat } from '../scripts/StringNegativeFormat';
 import { Calc } from '../scripts/Calc';
+
+import { Check, Frown, X } from 'lucide-react';
+import { Collapse } from '../components/Collapse';
 
 export default function Play() {
   const [input, setInput] = useState('');
@@ -22,7 +24,8 @@ export default function Play() {
   const [timerEnd, setTimerEnd] = useState('');
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
-  const [stored, setStored] = useState({ n1: 0, n2: 0, n3: 0 });
+  const [stored, setStored] = useState({ n1: '', n2: '', n3: '' });
+  const [storedArry, setStoredArry] = useState(['']);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalExitOpen, setIsModalExitOpen] = useState(false);
 
@@ -109,24 +112,14 @@ export default function Play() {
     TimeTracker();
     setIsActive(false);
     setIsModalOpen(true);
-    document.activeElement.blur();
   };
 
-  if (configCalc.tipo === ('maior' || 'menor')) {
-    useEffect(() => {
-      setMath({
-        n1: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
-        n2: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
-      });
-    }, [change]);
-  } else {
-    useEffect(() => {
-      setMath({
-        n1: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
-        n2: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
-      });
-    }, [change]);
-  }
+  useEffect(() => {
+    setMath({
+      n1: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
+      n2: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
+    });
+  }, [change]);
 
   const calcContainer = Calc(
     configCalc.tipo,
@@ -186,6 +179,13 @@ export default function Play() {
     }
   }
 
+  const addString = (anterior) => {
+    setStoredArry((prevStrings) => {
+      const updatedStrings = [anterior, ...prevStrings];
+      return updatedStrings.slice(0, 10);
+    });
+  };
+
   const valueChange = () => {
     setTimer(true);
     setIsActive(true);
@@ -198,20 +198,11 @@ export default function Play() {
     });
   };
 
-  const BackToMenu = ({ text }) => {
-    let openModal = () => {
-      setIsModalExitOpen(true);
-      document.activeElement.blur();
-    };
-
-    return (
-      <button
-        onClick={openModal}
-        className="w-full h-14 flex justify-center items-center text-white rounded-lg hover:font-bold bg-red-500 hover:bg-red-800 active:bg-red-700">
-        {text}
-      </button>
-    );
-  };
+  useEffect(() => {
+    if (isActive) {
+      return addString(calcContainer.anterior);
+    }
+  }, [stored]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -219,10 +210,10 @@ export default function Play() {
   };
 
   return (
-    <>
-      <div className="flex flex-col gap-4 items-center">
-        <h1 className="my-4">{calcContainer.calculoString}</h1>
-        <div className="flex flex-row gap-2 my-3 justify-center flex-wrap">
+    <div className="w-full flex flex-col gap-4 items-center">
+      <h1 className="my-4">{calcContainer.calculoString}</h1>
+      <div className="mb-4">
+        <div className="w-full flex flex-row gap-2 mb-2 justify-center flex-wrap">
           {configCalc.mode === 'speedrun' && (
             <Tag text={`${score} / ${configCalc.mode_config}`} tipo="score" color={color} />
           )}
@@ -232,10 +223,11 @@ export default function Play() {
               <Tag text={erros} tipo="erros" />
             </>
           )}
-          <Tag text={calcContainer.anterior} tipo="anterior" />
           <Tag text={seconds} tipo="time" />
         </div>
-        {!['maior', 'menor'].includes(configCalc.tipo) && (
+      </div>
+      {!['maior', 'menor'].includes(configCalc.tipo) && (
+        <>
           <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
             <InputCalc
               value={input}
@@ -245,77 +237,85 @@ export default function Play() {
               autoFocus={true}
               color={color}
             />
-            <Button text="Calcular" onClick={valueCheck} />
+            <Button onClick={valueCheck}>Calcular</Button>
           </form>
-        )}
-        {['maior', 'menor'].includes(configCalc.tipo) && (
+          <Button
+            variant="danger"
+            onClick={() => {
+              setIsModalExitOpen(true);
+            }}>
+            Voltar
+          </Button>
+        </>
+      )}
+      {['maior', 'menor'].includes(configCalc.tipo) && (
+        <>
           <form className="flex flex-row gap-3 items-center w-full" onSubmit={handleSubmit}>
-            <Button
-              text={
-                <>
-                  <i className="fa-solid fa-arrow-up"></i> Maior
-                </>
-              }
-              onClick={() => valueCheckDouble('maior')}
-            />
-            <Button
-              text={
-                <>
-                  <i className="fa-solid fa-arrow-down"></i> Menor
-                </>
-              }
-              onClick={() => valueCheckDouble('menor')}
-            />
+            <Button variant="success" onClick={() => valueCheckDouble('verdadeiro')}>
+              <Check /> Verdadeiro
+            </Button>
+            <Button variant="danger" onClick={() => valueCheckDouble('falso')}>
+              <X /> Falso
+            </Button>
           </form>
-        )}
-        <BackToMenu text="Voltar" />
-        {calcContainer.text ? '' : <p className="text-black dark:text-white">{calcContainer.texto}</p>}
-        {isModalOpen && (
-          <Modal>
-            <h2>Pontuação</h2>
-            <p>Acertos: {pontos}</p>
-            <p>Erros: {erros}</p>
-            {configCalc.mode === 'timer' && <p>Tempo: {seconds}</p>}
-            {configCalc.mode === 'speedrun' && <p>Tempo: {timerEnd}</p>}
-            <div className="flex flex-row gap-4">
-              <button
-                className="mt-4 px-4 py-2 w-full bg-green-500 text-white rounded-md hover:bg-green-600 hover:font-bold"
-                onClick={() => {
-                  window.location.reload();
-                }}>
-                Jogar Novamente
-              </button>
-              <button
-                className="mt-4 px-4 py-2 w-full bg-red-500 text-white rounded-md hover:bg-red-600 hover:font-bold"
-                onClick={() => navigate('/menu')}>
-                Menu
-              </button>
-            </div>
-          </Modal>
-        )}
-        {isModalExitOpen && (
-          <Modal>
-            <h2>Tem certeza?</h2>
-            <p>Acertos: {pontos}</p>
-            <p>Erros: {erros}</p>
-            <p>Tempo: {seconds}</p>
-            <div className="flex flex-row gap-4">
-              <button
-                className="mt-4 px-4 py-2 w-full bg-green-500 text-white rounded-md hover:bg-green-600 hover:font-bold"
-                onClick={() => {
-                  setIsModalExitOpen(false);
-                }}>
-                Cancelar
-              </button>
-              <button
-                className="mt-4 px-4 py-2 w-full bg-red-500 text-white rounded-md hover:bg-red-600 hover:font-bold"
-                onClick={() => navigate('/menu')}>
-                Confirmar
-              </button>
-            </div>
-          </Modal>
-        )}
-      </div>
-    </>
+          <Button
+            onClick={() => {
+              setIsModalExitOpen(true);
+            }}>
+            Voltar
+          </Button>
+        </>
+      )}
+      <Collapse.Root>
+        <Collapse.Title>Histórico</Collapse.Title>
+        <Collapse.Content>
+          {storedArry.map((string, index) => (
+            <p key={index} className="mb-0 font-semibold">
+              {string}
+            </p>
+          ))}
+          {storedArry[0] === '' && (
+            <p className="mb-0 font-semibold flex flex-row items-center gap-2">
+              Aqui está tão vazio quanto minha conta bancária... <Frown />
+            </p>
+          )}
+        </Collapse.Content>
+      </Collapse.Root>
+      {calcContainer.text ? '' : <p className="text-black dark:text-white">{calcContainer.texto}</p>}
+      <Modal open={isModalOpen}>
+        <h2>Pontuação</h2>
+        <p>Acertos: {pontos}</p>
+        <p>Erros: {erros}</p>
+        {configCalc.mode === 'timer' && <p>Tempo: {seconds}</p>}
+        {configCalc.mode === 'speedrun' && <p>Tempo: {timerEnd}</p>}
+        <div className="flex flex-row gap-4">
+          <Button variant="outline" onClick={() => navigate('/gerador')}>
+            Menu
+          </Button>
+          <Button
+            onClick={() => {
+              window.location.reload();
+            }}>
+            Jogar novamente
+          </Button>
+        </div>
+      </Modal>
+      <Modal open={isModalExitOpen}>
+        <h2>Tem certeza?</h2>
+        <p>Acertos: {pontos}</p>
+        <p>Erros: {erros}</p>
+        <p>Tempo: {seconds}</p>
+        <div className="flex flex-row gap-4">
+          <Button
+            variant="outline"
+            onClick={() => {
+              setIsModalExitOpen(false);
+            }}>
+            Cancelar
+          </Button>
+          <Button onClick={() => navigate('/gerador')}>Continuar</Button>
+        </div>
+      </Modal>
+    </div>
   );
 }

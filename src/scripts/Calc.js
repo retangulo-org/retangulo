@@ -1,7 +1,11 @@
 import { StringNegativeFormat } from './StringNegativeFormat.js';
 
 const Calc = (tipo, math, stored) => {
-  const calcContainer = new Object();
+  const calcContainer = {
+    calculo: undefined,
+    calculoString: undefined,
+    anterior: undefined,
+  };
 
   switch (tipo) {
     case 'soma':
@@ -44,12 +48,12 @@ const Calc = (tipo, math, stored) => {
       calcContainer.anterior = `${stored.n2}³ = ${stored.n3}`;
       break;
     case 'maior':
-      calcContainer.calculo = math.n1 > math.n2 ? 'maior' : 'menor';
+      calcContainer.calculo = math.n1 > math.n2 ? 'verdadeiro' : 'falso';
       calcContainer.calculoString = `${math.n1} > ${math.n2}`;
       calcContainer.anterior = `${stored.n1} > ${stored.n2} = ${stored.n3}`;
       break;
     case 'menor':
-      calcContainer.calculo = math.n1 < math.n2 ? 'menor' : 'maior';
+      calcContainer.calculo = math.n1 < math.n2 ? 'verdadeiro' : 'falso';
       calcContainer.calculoString = `${math.n1} < ${math.n2}`;
       calcContainer.anterior = `${stored.n1} < ${stored.n2} = ${stored.n3}`;
       break;

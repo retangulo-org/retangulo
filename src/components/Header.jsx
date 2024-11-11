@@ -1,9 +1,10 @@
+import React from 'react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LogoTipo } from '../assets/LogoTipo';
-import { AlignJustify, X } from 'lucide-react';
+import { AlignJustify, X, House, Gamepad2, Settings } from 'lucide-react';
 
-export const Header = () => {
+export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -14,12 +15,13 @@ export const Header = () => {
     return (
       <NavLink
         to={link}
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
         className={({ isActive }) =>
           `${
             isActive
-              ? 'bg-neutral-400 dark:bg-neutral-950'
-              : 'dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700'
-          } w-full md:w-auto p-2 rounded-md hover:no-underline text-neutral-800 dark:text-neutral-200 hover:text-neutral-800 dark:hover:text-neutral-200 my-2`
+              ? 'bg-neutral-950 dark:bg-neutral-100 text-neutral-100 dark:text-neutral-950 cursor-default'
+              : 'text-neutral-950 dark:text-neutral-100 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-950'
+          } w-full md:w-auto p-2 rounded-md hover:no-underline flex flex-row gap-2 font-semibold`
         }>
         {children}
       </NavLink>
@@ -35,18 +37,30 @@ export const Header = () => {
         <button
           onClick={toggleMenu}
           type="button"
-          className="inline-flex items-center p-2 w-10 h-10 bg-neutral-50 dark:bg-neutral-950 justify-center text-sm text-neutral-500 rounded-lg md:hidden hover:bg-neutral-100 focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:focus:ring-neutral-600 transition-all">
-          <span className="sr-only">Open main menu</span>
-          {isMenuOpen ? <X className="w-5 h-5" /> : <AlignJustify className="w-5 h-5" />}
+          className="inline-flex items-center p-2 w-10 h-10 bg-neutral-100 dark:bg-neutral-900 justify-center text-neutral-950 rounded-lg md:hidden hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-neutral-200 dark:text-neutral-100 dark:hover:bg-neutral-950 dark:focus:ring-neutral-600">
+          <span className="sr-only">Abrir menu</span>
+          {isMenuOpen ? <X className="w-10 h-10" /> : <AlignJustify className="w-10 h-10" />}
         </button>
-        <div className={`w-full md:block md:w-auto ${isMenuOpen ? 'block' : 'hidden'}`}>
-          <div className="font-medium w-full flex items-center flex-col md:space-y-0 mt-4 md:mt-0 md:p-0 md:flex-row md:space-x-8">
-            <Link link="/menu">Jogar</Link>
-            <Link link="/ui">Ui</Link>
-            <Link link="/contato">Contato</Link>
+        <div
+          className={`transition-all duration-300 ease-in-out overflow-hidden w-full md:w-auto ${
+            isMenuOpen ? 'block opacity-100 max-h-[500px]' : 'opacity-0 max-h-0'
+          } md:opacity-100 md:max-h-full md:block`}>
+          <div className="font-medium w-full flex items-center flex-col space-y-4 md:space-y-0 mt-4 md:mt-0 md:p-0 md:flex-row md:space-x-8 select-none">
+            <Link link="/">
+              <House />
+              Início
+            </Link>
+            <Link link="/gerador">
+              <Gamepad2 />
+              Gerador
+            </Link>
+            <Link link="/opcoes">
+              <Settings />
+              Opções
+            </Link>
           </div>
         </div>
       </div>
     </header>
   );
-};
+}

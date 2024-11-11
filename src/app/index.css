@@ -8,8 +8,27 @@
 }
 
 @layer base {
+  :root {
+    --radius: 0.75rem;
+    --background: theme(colors.neutral.100);
+    --foreground: theme(colors.neutral.200);
+    --secundary: theme(colors.neutral.900);
+    --text: theme(colors.neutral.950);
+    --text-alt: theme(colors.neutral.100);
+    --border: theme(colors.neutral.300);
+  }
+
+  .dark {
+    --background: theme(colors.neutral.950);
+    --foreground: theme(colors.neutral.800);
+    --secundary: theme(colors.neutral.100);
+    --text: theme(colors.neutral.100);
+    --text-alt: theme(colors.neutral.950);
+    --border: theme(colors.neutral.700);
+  }
+
   html {
-    @apply bg-neutral-200 dark:bg-neutral-800 selection:bg-blue-600 selection:text-neutral-100;
+    @apply bg-background selection:bg-blue-600 selection:text-neutral-100;
   }
 
   input {
@@ -41,11 +60,7 @@
   }
 
   p {
-    @apply mb-4 text-base text-neutral-800 dark:text-neutral-200;
-  }
-
-  a {
-    @apply hover:underline font-semibold dark:text-neutral-200 dark:hover:text-neutral-300 dark:active:text-neutral-200 text-neutral-800 hover:text-neutral-950 active:text-neutral-800;
+    @apply mb-4 text-base text-neutral-700 dark:text-neutral-300;
   }
 
   summary {
