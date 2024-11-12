@@ -131,7 +131,7 @@ export default function Selector() {
   return (
     <div className="flex flex-col justify-center items-center gap-4">
       <Collapse.Root>
-        <Collapse.Title>Configuração da geração do cálculo</Collapse.Title>
+        <Collapse.Toggle>Configuração da geração do cálculo</Collapse.Toggle>
         <Collapse.Content className="flex flex-col gap-4">
           <h4>Valor máximo:</h4>
           <Input value={calcSizeInputValue} onChange={calcSizeStorage} placeholder="Valor..." type="number" />

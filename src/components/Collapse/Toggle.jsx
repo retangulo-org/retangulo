@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { RootContext } from './Root';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
-Title.propTypes = {
+Toggle.propTypes = {
   children: PropTypes.node.isRequired,
-  isOpen: PropTypes.bool,
-  setIsOpen: PropTypes.func,
 };
 
-export default function Title({ children, isOpen, setIsOpen }) {
+export default function Toggle({ children }) {
+  const { isOpen, setIsOpen } = useContext(RootContext);
   return (
     <button
       className={`${

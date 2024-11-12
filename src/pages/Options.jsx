@@ -2,7 +2,7 @@ import React from 'react';
 import { ExternalLink, Trash2 } from 'lucide-react';
 import Button from '../components/Button';
 import { Card } from '../components/Card/index';
-import ToggleTheme from '../components/ToggleTheme';
+import ThemeToggle from '../components/Theme/ThemeToggle';
 
 export default function Options() {
   return (
@@ -10,14 +10,14 @@ export default function Options() {
       <Card.Root>
         <div className="w-full flex flex-row justify-between items-center gap-12 flex-nowrap">
           <Card.Header>
-            <Card.Title>alterar tema</Card.Title>
+            <Card.Title>Alterar tema</Card.Title>
             <Card.Description>
               Alternar entre os modos claro e escuro do site, ou seguir a preferência do sistema, ajustando
               automaticamente o tema conforme a configuração do dispositivo para uma experiência visual mais integrada.
             </Card.Description>
           </Card.Header>
           <Card.Content>
-            <ToggleTheme />
+            <ThemeToggle />
           </Card.Content>
         </div>
       </Card.Root>
