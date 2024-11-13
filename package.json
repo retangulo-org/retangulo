@@ -13,7 +13,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "prettier": "npx prettier . --check"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.10",
@@ -31,6 +32,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.33",
+    "prettier": "3.3.3",
     "tailwindcss": "^3.4.1",
     "vite": "^5.4.10",
     "vite-plugin-pwa": "^0.20.5",
