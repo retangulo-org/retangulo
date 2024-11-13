@@ -74,33 +74,31 @@ export default function Home() {
     };
 
     return (
-      <>
-        <div className="flex flex-col gap-4 items-center">
-          <h1>{calcContainer.calculoString}</h1>
-          <div className="flex flex-row gap-2 my-3 justify-center flex-wrap">
-            <Tag text={pontos.toString()} tipo="pontos" />
-            <Tag text={erros} tipo="erros" />
-            <Tag text={calcContainer.anterior} tipo="anterior" />
-          </div>
-          <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
-            <InputCalc
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Resultado..."
-              required={false}
-              color={color}
-            />
-            <Button onClick={valueCheck}>Calcular</Button>
-          </form>
+      <div className="flex flex-col gap-4 items-center">
+        <h1>{calcContainer.calculoString}</h1>
+        <div className="flex flex-row gap-2 my-3 justify-center flex-wrap">
+          <Tag text={pontos.toString()} tipo="pontos" />
+          <Tag text={erros} tipo="erros" />
+          <Tag text={calcContainer.anterior} tipo="anterior" />
         </div>
-      </>
+        <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
+          <InputCalc
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Resultado..."
+            required={false}
+            color={color}
+          />
+          <Button onClick={valueCheck}>Calcular</Button>
+        </form>
+      </div>
     );
   };
 
   return (
     <div className="w-full flex flex-col justify-center gap-24 bg-neutral-100 dark:bg-neutral-950">
-      <div className="w-full h-[50svh] flex flex-col justify-center items-center">
-        <h1 className="text-5xl text-center mt-24 mb-4">
+      <div className="w-full flex flex-col justify-center items-center">
+        <h1 className="text-5xl text-center mt-20 mb-4">
           Resolva exercícios <br /> matématicos
         </h1>
         <p className="text-center mb-12">

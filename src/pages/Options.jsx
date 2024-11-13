@@ -31,6 +31,8 @@ export default function Options() {
             </Card.Description>
           </Card.Header>
           <Card.Content>
+            <div className="bg-secundary p-2 rounded-md">
+
             <Button
               size="icon"
               onClick={() => {
@@ -39,6 +41,7 @@ export default function Options() {
               }}>
               <Trash2 />
             </Button>
+                </div>
           </Card.Content>
         </div>
       </Card.Root>

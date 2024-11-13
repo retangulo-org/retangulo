@@ -7,7 +7,11 @@ export default {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)',
+        primary: 'var(--primary)',
         secundary: 'var(--secundary)',
+        success: 'var(--success)',
+        danger: 'var(--danger)',
+        warning: 'var(-warning)',
         text: 'var(--text)',
         textAlt: 'var(--text-alt)',
         border: 'var(--border)',

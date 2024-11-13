@@ -10,19 +10,13 @@ Button.propTypes = {
 };
 
 export default function Button({ variant = 'default', size = undefined, children, onClick, className = undefined }) {
-  const theme = {
-    light: 'bg-neutral-800 hover:bg-neutral-900 active:bg-neutral-950',
-    dark: 'dark:bg-neutral-100 dark:hover:bg-neutral-200 dark:active:bg-neutral-300',
-  };
-
   const variants = {
-    default: `${theme.light} ${theme.dark} text-textAlt`,
-    primary: 'text-neutral-100 bg-blue-600 hover:bg-blue-700 active:bg-blue-800',
-    success: 'text-neutral-100 bg-green-600 hover:bg-green-700 active:bg-green-800',
-    danger: 'text-neutral-100 bg-red-600 hover:bg-red-700 active:bg-red-800',
-    warning: 'text-neutral-100 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800',
-    outline:
-      'text-neutral-950 dark:text-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-800 border border-neutral-300 dark:border-neutral-700',
+    default: 'actionDefault',
+    primary: 'actionPrimary',
+    success: 'actionSuccess',
+    danger: 'actionDanger',
+    warning: 'actionWarning',
+    outline: 'actionOutline',
   };
 
   return (

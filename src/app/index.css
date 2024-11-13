@@ -12,6 +12,10 @@
     --radius: 0.75rem;
     --background: theme(colors.neutral.100);
     --foreground: theme(colors.neutral.200);
+    --primary: theme(colors.blue.600);
+    --success: theme(colors.green.600);
+    --danger: theme(colors.red.600);
+    --warning: theme(colors.yellow.600);
     --secundary: theme(colors.neutral.900);
     --text: theme(colors.neutral.950);
     --text-alt: theme(colors.neutral.100);
@@ -27,8 +31,52 @@
     --border: theme(colors.neutral.700);
   }
 
+  .primary {
+    @apply text-neutral-100 bg-blue-600;
+  }
+
+  .success {
+    @apply text-neutral-100 bg-green-600;
+  }
+
+  .danger {
+    @apply text-neutral-100 bg-red-600;
+  }
+
+  .warning {
+    @apply text-neutral-100 bg-yellow-600;
+  }
+
+  .outline {
+    @apply text-neutral-950 dark:text-neutral-100 border border-neutral-300 dark:border-neutral-700;
+  }
+
+  .actionDefault {
+    @apply bg-neutral-800 hover:bg-neutral-900 active:bg-neutral-950 text-neutral-100 dark:bg-neutral-200 dark:hover:bg-neutral-300 dark:active:bg-neutral-400 dark:text-neutral-950;
+  }
+
+  .actionPrimary {
+    @apply text-neutral-100 bg-blue-600 hover:bg-blue-700 active:bg-blue-800;
+  }
+
+  .actionSuccess {
+    @apply text-neutral-100 bg-green-600 hover:bg-green-700 active:bg-green-800;
+  }
+
+  .actionDanger {
+    @apply text-neutral-100 bg-red-600 hover:bg-red-700 active:bg-red-800;
+  }
+
+  .actionWarning {
+    @apply text-neutral-100 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800;
+  }
+
+  .actionOutline {
+    @apply text-neutral-950 dark:text-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-800 border border-neutral-300 dark:border-neutral-700;
+  }
+
   html {
-    @apply bg-background selection:bg-blue-600 selection:text-neutral-100;
+    @apply bg-background selection:bg-[var(--primary)] selection:text-neutral-200;
   }
 
   input {

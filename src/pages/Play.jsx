@@ -124,7 +124,7 @@ export default function Play() {
   const calcContainer = Calc(
     configCalc.tipo,
     { n1: math.n1, n2: math.n2 },
-    { n1: stored.n1, n2: stored.n2, n3: stored.n3 }
+    { n1: stored.n1, n2: stored.n2, n3: stored.n3 },
   );
 
   const valueCheckDouble = (result) => {
