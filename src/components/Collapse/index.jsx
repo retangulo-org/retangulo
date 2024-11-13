@@ -1,9 +1,9 @@
 import Root from './Root';
-import Title from './Title';
+import Toggle from './Toggle';
 import Content from './Content';
 
 export const Collapse = {
   Root,
-  Title,
+  Toggle,
   Content,
 };

@@ -29,7 +29,7 @@ export default defineConfig({
         orientation: 'natural',
         icons: [
           {
-            src: '/apple-touch-icon.png',
+            src: '/apple-icon-180x180.png',
             sizes: '180x180',
           },
           {

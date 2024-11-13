@@ -1,16 +1,17 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
+import ThemeProvider from '../components/Theme/ThemeProvider';
 
 export default function Root() {
   return (
-    <>
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <Header />
       <main className="flex justify-center w-full p-5 bg-neutral-100 dark:bg-neutral-950">
         <div className="w-full sm:max-w-3xl">
           <Outlet />
         </div>
       </main>
-    </>
+    </ThemeProvider>
   );
 }

@@ -267,7 +267,7 @@ export default function Play() {
         </>
       )}
       <Collapse.Root>
-        <Collapse.Title>Histórico</Collapse.Title>
+        <Collapse.Toggle>Histórico</Collapse.Toggle>
         <Collapse.Content>
           {storedArry.map((string, index) => (
             <p key={index} className="mb-0 font-semibold">
