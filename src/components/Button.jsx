@@ -12,7 +12,7 @@ Button.propTypes = {
 export default function Button({ variant = 'default', size = undefined, children, onClick, className = undefined }) {
   const theme = {
     light: 'bg-neutral-800 hover:bg-neutral-900 active:bg-neutral-950',
-    dark: 'dark:bg-neutral-100 dark:hover:bg-neutral-200 dark:active:bg-neutral-300',
+    dark: 'dark:bg-neutral-200 dark:hover:bg-neutral-300 dark:active:bg-neutral-400',
   };
 
   const variants = {

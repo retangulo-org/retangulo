@@ -12,6 +12,7 @@
     --radius: 0.75rem;
     --background: theme(colors.neutral.100);
     --foreground: theme(colors.neutral.200);
+    --primary: theme(colors.blue.600);
     --secundary: theme(colors.neutral.900);
     --text: theme(colors.neutral.950);
     --text-alt: theme(colors.neutral.100);
@@ -28,7 +29,7 @@
   }
 
   html {
-    @apply bg-background selection:bg-blue-600 selection:text-neutral-100;
+    @apply bg-background selection:bg-[var(--primary)] selection:text-neutral-200;
   }
 
   input {
