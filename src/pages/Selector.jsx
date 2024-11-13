@@ -55,7 +55,7 @@ export default function Selector() {
 
     return (
       <select
-        className="appearance-none w-full h-12 rounded-sm cursor-pointer text-textAlt font-semibold bg-secundary text-center select-none"
+        className="appearance-none actionDefault w-full h-12 rounded-sm cursor-pointer font-semibold text-center select-none"
         value={calcMode}
         onChange={handleChange}>
         <option value="speedrun">Número de acertos</option>
@@ -71,7 +71,7 @@ export default function Selector() {
 
     return (
       <select
-        className="appearance-none w-full h-12 rounded-sm cursor-pointer text-textAlt font-semibold bg-secundary text-center select-none"
+        className="appearance-none actionDefault w-full h-12 rounded-sm cursor-pointer font-semibold text-center select-none"
         value={calcTime}
         onChange={handleChange}>
         <option value="30s">30 segundos</option>
