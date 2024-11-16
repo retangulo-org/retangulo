@@ -32,16 +32,15 @@ export default function Options() {
           </Card.Header>
           <Card.Content>
             <div className="bg-secundary p-2 rounded-md">
-
-            <Button
-              size="icon"
-              onClick={() => {
-                localStorage.clear();
-                window.location.href = window.location.href;
-              }}>
-              <Trash2 />
-            </Button>
-                </div>
+              <Button
+                size="icon"
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.href = window.location.href;
+                }}>
+                <Trash2 />
+              </Button>
+            </div>
           </Card.Content>
         </div>
       </Card.Root>
