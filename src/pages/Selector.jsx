@@ -98,7 +98,7 @@ export default function Selector() {
           {calcNegative ? (
             <ToggleRight className="w-10 h-10 text-neutral-100 dark:text-neutral-900" />
           ) : (
-            <ToggleLeft className="w-10 h-10 text-primary text-neutral-600 dark:text-neutral-400" />
+            <ToggleLeft className="w-10 h-10 text-primary text-neutral-500 dark:text-neutral-400" />
           )}
         </Button>
       </>

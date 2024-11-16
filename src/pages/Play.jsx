@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import InputCalc from '../components/InputCalc';
 import Tag from '../components/Tag';
-import Modal from '../components/Modal';
 import Button from '../components/Button';
+import { Collapse } from '../components/Collapse';
+import { Modal } from '../components/Modal';
 import { RandomNumber } from '../scripts/RandomNumber';
 import { StringNegativeFormat } from '../scripts/StringNegativeFormat';
 import { Calc } from '../scripts/Calc';
 
-import { Check, Frown, X } from 'lucide-react';
-import { Collapse } from '../components/Collapse';
+import { Check, Clock, Frown, X } from 'lucide-react';
 
 export default function Play() {
   const [input, setInput] = useState('');
@@ -54,7 +54,7 @@ export default function Play() {
     let seconds = elapsedSeconds % 60;
     let milliseconds = elapsedMilliseconds % 1000;
 
-    setTimerEnd(`${minutes}:${seconds}.${milliseconds}`);
+    setTimerEnd(`${minutes}m ${seconds}s ${milliseconds}ms`);
   };
 
   if (configCalc.mode === 'speedrun') {
@@ -109,6 +109,7 @@ export default function Play() {
   }
 
   const openModal = () => {
+    document.activeElement.blur();
     TimeTracker();
     setIsActive(false);
     setIsModalOpen(true);
@@ -276,36 +277,58 @@ export default function Play() {
           ))}
           {storedArry[0] === '' && (
             <p className="mb-0 font-semibold flex flex-row items-center gap-2">
-              Aqui está tão vazio quanto minha conta bancária... <Frown />
+              Aqui está tão vazio quanto a minha conta bancária... <Frown />
             </p>
           )}
         </Collapse.Content>
       </Collapse.Root>
-      {calcContainer.text ? '' : <p className="text-black dark:text-white">{calcContainer.texto}</p>}
-      <Modal open={isModalOpen}>
-        <h2>Pontuação</h2>
-        <p>Acertos: {pontos}</p>
-        <p>Erros: {erros}</p>
-        {configCalc.mode === 'timer' && <p>Tempo: {seconds}</p>}
-        {configCalc.mode === 'speedrun' && <p>Tempo: {timerEnd}</p>}
-        <div className="flex flex-row gap-4">
+      {calcContainer.texto && <p className="text-text">{calcContainer.texto}</p>}
+      <Modal.Root isOpen={isModalOpen}>
+        <Modal.Title>
+          Pontuação
+        </Modal.Title>
+        <Modal.Content>
+          <div className="w-full flex flex-col justify-center items-center">
+            <div className="w-full py-2 px-4 flex flex-row justify-between gap-4 bg-success text-neutral-100 font-semibold rounded-t-sm">
+              <div className="flex flex-row justify-center gap-4">
+                <Check /> Certos
+              </div>
+              {pontos}
+            </div>
+            <div className="w-full py-2 px-4 flex flex-row justify-between gap-4 bg-danger text-neutral-100 font-semibold">
+              <div className="flex flex-row justify-center gap-4">
+                <X /> Errados
+              </div>
+              {erros}
+            </div>
+            <div className="w-full py-2 px-4 flex flex-row justify-between gap-4 bg-warning text-neutral-100 font-semibold rounded-b-sm">
+              <div className="flex flex-row justify-center gap-4">
+                <Clock /> Tempo
+              </div>
+              {configCalc.mode === 'speedrun' ? `${timerEnd}` : `${seconds}`}
+            </div>
+          </div>
+        </Modal.Content>
+        <Modal.Actions>
           <Button variant="outline" onClick={() => navigate('/gerador')}>
-            Menu
+            Gerador
           </Button>
           <Button
             onClick={() => {
               window.location.reload();
             }}>
-            Jogar novamente
+            Reiniciar
           </Button>
-        </div>
-      </Modal>
-      <Modal open={isModalExitOpen}>
-        <h2>Tem certeza?</h2>
-        <p>Acertos: {pontos}</p>
-        <p>Erros: {erros}</p>
-        <p>Tempo: {seconds}</p>
-        <div className="flex flex-row gap-4">
+        </Modal.Actions>
+      </Modal.Root>
+      <Modal.Root isOpen={isModalExitOpen}>
+        <Modal.Title>
+          Tem certeza?
+        </Modal.Title>
+        <Modal.Content>
+          <p>Todo o seu progresso será perdido ao continuar.</p>
+        </Modal.Content>
+        <Modal.Actions>
           <Button
             variant="outline"
             onClick={() => {
@@ -314,8 +337,8 @@ export default function Play() {
             Cancelar
           </Button>
           <Button onClick={() => navigate('/gerador')}>Continuar</Button>
-        </div>
-      </Modal>
+        </Modal.Actions>
+      </Modal.Root>
     </div>
   );
 }

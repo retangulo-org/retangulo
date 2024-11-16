@@ -10,7 +10,7 @@ export default function Tag({ text, tipo, color = undefined }) {
   if (tipo === 'pontos') {
     return (
       <span className={`${variant.default} success`}>
-      <Check className="w-5 h-5" /> {text}
+        <Check className="w-5 h-5" /> {text}
       </span>
     );
   } else if (tipo === 'score') {
@@ -46,7 +46,7 @@ export default function Tag({ text, tipo, color = undefined }) {
   } else if (tipo === 'time') {
     return (
       <span className={`${variant.default} warning`}>
-        <Clock className="w-5 h-5" /> {text}
+        <Clock className="w-5 h-5" /> {text}s
       </span>
     );
   }
