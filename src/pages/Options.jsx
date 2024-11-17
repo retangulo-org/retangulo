@@ -66,7 +66,7 @@ export default function Options() {
         <span>
           <a
             className="flex flex-row justify-center items-center gap-2 hover:underline underline-offset-4"
-            href="https://dev.retangulo.org"
+            href="https://dev.retangulo.pages.dev/"
             target="_blank">
             Preview
             <ExternalLink />
