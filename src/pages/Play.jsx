@@ -284,9 +284,7 @@ export default function Play() {
       </Collapse.Root>
       {calcContainer.texto && <p className="text-text">{calcContainer.texto}</p>}
       <Modal.Root isOpen={isModalOpen}>
-        <Modal.Title>
-          Pontuação
-        </Modal.Title>
+        <Modal.Title>Pontuação</Modal.Title>
         <Modal.Content>
           <div className="w-full flex flex-col justify-center items-center">
             <div className="w-full py-2 px-4 flex flex-row justify-between gap-4 bg-success text-neutral-100 font-semibold rounded-t-sm">
@@ -322,9 +320,7 @@ export default function Play() {
         </Modal.Actions>
       </Modal.Root>
       <Modal.Root isOpen={isModalExitOpen}>
-        <Modal.Title>
-          Tem certeza?
-        </Modal.Title>
+        <Modal.Title>Tem certeza?</Modal.Title>
         <Modal.Content>
           <p>Todo o seu progresso será perdido ao continuar.</p>
         </Modal.Content>

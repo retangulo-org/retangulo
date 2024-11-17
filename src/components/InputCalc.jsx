@@ -1,6 +1,15 @@
 import React from 'react';
 
-export default function InputCalc({ onChange, value, placeholder, autoFocus = undefined, color, required, type, inputMode }) {
+export default function InputCalc({
+  onChange,
+  value,
+  placeholder,
+  autoFocus = undefined,
+  color,
+  required,
+  type,
+  inputMode,
+}) {
   return (
     <div className="w-full">
       <input
@@ -11,8 +20,8 @@ export default function InputCalc({ onChange, value, placeholder, autoFocus = un
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        type={type ? type :"number"}
-        inputMode={inputMode ? inputMode : "numeric"}
+        type={type ? type : 'number'}
+        inputMode={inputMode ? inputMode : 'numeric'}
         autoFocus={autoFocus}
         required={required}
       />

@@ -7,5 +7,5 @@ export const Modal = {
   Root,
   Title,
   Content,
-  Actions
+  Actions,
 };
