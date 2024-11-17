@@ -10,29 +10,29 @@ export default function Ui() {
     <div className="flex flex-col bg-neutral-100 dark:bg-neutral-950">
       <Button
         onClick={() => {
-          setIsOpen(!isOpen)
+          setIsOpen(!isOpen);
         }}>
         Abrir modal
       </Button>
       <Modal.Root isOpen={isOpen}>
-        <Modal.Title>
-          Tem certeza?
-        </Modal.Title>
+        <Modal.Title>Tem certeza?</Modal.Title>
         <Modal.Content>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur maiores voluptatem beatae corrupti aspernatur accusantium sed rem eaque tempora, quibusdam exercitationem voluptatum, natus expedita animi nostrum ullam facere excepturi at.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur maiores voluptatem beatae corrupti
+          aspernatur accusantium sed rem eaque tempora, quibusdam exercitationem voluptatum, natus expedita animi
+          nostrum ullam facere excepturi at.
         </Modal.Content>
         <Modal.Actions>
           <Button
             variant="outline"
             onClick={() => {
-            setIsOpen(!isOpen)
-          }}>
+              setIsOpen(!isOpen);
+            }}>
             Fechar modal
           </Button>
           <Button
             onClick={() => {
-            setIsOpen(!isOpen)
-          }}>
+              setIsOpen(!isOpen);
+            }}>
             Fechar modal
           </Button>
         </Modal.Actions>
