@@ -28,5 +28,3 @@ dev-dist
 *.njsproj
 *.sln
 *.sw?
-
-public/robots.txt
