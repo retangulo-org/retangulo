@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default function Content({ children }) {
-  return <p>{children}</p>;
+export default function Content({ children, className }) {
+  return <div className={className}>{children}</div>;
 }

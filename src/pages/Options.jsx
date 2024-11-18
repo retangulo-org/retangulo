@@ -6,7 +6,10 @@ import ThemeToggle from '../components/Theme/ThemeToggle';
 
 export default function Options() {
   return (
-    <div className="flex flex-col justify-center items-center gap-8">
+    <div className="flex flex-col justify-center items-center gap-4">
+      <div className="w-full flex flex-col">
+        <h3>Opções</h3>
+      </div>
       <Card.Root>
         <div className="w-full flex flex-row justify-between items-center gap-12 flex-nowrap">
           <Card.Header>

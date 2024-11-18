@@ -106,7 +106,7 @@ export default function Home() {
           treine seu cálculo mental.
         </p>
         <div className="w-full sm:w-96">
-          <Button onClick={() => navigate('/gerador')}>Jogar</Button>
+          <Button variant="primary" onClick={() => navigate('/gerador')}>Jogar</Button>
         </div>
       </div>
       <div className="flex flex-col sm:flex-row gap-4">
