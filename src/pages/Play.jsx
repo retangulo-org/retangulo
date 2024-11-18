@@ -35,9 +35,9 @@ export default function Play() {
 
   const configCalc = {
     tipo: type || 'soma',
-    mode: mode || 'speedrun',
+    mode: mode || 'points',
     mode_config: mode_config || '10',
-    negativo: negativo || 'false',
+    negativo: negativo || 'only-positive',
     maximo: maximo || 100,
   };
 
@@ -57,7 +57,7 @@ export default function Play() {
     setTimerEnd(`${minutes}m ${seconds}s ${milliseconds}ms`);
   };
 
-  if (configCalc.mode === 'speedrun') {
+  if (configCalc.mode === 'points') {
     useEffect(() => {
       if (score >= Number(configCalc.mode_config)) {
         openModal();
@@ -150,7 +150,7 @@ export default function Play() {
     let value = calcContainer.calculo;
     let result = Number(input);
 
-    if (configCalc.mode === 'speedrun') {
+    if (configCalc.mode === 'points') {
       if (result != value) {
         valueChange();
         setErros(erros + 1);
@@ -215,7 +215,7 @@ export default function Play() {
       <h1 className="my-4">{calcContainer.calculoString}</h1>
       <div className="mb-4">
         <div className="w-full flex flex-row gap-2 mb-2 justify-center flex-wrap">
-          {configCalc.mode === 'speedrun' && (
+          {configCalc.mode === 'points' && (
             <Tag text={`${score} / ${configCalc.mode_config}`} tipo="score" color={color} />
           )}
           {configCalc.mode === 'timer' && (
@@ -303,7 +303,7 @@ export default function Play() {
               <div className="flex flex-row justify-center gap-4">
                 <Clock /> Tempo
               </div>
-              {configCalc.mode === 'speedrun' ? `${timerEnd}` : `${seconds}`}
+              {configCalc.mode === 'points' ? `${timerEnd}` : `${seconds}`}
             </div>
           </div>
         </Modal.Content>
