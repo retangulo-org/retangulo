@@ -4,7 +4,6 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 
 import './index.css';
 import Root from './layout';
-import Home from '../pages/Home';
 import Selector from '../pages/Selector';
 import Play from '../pages/Play';
 import Options from '../pages/Options';
