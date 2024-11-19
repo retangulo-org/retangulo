@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import { Collapse } from '../components/Collapse/index';
 import { Modal } from '../components/Modal/index';
 import Button from '../components/Button';
+import Radio from '../components/Radio';
 
 export default function Ui() {
   const [isOpen, setIsOpen] = useState(false);
+  const [radio, setRadio] = useState('ativo')
 
   return (
     <div className="flex flex-col bg-neutral-100 dark:bg-neutral-950">
+      <Radio label="Modo speedrun" value='ativo' checked={radio === 'ativo'} onChange={(e) => setRadio(e.target.value)} />
+      <Radio label="Tempo limite" value='ativo2' checked={radio === 'ativo2'} onChange={(e) => setRadio(e.target.value)} />
       <Button
         onClick={() => {
           setIsOpen(!isOpen);
