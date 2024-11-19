@@ -308,7 +308,7 @@ export default function Play() {
           </div>
         </Modal.Content>
         <Modal.Actions>
-          <Button variant="outline" onClick={() => navigate('/gerador')}>
+          <Button variant="outline" onClick={() => navigate('/')}>
             Gerador
           </Button>
           <Button
@@ -332,7 +332,7 @@ export default function Play() {
             }}>
             Cancelar
           </Button>
-          <Button onClick={() => navigate('/gerador')}>Continuar</Button>
+          <Button onClick={() => navigate('/')}>Continuar</Button>
         </Modal.Actions>
       </Modal.Root>
     </div>
