@@ -43,7 +43,7 @@ export default function Header() {
           {isMenuOpen ? <X className="w-10 h-10" /> : <AlignJustify className="w-10 h-10" />}
         </button>
         <div
-          className={`transition-all duration-500 ease-in-out overflow-hidden w-full md:w-auto ${
+          className={`transition-all duration-300 ease-in-out overflow-hidden w-full md:w-auto ${
             isMenuOpen ? 'block opacity-100 max-h-[500px]' : 'opacity-0 max-h-0'
           } md:opacity-100 md:max-h-full md:block`}>
           <div className="font-medium w-full flex items-center flex-col space-y-4 md:space-y-0 mt-4 md:mt-0 md:p-0 md:flex-row md:space-x-8 select-none">

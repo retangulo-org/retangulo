@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import ThemeProvider from '../components/Theme/ThemeProvider';
+import { motion } from "framer-motion"
 
 export default function Root() {
   return (

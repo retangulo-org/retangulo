@@ -4,6 +4,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import { ChevronDown } from 'lucide-react';
 import { Collapse } from '../components/Collapse';
+import Transition from '../components/Transition';
 
 export default function Selector() {
   const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
@@ -134,7 +135,8 @@ export default function Selector() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-4">
+    <Transition
+      className="flex flex-col justify-center items-center gap-4">
       <Collapse.Root>
         <Collapse.Toggle>Configuração do gerador</Collapse.Toggle>
         <Collapse.Content className="flex flex-col gap-4">
@@ -192,6 +194,6 @@ export default function Selector() {
           </div>
         </div>
       </div>
-    </div>
+    </Transition>
   );
 }

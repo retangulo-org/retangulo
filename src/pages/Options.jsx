@@ -1,12 +1,13 @@
 import React from 'react';
 import { ExternalLink, Trash2 } from 'lucide-react';
 import Button from '../components/Button';
-import { Card } from '../components/Card/index';
 import ThemeToggle from '../components/Theme/ThemeToggle';
+import Transition from '../components/Transition';
 
 export default function Options() {
   return (
-    <div className="flex flex-col justify-center items-center">
+    <Transition
+      className="flex flex-col justify-center items-center">
       <div className="w-full divide-neutral-200 dark:divide-neutral-800 divide-y-2">
         <div className="w-full py-2 flex flex-row justify-between items-center">
           <h3 className="mb-0">Tema</h3>
@@ -71,6 +72,6 @@ export default function Options() {
           </a>
         </span>
       </div>
-    </div>
+    </Transition>
   );
 }

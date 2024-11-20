@@ -8,8 +8,8 @@ import { Modal } from '../components/Modal';
 import { RandomNumber } from '../scripts/RandomNumber';
 import { StringNegativeFormat } from '../scripts/StringNegativeFormat';
 import { Calc } from '../scripts/Calc';
-
 import { Check, Clock, Frown, X } from 'lucide-react';
+import Transition from '../components/Transition';
 
 export default function Play() {
   const [input, setInput] = useState('');
@@ -211,7 +211,8 @@ export default function Play() {
   };
 
   return (
-    <div className="w-full flex flex-col gap-4 items-center">
+    <Transition
+      className="w-full flex flex-col gap-4 items-center">
       <h1 className="my-4">{calcContainer.calculoString}</h1>
       <div className="mb-4">
         <div className="w-full flex flex-row gap-2 mb-2 justify-center flex-wrap">
@@ -332,25 +333,6 @@ export default function Play() {
           </Button>
         </Modal.Actions>
       </Modal.Root>
-      {/* 
-      
-       const [input, setInput] = useState('');
-  const [math, setMath] = useState({ n1: 0, n2: 0 });
-  const [change, setChange] = useState(true);
-  const [pontos, setPontos] = useState(0);
-  const [score, setScore] = useState(0);
-  const [erros, setErros] = useState(0);
-  const [color, setColor] = useState('');
-  const [timer, setTimer] = useState(false);
-  const [timerStorage, setTimerStorage] = useState(0);
-  const [timerEnd, setTimerEnd] = useState('');
-  const [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-  const [stored, setStored] = useState({ n1: '', n2: '', n3: '' });
-  const [storedArry, setStoredArry] = useState(['']);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isModalExitOpen, setIsModalExitOpen] = useState(false);
-      */}
       <Modal.Root isOpen={isModalExitOpen}>
         <Modal.Title>Tem certeza?</Modal.Title>
         <Modal.Content>
@@ -367,6 +349,6 @@ export default function Play() {
           <Button onClick={() => navigate('/')}>Continuar</Button>
         </Modal.Actions>
       </Modal.Root>
-    </div>
+    </Transition>
   );
 }
