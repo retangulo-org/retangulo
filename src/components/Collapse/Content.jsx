@@ -9,5 +9,11 @@ Content.propTypes = {
 
 export default function Content({ children, className }) {
   const { isOpen } = useContext(RootContext);
-  return <>{isOpen && <div className={`${className} p-4`}>{children}</div>}</>;
+  return ( 
+    <div className={`transition-all duration-500 ease-in-out overflow-hidden ${isOpen ? 'block opacity-100 max-h-[1000px]' : 'opacity-0 max-h-0'}`}>
+      <div className={`${className} p-4`}>
+        {children}
+      </div>
+    </div>
+  )
 }

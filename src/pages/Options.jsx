@@ -6,48 +6,25 @@ import ThemeToggle from '../components/Theme/ThemeToggle';
 
 export default function Options() {
   return (
-    <div className="flex flex-col justify-center items-center gap-4">
-      <div className="w-full flex flex-col">
-        <h3>Opções</h3>
+    <div className="flex flex-col justify-center items-center">
+      <div className="w-full divide-neutral-200 dark:divide-neutral-800 divide-y-2">
+        <div className="w-full py-2 flex flex-row justify-between items-center">
+          <h3 className="mb-0">Tema</h3>
+          <ThemeToggle />
+        </div>
+        <div className="w-full py-2 flex flex-row justify-between items-center">
+          <h3 className="mb-0">Limpar cache</h3>
+          <Button
+            size="icon"
+            onClick={() => {
+              localStorage.clear();
+              window.location.href = window.location.href;
+            }}>
+            <Trash2 />
+          </Button>
+        </div>
       </div>
-      <Card.Root>
-        <div className="w-full flex flex-row justify-between items-center gap-12 flex-nowrap">
-          <Card.Header>
-            <Card.Title>Alterar tema</Card.Title>
-            <Card.Description>
-              Alternar entre os modos claro e escuro do site, ou seguir a preferência do sistema, ajustando
-              automaticamente o tema conforme a configuração do dispositivo para uma experiência visual mais integrada.
-            </Card.Description>
-          </Card.Header>
-          <Card.Content>
-            <ThemeToggle />
-          </Card.Content>
-        </div>
-      </Card.Root>
-      <Card.Root>
-        <div className="w-full flex flex-row justify-between items-center gap-12 flex-nowrap">
-          <Card.Header>
-            <Card.Title>Limpar cache</Card.Title>
-            <Card.Description>
-              Remover completamente o cache do site, eliminando dados armazenados temporariamente para garantir que o
-              conteúdo carregue com as informações mais atualizadas.
-            </Card.Description>
-          </Card.Header>
-          <Card.Content>
-            <div className="bg-secundary p-2 rounded-md">
-              <Button
-                size="icon"
-                onClick={() => {
-                  localStorage.clear();
-                  window.location.href = window.location.href;
-                }}>
-                <Trash2 />
-              </Button>
-            </div>
-          </Card.Content>
-        </div>
-      </Card.Root>
-      <div className="flex flex-row justify-center flex-wrap gap-4 text-text">
+      <div className="w-full mt-12 flex flex-row justify-center flex-wrap gap-4 text-text">
         <span>
           <a
             className="flex flex-row justify-center items-center gap-2 hover:underline underline-offset-4"

@@ -313,12 +313,44 @@ export default function Play() {
           </Button>
           <Button
             onClick={() => {
-              window.location.reload();
+              setChange(!change)
+              setInput('')
+              setPontos(0)
+              setScore(0)
+              setErros(0)
+              setColor('')
+              setTimer(false)
+              setTimerStorage(0)
+              setTimerEnd('')
+              setSeconds(0)
+              setIsActive(false)
+              setStored({ n1: '', n2: '', n3: '' })
+              setStoredArry([''])
+              setIsModalOpen(!isModalOpen)
             }}>
             Reiniciar
           </Button>
         </Modal.Actions>
       </Modal.Root>
+      {/* 
+      
+       const [input, setInput] = useState('');
+  const [math, setMath] = useState({ n1: 0, n2: 0 });
+  const [change, setChange] = useState(true);
+  const [pontos, setPontos] = useState(0);
+  const [score, setScore] = useState(0);
+  const [erros, setErros] = useState(0);
+  const [color, setColor] = useState('');
+  const [timer, setTimer] = useState(false);
+  const [timerStorage, setTimerStorage] = useState(0);
+  const [timerEnd, setTimerEnd] = useState('');
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  const [stored, setStored] = useState({ n1: '', n2: '', n3: '' });
+  const [storedArry, setStoredArry] = useState(['']);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalExitOpen, setIsModalExitOpen] = useState(false);
+      */}
       <Modal.Root isOpen={isModalExitOpen}>
         <Modal.Title>Tem certeza?</Modal.Title>
         <Modal.Content>

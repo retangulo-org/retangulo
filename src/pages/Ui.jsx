@@ -10,8 +10,6 @@ export default function Ui() {
 
   return (
     <div className="flex flex-col bg-neutral-100 dark:bg-neutral-950">
-      <Radio label="Modo speedrun" value='ativo' checked={radio === 'ativo'} onChange={(e) => setRadio(e.target.value)} />
-      <Radio label="Tempo limite" value='ativo2' checked={radio === 'ativo2'} onChange={(e) => setRadio(e.target.value)} />
       <Button
         onClick={() => {
           setIsOpen(!isOpen);
@@ -21,18 +19,10 @@ export default function Ui() {
       <Modal.Root isOpen={isOpen}>
         <Modal.Title>Tem certeza?</Modal.Title>
         <Modal.Content>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur maiores voluptatem beatae corrupti
-          aspernatur accusantium sed rem eaque tempora, quibusdam exercitationem voluptatum, natus expedita animi
-          nostrum ullam facere excepturi at.
+          <Radio label="Modo speedrun" value='ativo' checked={radio === 'ativo'} onChange={(e) => setRadio(e.target.value)} />
+          <Radio label="Tempo limite" value='ativo2' checked={radio === 'ativo2'} onChange={(e) => setRadio(e.target.value)} />
         </Modal.Content>
         <Modal.Actions>
-          <Button
-            variant="outline"
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}>
-            Fechar modal
-          </Button>
           <Button
             onClick={() => {
               setIsOpen(!isOpen);
