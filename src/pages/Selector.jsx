@@ -135,8 +135,7 @@ export default function Selector() {
   };
 
   return (
-    <Transition
-      className="flex flex-col justify-center items-center gap-4">
+    <Transition className="flex flex-col justify-center items-center gap-4">
       <Collapse.Root>
         <Collapse.Toggle>Configuração do gerador</Collapse.Toggle>
         <Collapse.Content className="flex flex-col gap-4">
@@ -152,7 +151,7 @@ export default function Selector() {
             <h4>Modo</h4>
             <CalcModeToggle />
           </div>
-          <div className="space-y-2"> 
+          <div className="space-y-2">
             {calcMode === 'points' && (
               <>
                 <h4>Pontuação máxima</h4>

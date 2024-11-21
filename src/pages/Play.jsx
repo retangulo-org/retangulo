@@ -211,8 +211,7 @@ export default function Play() {
   };
 
   return (
-    <Transition
-      className="w-full flex flex-col gap-4 items-center">
+    <Transition className="w-full flex flex-col gap-4 items-center">
       <h1 className="my-4">{calcContainer.calculoString}</h1>
       <div className="mb-4">
         <div className="w-full flex flex-row gap-2 mb-2 justify-center flex-wrap">
@@ -314,20 +313,20 @@ export default function Play() {
           </Button>
           <Button
             onClick={() => {
-              setChange(!change)
-              setInput('')
-              setPontos(0)
-              setScore(0)
-              setErros(0)
-              setColor('')
-              setTimer(false)
-              setTimerStorage(0)
-              setTimerEnd('')
-              setSeconds(0)
-              setIsActive(false)
-              setStored({ n1: '', n2: '', n3: '' })
-              setStoredArry([''])
-              setIsModalOpen(!isModalOpen)
+              setChange(!change);
+              setInput('');
+              setPontos(0);
+              setScore(0);
+              setErros(0);
+              setColor('');
+              setTimer(false);
+              setTimerStorage(0);
+              setTimerEnd('');
+              setSeconds(0);
+              setIsActive(false);
+              setStored({ n1: '', n2: '', n3: '' });
+              setStoredArry(['']);
+              setIsModalOpen(!isModalOpen);
             }}>
             Reiniciar
           </Button>

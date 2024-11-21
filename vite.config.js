@@ -9,7 +9,7 @@ export default defineConfig({
       injectRegister: 'script' | 'script-defer',
       registerType: 'prompt',
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
       },
       devOptions: {
         enabled: true,

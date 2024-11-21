@@ -2,20 +2,20 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import ThemeProvider from '../components/Theme/ThemeProvider';
-import { registerSW } from 'virtual:pwa-register'
+import { registerSW } from 'virtual:pwa-register';
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    if (confirm("Nova versão disponível. Deseja atualizar?")) {
-      updateSW(true)
+    if (confirm('Nova versão disponível. Deseja atualizar?')) {
+      updateSW(true);
     } else {
-      updateSW(false)
+      updateSW(false);
     }
   },
   onOfflineReady() {
     console.log('App pronto para uso offline!');
   },
-})
+});
 
 export default function Root() {
   return (
