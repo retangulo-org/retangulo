@@ -6,11 +6,10 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      injectRegister: 'script',
+      injectRegister: 'script' | 'script-defer',
       registerType: 'prompt',
       workbox: {
-        globPatterns: ['**/*'],
-        sourcemap: true,
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
       },
       devOptions: {
         enabled: true,
@@ -20,7 +19,7 @@ export default defineConfig({
         name: 'Retangulo.org',
         short_name: 'Retangulo.org',
         description:
-          'O Retangulo.org é uma plataforma de exercícios matemáticos projetada para desafiar suas habilidades de cálculo. Melhore suas habilidades de resolução de cálculo mental e resolva as questões o mais rápido possível sem cometer erros. Atualmente, o Retangulo.org, conta com a possibilidade de gerar cálculos aleatórios com ou sem negativo nas seguintes operações matemáticas: adição, subtração, divisão, multiplicação, raiz quadrada, expoente 2 e expoente 3.',
+          'O Retangulo.org é uma plataforma de exercícios matemáticos projetada para desafiar suas habilidades de cálculo. Melhore suas habilidades de resolução de cálculo mental e resolva as questões o mais rápido possível sem cometer erros.',
         display: 'standalone',
         id: '/',
         lang: 'ptbr',

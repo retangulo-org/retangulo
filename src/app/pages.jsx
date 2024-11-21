@@ -12,7 +12,7 @@ import ErrorPage from '../pages/ErrorPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Root />}>
+    <Route element={<Root />}>
       <Route index element={<Selector />} />
       <Route path="/jogar/:type/:mode/:mode_config/:negativo/:maximo" element={<Play />} />
       <Route path="/opcoes" element={<Options />} />

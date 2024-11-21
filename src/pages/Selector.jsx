@@ -4,6 +4,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import { ChevronDown } from 'lucide-react';
 import { Collapse } from '../components/Collapse';
+import Transition from '../components/Transition';
 
 export default function Selector() {
   const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
@@ -54,8 +55,8 @@ export default function Selector() {
     };
 
     return (
-      <div className="w-full relative flex flex-row">
-        <ChevronDown className="absolute left-4 bottom-3 text-textAlt" />
+      <div className="w-full relative flex flex-row justify-center items-center">
+        <ChevronDown className="absolute right-4 text-textAlt pointer-events-none" />
         <select
           className="appearance-none actionDefault w-full h-12 rounded-sm cursor-pointer font-semibold text-center select-none"
           value={calcMode}
@@ -73,8 +74,8 @@ export default function Selector() {
     };
 
     return (
-      <div className="w-full relative flex flex-row">
-        <ChevronDown className="absolute left-4 bottom-3 text-textAlt" />
+      <div className="w-full relative flex flex-row justify-center items-center">
+        <ChevronDown className="absolute right-4 text-textAlt pointer-events-none" />
         <select
           className="appearance-none actionDefault w-full h-12 rounded-sm cursor-pointer font-semibold text-center select-none"
           value={calcTime}
@@ -96,8 +97,8 @@ export default function Selector() {
     };
 
     return (
-      <div className="w-full relative flex flex-row">
-        <ChevronDown className="absolute left-4 bottom-3 text-textAlt" />
+      <div className="w-full relative flex flex-row justify-center items-center">
+        <ChevronDown className="absolute right-4 text-textAlt pointer-events-none" />
         <select
           className="appearance-none actionDefault w-full h-12 rounded-sm cursor-pointer font-semibold text-center select-none"
           value={calcNegative}
@@ -134,45 +135,42 @@ export default function Selector() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-4">
-      <div className="w-full flex flex-col">
-        <h3>Gerador</h3>
-        <p>Gere cálculos matemáticos infinitamente.</p>
-      </div>
+    <Transition
+      className="flex flex-col justify-center items-center gap-4">
       <Collapse.Root>
-        <Collapse.Toggle>Configuração da geração do cálculo</Collapse.Toggle>
+        <Collapse.Toggle>Configuração do gerador</Collapse.Toggle>
         <Collapse.Content className="flex flex-col gap-4">
           <div className="space-y-2">
-            <h4>Valor máximo:</h4>
+            <h4>Valor máximo</h4>
             <Input value={calcSizeInputValue} onChange={calcSizeStorage} placeholder="Valor..." type="number" />
           </div>
           <div className="space-y-2">
-            <h4>Positivo ou negativo:</h4>
+            <h4>Positivo ou negativo</h4>
             <CalcNegativeToggle />
           </div>
           <div className="space-y-2">
-            <h4>Modo:</h4>
+            <h4>Modo</h4>
             <CalcModeToggle />
           </div>
           <div className="space-y-2"> 
             {calcMode === 'points' && (
               <>
-                <h4>Pontuação máxima:</h4>
+                <h4>Pontuação máxima</h4>
                 <Input value={speedInputValue} onChange={calcSpeedStorage} placeholder="Valor..." type="number" />
               </>
             )}
             {calcMode === 'timer' && (
               <>
-                <h4>Tempo máximo:</h4>
+                <h4>Tempo máximo</h4>
                 <CalcTimeToggle />
               </>
             )}
           </div>
         </Collapse.Content>
       </Collapse.Root>
-      <div className="w-full flex flex-col gap-4">
-        <div className="w-full p-4 bg-foreground rounded-md">
-        <h3>Aritmética</h3>
+      <div className="w-full flex flex-col gap-4 text-center">
+        <div className="w-full p-4 bg-foreground rounded-md space-y-4">
+          <h4>Aritmética</h4>
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <LinkCalc text="Adição" type="soma" />
             <LinkCalc text="Subtração" type="subt" />
@@ -180,23 +178,22 @@ export default function Selector() {
             <LinkCalc text="Divisão" type="divi" />
           </div>
         </div>
-        <div className="w-full p-4 bg-foreground rounded-md">
-          <h3>Potenciação</h3>
+        <div className="w-full p-4 bg-foreground rounded-md space-y-4">
+          <h4>Potenciação</h4>
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <LinkCalc text="Raiz Quadrada" type="raiz2" />
             <LinkCalc text="Expoente 2" type="expo2" />
             <LinkCalc text="Expoente 3" type="expo3" />
           </div>
         </div>
-        <div className="w-full p-4 bg-foreground rounded-md">
-          <h3>Comparação</h3>
+        <div className="w-full p-4 bg-foreground rounded-md space-y-4">
+          <h4>Comparação</h4>
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-
             <LinkCalc text="Maior" type="maior" />
             <LinkCalc text="Menor" type="menor" />
           </div>
-          </div>
+        </div>
       </div>
-    </div>
+    </Transition>
   );
 }

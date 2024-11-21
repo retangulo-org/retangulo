@@ -8,8 +8,8 @@ import { Modal } from '../components/Modal';
 import { RandomNumber } from '../scripts/RandomNumber';
 import { StringNegativeFormat } from '../scripts/StringNegativeFormat';
 import { Calc } from '../scripts/Calc';
-
 import { Check, Clock, Frown, X } from 'lucide-react';
+import Transition from '../components/Transition';
 
 export default function Play() {
   const [input, setInput] = useState('');
@@ -211,7 +211,8 @@ export default function Play() {
   };
 
   return (
-    <div className="w-full flex flex-col gap-4 items-center">
+    <Transition
+      className="w-full flex flex-col gap-4 items-center">
       <h1 className="my-4">{calcContainer.calculoString}</h1>
       <div className="mb-4">
         <div className="w-full flex flex-row gap-2 mb-2 justify-center flex-wrap">
@@ -313,7 +314,20 @@ export default function Play() {
           </Button>
           <Button
             onClick={() => {
-              window.location.reload();
+              setChange(!change)
+              setInput('')
+              setPontos(0)
+              setScore(0)
+              setErros(0)
+              setColor('')
+              setTimer(false)
+              setTimerStorage(0)
+              setTimerEnd('')
+              setSeconds(0)
+              setIsActive(false)
+              setStored({ n1: '', n2: '', n3: '' })
+              setStoredArry([''])
+              setIsModalOpen(!isModalOpen)
             }}>
             Reiniciar
           </Button>
@@ -335,6 +349,6 @@ export default function Play() {
           <Button onClick={() => navigate('/')}>Continuar</Button>
         </Modal.Actions>
       </Modal.Root>
-    </div>
+    </Transition>
   );
 }
