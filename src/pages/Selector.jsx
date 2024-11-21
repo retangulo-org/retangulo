@@ -141,27 +141,27 @@ export default function Selector() {
         <Collapse.Toggle>Configuração do gerador</Collapse.Toggle>
         <Collapse.Content className="flex flex-col gap-4">
           <div className="space-y-2">
-            <h4>Valor máximo:</h4>
+            <h4>Valor máximo</h4>
             <Input value={calcSizeInputValue} onChange={calcSizeStorage} placeholder="Valor..." type="number" />
           </div>
           <div className="space-y-2">
-            <h4>Positivo ou negativo:</h4>
+            <h4>Positivo ou negativo</h4>
             <CalcNegativeToggle />
           </div>
           <div className="space-y-2">
-            <h4>Modo:</h4>
+            <h4>Modo</h4>
             <CalcModeToggle />
           </div>
           <div className="space-y-2"> 
             {calcMode === 'points' && (
               <>
-                <h4>Pontuação máxima:</h4>
+                <h4>Pontuação máxima</h4>
                 <Input value={speedInputValue} onChange={calcSpeedStorage} placeholder="Valor..." type="number" />
               </>
             )}
             {calcMode === 'timer' && (
               <>
-                <h4>Tempo máximo:</h4>
+                <h4>Tempo máximo</h4>
                 <CalcTimeToggle />
               </>
             )}
