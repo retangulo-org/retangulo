@@ -7,7 +7,7 @@ import Transition from '../components/Transition';
 
 export default function Ui() {
   const [isOpen, setIsOpen] = useState(false);
-  const [radio, setRadio] = useState('ativo')
+  const [radio, setRadio] = useState('ativo');
 
   return (
     <Transition className="flex flex-col bg-neutral-100 dark:bg-neutral-950">
@@ -20,8 +20,18 @@ export default function Ui() {
       <Modal.Root isOpen={isOpen}>
         <Modal.Title>Tem certeza?</Modal.Title>
         <Modal.Content>
-          <Radio label="Modo speedrun" value='ativo' checked={radio === 'ativo'} onChange={(e) => setRadio(e.target.value)} />
-          <Radio label="Tempo limite" value='ativo2' checked={radio === 'ativo2'} onChange={(e) => setRadio(e.target.value)} />
+          <Radio
+            label="Modo speedrun"
+            value="ativo"
+            checked={radio === 'ativo'}
+            onChange={(e) => setRadio(e.target.value)}
+          />
+          <Radio
+            label="Tempo limite"
+            value="ativo2"
+            checked={radio === 'ativo2'}
+            onChange={(e) => setRadio(e.target.value)}
+          />
         </Modal.Content>
         <Modal.Actions>
           <Button

@@ -10,6 +10,7 @@ import { StringNegativeFormat } from '../scripts/StringNegativeFormat';
 import { Calc } from '../scripts/Calc';
 import { Check, Clock, Frown, X } from 'lucide-react';
 import Transition from '../components/Transition';
+import Return from '../components/Return';
 
 export default function Play() {
   const [input, setInput] = useState('');
@@ -99,6 +100,7 @@ export default function Play() {
           timerSelect = Infinity;
           break;
         default:
+          timerSelect = 60;
           break;
       }
 
@@ -211,8 +213,8 @@ export default function Play() {
   };
 
   return (
-    <Transition
-      className="w-full flex flex-col gap-4 items-center">
+    <Transition className="w-full flex flex-col gap-4 items-center">
+      <Return text="Playground" url="/math" onClick={() => setIsModalExitOpen(true)} />
       <h1 className="my-4">{calcContainer.calculoString}</h1>
       <div className="mb-4">
         <div className="w-full flex flex-row gap-2 mb-2 justify-center flex-wrap">
@@ -229,44 +231,27 @@ export default function Play() {
         </div>
       </div>
       {!['maior', 'menor'].includes(configCalc.tipo) && (
-        <>
-          <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
-            <InputCalc
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Resultado..."
-              required={false}
-              autoFocus={true}
-              color={color}
-            />
-            <Button onClick={valueCheck}>Calcular</Button>
-          </form>
-          <Button
-            variant="danger"
-            onClick={() => {
-              setIsModalExitOpen(true);
-            }}>
-            Voltar
-          </Button>
-        </>
+        <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
+          <InputCalc
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Resultado..."
+            required={false}
+            autoFocus={true}
+            color={color}
+          />
+          <Button onClick={valueCheck}>Calcular</Button>
+        </form>
       )}
       {['maior', 'menor'].includes(configCalc.tipo) && (
-        <>
-          <form className="flex flex-row gap-3 items-center w-full" onSubmit={handleSubmit}>
-            <Button variant="success" onClick={() => valueCheckDouble('verdadeiro')}>
-              <Check /> Verdadeiro
-            </Button>
-            <Button variant="danger" onClick={() => valueCheckDouble('falso')}>
-              <X /> Falso
-            </Button>
-          </form>
-          <Button
-            onClick={() => {
-              setIsModalExitOpen(true);
-            }}>
-            Voltar
+        <form className="flex flex-row gap-3 items-center w-full" onSubmit={handleSubmit}>
+          <Button variant="success" onClick={() => valueCheckDouble('verdadeiro')}>
+            <Check /> Verdadeiro
           </Button>
-        </>
+          <Button variant="danger" onClick={() => valueCheckDouble('falso')}>
+            <X /> Falso
+          </Button>
+        </form>
       )}
       <Collapse.Root>
         <Collapse.Toggle>Histórico</Collapse.Toggle>
@@ -314,20 +299,20 @@ export default function Play() {
           </Button>
           <Button
             onClick={() => {
-              setChange(!change)
-              setInput('')
-              setPontos(0)
-              setScore(0)
-              setErros(0)
-              setColor('')
-              setTimer(false)
-              setTimerStorage(0)
-              setTimerEnd('')
-              setSeconds(0)
-              setIsActive(false)
-              setStored({ n1: '', n2: '', n3: '' })
-              setStoredArry([''])
-              setIsModalOpen(!isModalOpen)
+              setChange(!change);
+              setInput('');
+              setPontos(0);
+              setScore(0);
+              setErros(0);
+              setColor('');
+              setTimer(false);
+              setTimerStorage(0);
+              setTimerEnd('');
+              setSeconds(0);
+              setIsActive(false);
+              setStored({ n1: '', n2: '', n3: '' });
+              setStoredArry(['']);
+              setIsModalOpen(!isModalOpen);
             }}>
             Reiniciar
           </Button>

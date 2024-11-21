@@ -6,8 +6,7 @@ import Transition from '../components/Transition';
 
 export default function Options() {
   return (
-    <Transition
-      className="flex flex-col justify-center items-center">
+    <Transition className="flex flex-col justify-center items-center">
       <div className="w-full divide-neutral-200 dark:divide-neutral-800 divide-y-2">
         <div className="w-full py-2 flex flex-row justify-between items-center">
           <h3 className="mb-0">Tema</h3>

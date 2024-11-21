@@ -4,5 +4,5 @@ export default function Radio({ label, value, checked, onChange }) {
       <input type="radio" value={value} checked={checked} onChange={onChange} />
       {label}
     </label>
-  )
+  );
 }

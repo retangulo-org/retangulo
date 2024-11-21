@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LogoTipo } from '../assets/LogoTipo';
-import { AlignJustify, X, Gamepad2, Settings } from 'lucide-react';
+import { AlignJustify, X, House, Settings } from 'lucide-react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,7 +31,7 @@ export default function Header() {
   return (
     <header className="bg-neutral-200 border-gray-200 dark:bg-neutral-800 p-4">
       <div className="w-full sm:max-w-3xl flex flex-wrap items-center justify-between mx-auto">
-        <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="/" className="flex items-center rtl:space-x-reverse">
           <span className="sr-only">Logo do site</span>
           <LogoTipo className="w-20 h-auto fill-neutral-950 dark:fill-neutral-100" />
         </a>
@@ -48,8 +48,8 @@ export default function Header() {
           } md:opacity-100 md:max-h-full md:block`}>
           <div className="font-medium w-full flex items-center flex-col space-y-4 md:space-y-0 mt-4 md:mt-0 md:p-0 md:flex-row md:space-x-8 select-none">
             <Link link="/">
-              <Gamepad2 />
-              Gerador
+              <House />
+              Início
             </Link>
             <Link link="/opcoes">
               <Settings />

@@ -28,9 +28,8 @@ export default function Transition({ children, className }) {
       animate="animate"
       exit="exit"
       transition={{ type: 'tween', duration: 0.4 }}
-      className={className}
-    >
+      className={className}>
       {children}
     </motion.div>
-  )
+  );
 }

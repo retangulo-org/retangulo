@@ -56,23 +56,23 @@
   }
 
   .actionPrimary {
-    @apply text-neutral-100 bg-blue-600 hover:bg-blue-700 active:bg-blue-800;
+    @apply text-neutral-100 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 select-none;
   }
 
   .actionSuccess {
-    @apply text-neutral-100 bg-green-600 hover:bg-green-700 active:bg-green-800;
+    @apply text-neutral-100 bg-green-600 hover:bg-green-700 active:bg-green-800 select-none;
   }
 
   .actionDanger {
-    @apply text-neutral-100 bg-red-600 hover:bg-red-700 active:bg-red-800;
+    @apply text-neutral-100 bg-red-600 hover:bg-red-700 active:bg-red-800 select-none;
   }
 
   .actionWarning {
-    @apply text-neutral-100 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800;
+    @apply text-neutral-100 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 select-none;
   }
 
   .actionOutline {
-    @apply text-neutral-950 dark:text-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-800 border border-neutral-300 dark:border-neutral-700;
+    @apply text-neutral-950 dark:text-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 select-none;
   }
 
   html {
