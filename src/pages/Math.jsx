@@ -5,8 +5,9 @@ import Button from '../components/Button';
 import { ChevronDown } from 'lucide-react';
 import { Collapse } from '../components/Collapse';
 import Transition from '../components/Transition';
+import Return from '../components/Return';
 
-export default function Selector() {
+export default function Math() {
   const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
     return localStorage.getItem('calcSizeValue') || 100;
   });
@@ -118,10 +119,10 @@ export default function Selector() {
       }
 
       if (calcMode === 'timer') {
-        return navigate(`/jogar/${type}/${calcMode}/${calcTime}/${calcNegative}/${calcSizeInputValue}`);
+        return navigate(`/play/${type}/${calcMode}/${calcTime}/${calcNegative}/${calcSizeInputValue}`);
       }
 
-      return navigate(`/jogar/${type}/${calcMode}/${speedInputValue}/${calcNegative}/${calcSizeInputValue}`);
+      return navigate(`/play/${type}/${calcMode}/${speedInputValue}/${calcNegative}/${calcSizeInputValue}`);
     };
 
     return (
@@ -136,37 +137,49 @@ export default function Selector() {
 
   return (
     <Transition className="flex flex-col justify-center items-center gap-4">
-      <Collapse.Root>
-        <Collapse.Toggle>Configuração do gerador</Collapse.Toggle>
-        <Collapse.Content className="flex flex-col gap-4">
-          <div className="space-y-2">
-            <h4>Valor máximo</h4>
-            <Input value={calcSizeInputValue} onChange={calcSizeStorage} placeholder="Valor..." type="number" />
-          </div>
-          <div className="space-y-2">
-            <h4>Positivo ou negativo</h4>
-            <CalcNegativeToggle />
-          </div>
-          <div className="space-y-2">
-            <h4>Modo</h4>
-            <CalcModeToggle />
-          </div>
-          <div className="space-y-2">
-            {calcMode === 'points' && (
-              <>
-                <h4>Pontuação máxima</h4>
-                <Input value={speedInputValue} onChange={calcSpeedStorage} placeholder="Valor..." type="number" />
-              </>
-            )}
-            {calcMode === 'timer' && (
-              <>
-                <h4>Tempo máximo</h4>
-                <CalcTimeToggle />
-              </>
-            )}
-          </div>
-        </Collapse.Content>
-      </Collapse.Root>
+      <Return text="Matemática" url="/" />
+      {/* <div className="w-full p-4 bg-foreground rounded-md space-y-4"> */}
+        <ul className="w-full flex flex-row justify-center items-center rounded-md font-semibold">
+          <li
+            className={`${calcMode === "points" ? "actionPrimary cursor-default" : "text-text bg-foreground"} w-full p-4 rounded-l-md text-center cursor-pointer`}
+            onClick={() => setCalcMode('points')}
+          >
+            Pontuação
+          </li>
+          <li 
+            className={`${calcMode === "timer" ? "actionPrimary cursor-default" : "text-text bg-foreground"} w-full p-4 rounded-r-md text-center cursor-pointer`}
+            onClick={() => setCalcMode('timer')}
+          >
+            Tempo
+          </li>
+        </ul>
+        <Collapse.Root>
+          <Collapse.Toggle>Configuração do gerador</Collapse.Toggle>
+          <Collapse.Content className="flex flex-col gap-4">
+            <div className="space-y-2">
+              {calcMode === 'points' ? (
+                <>
+                  <h4>Pontuação máxima</h4>
+                  <Input value={speedInputValue} onChange={calcSpeedStorage} placeholder="Valor..." type="number" />
+                </>
+              ) : (
+                <>
+                  <h4>Tempo máximo</h4>
+                  <CalcTimeToggle />
+                </>
+              )}
+            </div>
+            <div className="space-y-2">
+              <h4>Valor máximo</h4>
+              <Input value={calcSizeInputValue} onChange={calcSizeStorage} placeholder="Valor..." type="number" />
+            </div>
+            <div className="space-y-2">
+              <h4>Positivo ou negativo</h4>
+              <CalcNegativeToggle />
+            </div>
+          </Collapse.Content>
+        </Collapse.Root>
+      {/* </div> */}
       <div className="w-full flex flex-col gap-4 text-center">
         <div className="w-full p-4 bg-foreground rounded-md space-y-4">
           <h4>Aritmética</h4>

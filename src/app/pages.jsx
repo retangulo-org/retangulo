@@ -4,7 +4,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 
 import './index.css';
 import Root from './layout';
-import Selector from '../pages/Selector';
+import Math from '../pages/Math';
 import Play from '../pages/Play';
 import Options from '../pages/Options';
 import Ui from '../pages/Ui';
@@ -13,8 +13,8 @@ import ErrorPage from '../pages/ErrorPage';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Root />}>
-      <Route index element={<Selector />} />
-      <Route path="/jogar/:type/:mode/:mode_config/:negativo/:maximo" element={<Play />} />
+      <Route index element={<Math />} />
+      <Route path="/play/:type/:mode/:mode_config/:negativo/:maximo" element={<Play />} />
       <Route path="/opcoes" element={<Options />} />
       <Route path="/ui" element={<Ui />} />
       <Route path="/*" element={<ErrorPage />} />
