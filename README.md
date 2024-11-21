@@ -24,3 +24,15 @@ npm install
 ```bash
 npm run dev
 ```
+
+## Mensagens de commit
+
+- feat: um novo recurso
+- fix: uma correção de bug
+- build: alterações que afetam o sistema de compilação ou dependências externas (escopos de exemplo: gulp, brócolis, npm)
+- refactor: uma alteração de código que não corrige um bug nem adiciona um recurso
+- style: alterações que não afetam o significado do código (espaço em branco, formatação, falta de ponto e vírgula, etc.)
+- css: alteração que alterar o visual da página
+- test: Adicionando testes ausentes ou corrigindo testes existentes
+- docs: Apenas a documentação muda
+- perf: uma alteração de código que melhora o desempenho
