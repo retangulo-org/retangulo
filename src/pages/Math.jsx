@@ -137,7 +137,7 @@ export default function Math() {
 
   return (
     <Transition className="flex flex-col justify-center items-center gap-4">
-      <Return text="Matemática" url="/" />
+      {/* <Return text="Matemática" url="/" /> */}
       {/* <div className="w-full p-4 bg-foreground rounded-md space-y-4"> */}
         <ul className="w-full flex flex-row justify-center items-center rounded-md font-semibold">
           <li
