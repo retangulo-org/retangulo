@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import { registerSW } from 'virtual:pwa-register'
 
 import './index.css';
 import Root from './layout';
@@ -10,6 +11,8 @@ import Play from '../pages/Play';
 import Options from '../pages/Options';
 import Ui from '../pages/Ui';
 import ErrorPage from '../pages/ErrorPage';
+
+registerSW({ immediate: true })
 
 const router = createBrowserRouter(
   createRoutesFromElements(
