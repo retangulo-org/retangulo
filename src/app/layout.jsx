@@ -8,8 +8,6 @@ const updateSW = registerSW({
   onNeedRefresh() {
     if (confirm('Nova versão disponível. Deseja atualizar?')) {
       updateSW(true);
-    } else {
-      updateSW(false);
     }
   },
   onOfflineReady() {
