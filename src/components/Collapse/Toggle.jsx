@@ -12,7 +12,7 @@ export default function Toggle({ children }) {
   return (
     <button
       className={`${
-        isOpen ? 'bg-blue-600' : ''
+        isOpen ? 'bg-blue-600 !text-neutral-100' : ''
       } w-full h-12 relative flex felx-row justify-between items-center text-text font-semibold rounded-lg`}
       onClick={() => setIsOpen(!isOpen)}>
       <span className="absolute right-4">{isOpen ? <ChevronUp /> : <ChevronDown />}</span>
