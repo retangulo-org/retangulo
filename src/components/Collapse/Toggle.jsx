@@ -12,10 +12,10 @@ export default function Toggle({ children }) {
   return (
     <button
       className={`${
-        isOpen ? 'bg-blue-600 !text-neutral-100' : ''
+        isOpen ? 'bg-neutral-300 dark:bg-neutral-700' : ''
       } w-full h-12 relative flex felx-row justify-between items-center text-text font-semibold rounded-lg`}
       onClick={() => setIsOpen(!isOpen)}>
-      <span className="absolute right-4">{isOpen ? <ChevronUp /> : <ChevronDown />}</span>
+      <span className={`${isOpen ? 'rotate-180' : 'rotate-0'} transition-all duration-300 absolute left-4`}><ChevronUp /></span>
       <span className="mx-auto">{children}</span>
     </button>
   );

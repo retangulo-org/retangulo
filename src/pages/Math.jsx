@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Dot, Settings } from 'lucide-react';
 import { Collapse } from '../components/Collapse';
 import Transition from '../components/Transition';
-import Return from '../components/Return';
+import { Modal } from '../components/Modal';
 
 export default function Math() {
   const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
@@ -28,6 +28,8 @@ export default function Math() {
     return localStorage.getItem('timerValue') || '1m';
   });
 
+  const [modal, setModal] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,25 +50,6 @@ export default function Math() {
     localStorage.setItem('speedValue', event.target.value);
 
     setSpeedInputValue(event.target.value);
-  };
-
-  const CalcModeToggle = () => {
-    let handleChange = (event) => {
-      setCalcMode(event.target.value);
-    };
-
-    return (
-      <div className="w-full relative flex flex-row justify-center items-center">
-        <ChevronDown className="absolute right-4 text-textAlt pointer-events-none" />
-        <select
-          className="appearance-none actionDefault w-full h-12 rounded-sm cursor-pointer font-semibold text-center select-none"
-          value={calcMode}
-          onChange={handleChange}>
-          <option value="points">Pontos</option>
-          <option value="timer">Tempo</option>
-        </select>
-      </div>
-    );
   };
 
   const CalcTimeToggle = () => {
@@ -137,49 +120,56 @@ export default function Math() {
 
   return (
     <Transition className="flex flex-col justify-center items-center gap-4">
-      {/* <Return text="Matemática" url="/" /> */}
-      {/* <div className="w-full p-4 bg-foreground rounded-md space-y-4"> */}
-        <ul className="w-full flex flex-row justify-center items-center rounded-md font-semibold">
-          <li
-            className={`${calcMode === "points" ? "actionPrimary cursor-default" : "text-text bg-foreground"} w-full p-4 rounded-l-md text-center cursor-pointer`}
-            onClick={() => setCalcMode('points')}
-          >
-            Pontuação
-          </li>
-          <li 
-            className={`${calcMode === "timer" ? "actionPrimary cursor-default" : "text-text bg-foreground"} w-full p-4 rounded-r-md text-center cursor-pointer`}
-            onClick={() => setCalcMode('timer')}
-          >
-            Tempo
-          </li>
-        </ul>
-        <Collapse.Root>
-          <Collapse.Toggle>Configuração do gerador</Collapse.Toggle>
-          <Collapse.Content className="flex flex-col gap-4">
-            <div className="space-y-2">
-              {calcMode === 'points' ? (
-                <>
-                  <h4>Pontuação máxima</h4>
-                  <Input value={speedInputValue} onChange={calcSpeedStorage} placeholder="Valor..." type="number" />
-                </>
-              ) : (
-                <>
-                  <h4>Tempo máximo</h4>
-                  <CalcTimeToggle />
-                </>
-              )}
-            </div>
-            <div className="space-y-2">
-              <h4>Valor máximo</h4>
-              <Input value={calcSizeInputValue} onChange={calcSizeStorage} placeholder="Valor..." type="number" />
-            </div>
-            <div className="space-y-2">
-              <h4>Positivo ou negativo</h4>
-              <CalcNegativeToggle />
-            </div>
-          </Collapse.Content>
-        </Collapse.Root>
-      {/* </div> */}
+      <ul className="w-full flex flex-row justify-center items-center rounded-md font-semibold select-none">
+        <li
+          className={`${calcMode === "points" ? "bg-primary text-neutral-100 cursor-default" : "text-text bg-foreground"} w-full h-12 flex justify-center items-center rounded-l-md text-center cursor-pointer`}
+          onClick={() => setCalcMode('points')}
+        >
+          Pontuação
+        </li>
+        <li 
+          className={`${calcMode === "timer" ? "bg-primary text-neutral-100 cursor-default" : "text-text bg-foreground"} w-full h-12 flex justify-center items-center rounded-r-md text-center cursor-pointer`}
+          onClick={() => setCalcMode('timer')}
+        >
+          Tempo
+        </li>
+      </ul>
+      <Button variant="primary" onClick={() => setModal(!modal)}><Settings /> Configuração do gerador</Button>
+      <Modal.Root isOpen={modal}>
+        <Modal.Title>Configuração</Modal.Title>
+        <Modal.Content className="flex flex-col gap-4">
+          <div className="space-y-2">
+            {calcMode === 'points' ? (
+              <>
+                <h4>Pontuação máxima</h4>
+                <Input value={speedInputValue} onChange={calcSpeedStorage} placeholder="Valor..." type="number" />
+              </>
+            ) : (
+              <>
+                <h4>Tempo máximo</h4>
+                <CalcTimeToggle />
+              </>
+            )}
+          </div>
+          <div className="space-y-2">
+            <h4>Valor máximo</h4>
+            <Input value={calcSizeInputValue} onChange={calcSizeStorage} placeholder="Valor..." type="number" />
+          </div>
+          <div className="space-y-2">
+            <h4>Positivo ou negativo</h4>
+            <CalcNegativeToggle />
+          </div>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+            variant="danger"
+            onClick={() => {
+              setModal(!modal);
+            }}>
+            Fechar
+          </Button>
+        </Modal.Actions>
+      </Modal.Root>
       <div className="w-full flex flex-col gap-4 text-center">
         <div className="w-full p-4 bg-foreground rounded-md space-y-4">
           <h4>Aritmética</h4>
