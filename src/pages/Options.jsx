@@ -1,19 +1,27 @@
 import React from 'react';
-import { ExternalLink, Trash2 } from 'lucide-react';
+import { ArrowUpRight, Trash2 } from 'lucide-react';
 import Button from '../components/Button';
 import ThemeToggle from '../components/Theme/ThemeToggle';
 import Transition from '../components/Transition';
+
+const links = [
+  { title: 'Contato', url: 'mailto:contato@retangulo.org' },
+  { title: 'Preview', url: 'https://dev.retangulo.pages.dev/' },
+  { title: 'Github', url: 'https://github.com/retangulo-org' },
+  { title: 'To-do', url: 'https://github.com/orgs/Retangulo-org/projects/1/views/1' },
+  { title: 'MySaas', url: 'https://mysaas.crom.live/saas/19' }
+]
 
 export default function Options() {
   return (
     <Transition className="flex flex-col justify-center items-center">
       <div className="w-full divide-neutral-200 dark:divide-neutral-800 divide-y-2">
         <div className="w-full py-2 flex flex-row justify-between items-center">
-          <h3 className="mb-0">Tema</h3>
+          <h3 className="mb-0 !text-text">Tema</h3>
           <ThemeToggle />
         </div>
         <div className="w-full py-2 flex flex-row justify-between items-center">
-          <h3 className="mb-0">Limpar cache</h3>
+          <h3 className="mb-0 !text-text">Limpar cache</h3>
           <Button
             size="icon"
             onClick={() => {
@@ -24,52 +32,19 @@ export default function Options() {
           </Button>
         </div>
       </div>
-      <div className="w-full mt-12 flex flex-row justify-center flex-wrap gap-4 text-text">
-        <span>
-          <a
-            className="flex flex-row justify-center items-center gap-2 hover:underline underline-offset-4"
-            href="https://github.com/retangulo-org"
-            target="_blank">
-            Github
-            <ExternalLink />
-          </a>
-        </span>
-        <span>
-          <a
-            className="flex flex-row justify-center items-center gap-2 hover:underline underline-offset-4"
-            href="mailto:contato@retangulo.org"
-            target="_blank">
-            Contato
-            <ExternalLink />
-          </a>
-        </span>
-        <span>
-          <a
-            className="flex flex-row justify-center items-center gap-2 hover:underline underline-offset-4"
-            href="https://dev.retangulo.pages.dev/"
-            target="_blank">
-            Preview
-            <ExternalLink />
-          </a>
-        </span>
-        <span>
-          <a
-            className="flex flex-row justify-center items-center gap-2 hover:underline underline-offset-4"
-            href="https://github.com/orgs/Retangulo-org/projects/1/views/1"
-            target="_blank">
-            To-do
-            <ExternalLink />
-          </a>
-        </span>
-        <span>
-          <a
-            className="flex flex-row justify-center items-center gap-2 hover:underline underline-offset-4"
-            href="https://mysaas.crom.live/saas/19"
-            target="_blank">
-            MySaas
-            <ExternalLink />
-          </a>
-        </span>
+      <h2 className="mt-8">Links</h2>
+      <div className="w-full divide-neutral-200 dark:divide-neutral-800 divide-y-2">
+        {links.map((link) => (
+          <div className="w-full flex flex-row justify-between items-center">
+            <a
+              className="w-full py-2 flex flex-row justify-between items-center hover:underline underline-offset-4 text-text"
+              href={link.url}
+              target="_blank">
+              <h3 className="!text-text">{link.title}</h3>
+              <ArrowUpRight className="w-8 h-8 text-text" />
+            </a>
+          </div>
+        ))}
       </div>
     </Transition>
   );
