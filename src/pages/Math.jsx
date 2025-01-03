@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
-import { ChevronDown, Dot, Settings } from 'lucide-react';
-import { Collapse } from '../components/Collapse';
+import { ChevronDown, Settings } from 'lucide-react';
 import Transition from '../components/Transition';
 import { Modal } from '../components/Modal';
+import Return from '../components/Return';
 
 export default function Math() {
   const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
@@ -102,10 +102,10 @@ export default function Math() {
       }
 
       if (calcMode === 'timer') {
-        return navigate(`/play/${type}/${calcMode}/${calcTime}/${calcNegative}/${calcSizeInputValue}`);
+        return navigate(`/math/${type}/${calcMode}/${calcTime}/${calcNegative}/${calcSizeInputValue}`);
       }
 
-      return navigate(`/play/${type}/${calcMode}/${speedInputValue}/${calcNegative}/${calcSizeInputValue}`);
+      return navigate(`/math/${type}/${calcMode}/${speedInputValue}/${calcNegative}/${calcSizeInputValue}`);
     };
 
     return (
@@ -120,6 +120,7 @@ export default function Math() {
 
   return (
     <Transition className="flex flex-col justify-center items-center gap-4">
+      <Return text="Matemática" url="/" onClick={() => navigate("/")} />
       <ul className="w-full flex flex-row justify-center items-center rounded-md font-semibold select-none">
         <li
           className={`${calcMode === "points" ? "bg-primary text-neutral-100 cursor-default" : "text-text bg-foreground"} w-full h-12 flex justify-center items-center rounded-l-md text-center cursor-pointer`}

@@ -111,6 +111,30 @@
     @apply mb-4 text-base text-neutral-700 dark:text-neutral-300;
   }
 
+  table {
+    @apply w-full text-center text-text bg-foreground border-2 border-primary rounded-xl table-fixed;
+  }
+
+  thead {
+    @apply font-bold;
+  }
+
+  tbody {
+    @apply font-normal;
+  }
+
+  th {
+    @apply border-2 border-background p-4;
+  }
+
+  tr {
+    @apply border-2 border-background p-2 hover:bg-background;
+  }
+
+  td {
+    @apply py-2 border-2 border-background;
+  }
+
   summary {
     @apply text-neutral-800 dark:text-neutral-200;
   }
