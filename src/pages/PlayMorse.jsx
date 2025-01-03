@@ -5,16 +5,15 @@ import Tag from '../components/Tag';
 import Button from '../components/Button';
 import { Collapse } from '../components/Collapse';
 import { Modal } from '../components/Modal';
-import { RandomNumber } from '../scripts/RandomNumber';
-import { StringNegativeFormat } from '../scripts/StringNegativeFormat';
-import { Calc } from '../scripts/Calc';
 import { Check, Clock, Frown, X } from 'lucide-react';
 import Transition from '../components/Transition';
 import Return from '../components/Return';
+import { MorseFormat } from '../scripts/MorseFormat';
+import { faker } from '@faker-js/faker';
 
-export default function Play() {
+export default function PlayMorse() {
+  const [palavra, setPalavra] = useState('');
   const [input, setInput] = useState('');
-  const [math, setMath] = useState({ n1: 0, n2: 0 });
   const [change, setChange] = useState(true);
   const [pontos, setPontos] = useState(0);
   const [score, setScore] = useState(0);
@@ -25,21 +24,19 @@ export default function Play() {
   const [timerEnd, setTimerEnd] = useState('');
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
-  const [stored, setStored] = useState({ n1: '', n2: '', n3: '' });
+  const [stored, setStored] = useState({ n1: '', n2: '' });
   const [storedArry, setStoredArry] = useState(['']);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalExitOpen, setIsModalExitOpen] = useState(false);
 
   const navigate = useNavigate();
 
-  const { type, mode, mode_config, negativo, maximo } = useParams();
+  const { type, mode, mode_config } = useParams();
 
   const configCalc = {
-    tipo: type || 'soma',
+    tipo: type || 'toMorse',
     mode: mode || 'points',
     mode_config: mode_config || '10',
-    negativo: negativo || 'only-positive',
-    maximo: maximo || 100,
   };
 
   useEffect(() => {
@@ -118,39 +115,15 @@ export default function Play() {
   };
 
   useEffect(() => {
-    setMath({
-      n1: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
-      n2: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
-    });
+    faker.locale = 'pt_BR';
+    setPalavra(faker.word.noun());
   }, [change]);
 
-  const calcContainer = Calc(
-    configCalc.tipo,
-    { n1: math.n1, n2: math.n2 },
-    { n1: stored.n1, n2: stored.n2, n3: stored.n3 },
-  );
-
-  const valueCheckDouble = (result) => {
-    let value = calcContainer.calculo;
-
-    if (result != value) {
-      valueChange();
-      setErros(erros + 1);
-      setScore(score - 1);
-      setColor('red');
-    }
-
-    if (result === value) {
-      valueChange();
-      setScore(score + 1);
-      setPontos(pontos + 1);
-      setColor('green');
-    }
-  };
+  const morseContainer = MorseFormat(configCalc.tipo, palavra, { n1: stored.n1, n2: stored.n2 });
 
   function valueCheck() {
-    let value = calcContainer.calculo;
-    let result = Number(input);
+    let value = morseContainer.result;
+    let result = input;
 
     if (configCalc.mode === 'points') {
       if (result != value) {
@@ -194,16 +167,16 @@ export default function Play() {
     setIsActive(true);
     setChange(!change);
     setInput('');
+    setStored(morseContainer.result);
     setStored({
-      n1: StringNegativeFormat(math.n1),
-      n2: StringNegativeFormat(math.n2),
-      n3: calcContainer.calculo,
+      n1: morseContainer.string,
+      n2: morseContainer.result,
     });
   };
 
   useEffect(() => {
     if (isActive) {
-      return addString(calcContainer.anterior);
+      return addString(morseContainer.anterior);
     }
   }, [stored]);
 
@@ -214,8 +187,8 @@ export default function Play() {
 
   return (
     <Transition className="w-full flex flex-col gap-4 items-center">
-      <Return text="Playground" url="/math" onClick={() => setIsModalExitOpen(true)} />
-      <h1 className="my-4">{calcContainer.calculoString}</h1>
+      <Return text="Playground" url="/morse" onClick={() => setIsModalExitOpen(true)} />
+      <h1 className="my-4">{morseContainer.string}</h1>
       <div className="mb-4">
         <div className="w-full flex flex-row gap-2 mb-2 justify-center flex-wrap">
           {configCalc.mode === 'points' && (
@@ -230,29 +203,18 @@ export default function Play() {
           <Tag text={seconds} tipo="time" />
         </div>
       </div>
-      {!['maior', 'menor'].includes(configCalc.tipo) && (
-        <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
-          <InputCalc
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Resultado..."
-            required={false}
-            autoFocus={true}
-            color={color}
-          />
-          <Button onClick={valueCheck}>Calcular</Button>
-        </form>
-      )}
-      {['maior', 'menor'].includes(configCalc.tipo) && (
-        <form className="flex flex-row gap-3 items-center w-full" onSubmit={handleSubmit}>
-          <Button variant="success" onClick={() => valueCheckDouble('verdadeiro')}>
-            <Check /> Verdadeiro
-          </Button>
-          <Button variant="danger" onClick={() => valueCheckDouble('falso')}>
-            <X /> Falso
-          </Button>
-        </form>
-      )}
+      <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
+        <InputCalc
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          placeholder="Resultado..."
+          required={false}
+          autoFocus={true}
+          color={color}
+          type="text"
+        />
+        <Button onClick={valueCheck}>Calcular</Button>
+      </form>
       <Collapse.Root>
         <Collapse.Toggle>Histórico</Collapse.Toggle>
         <Collapse.Content>
@@ -268,7 +230,7 @@ export default function Play() {
           )}
         </Collapse.Content>
       </Collapse.Root>
-      {calcContainer.texto && <p className="text-text">{calcContainer.texto}</p>}
+      {morseContainer.texto && <p className="text-text">{morseContainer.texto}</p>}
       <Modal.Root isOpen={isModalOpen}>
         <Modal.Title>Pontuação</Modal.Title>
         <Modal.Content>
@@ -331,7 +293,7 @@ export default function Play() {
             }}>
             Cancelar
           </Button>
-          <Button onClick={() => navigate('/math')}>Continuar</Button>
+          <Button onClick={() => navigate('/morse')}>Continuar</Button>
         </Modal.Actions>
       </Modal.Root>
     </Transition>

@@ -4,9 +4,11 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 
 import './index.css';
 import Root from './layout';
-// import Home from '../pages/Home';
+import Home from '../pages/Home';
 import Math from '../pages/Math';
+import Morse from '../pages/Morse'
 import Play from '../pages/Play';
+import PlayMorse from '../pages/PlayMorse';
 import Options from '../pages/Options';
 import Ui from '../pages/Ui';
 import ErrorPage from '../pages/ErrorPage';
@@ -14,8 +16,11 @@ import ErrorPage from '../pages/ErrorPage';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Root />}>
-      <Route index element={<Math />} />
-      <Route path="/play/:type/:mode/:mode_config/:negativo/:maximo" element={<Play />} />
+      <Route index element={<Home />} />
+      <Route path="/math" element={<Math />} />
+      <Route path="/math/:type/:mode/:mode_config/:negativo/:maximo" element={<Play />} />
+      <Route path="/morse" element={<Morse />} />
+      <Route path="/morse/:type/:mode/:mode_config/" element={<PlayMorse />} />
       <Route path="/opcoes" element={<Options />} />
       <Route path="/ui" element={<Ui />} />
       <Route path="/*" element={<ErrorPage />} />
