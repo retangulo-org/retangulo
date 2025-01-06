@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
-import Transition from '../components/Transition';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -20,7 +19,8 @@ export default function Home() {
   };
 
   return (
-    <Transition className="flex flex-col justify-center items-center gap-4">
+    <div className="flex flex-col justify-center items-center gap-4">
+      <h1 className="text-center my-8">Gerador de Cálculos Matemáticos e Código Morse</h1>
       <div className="w-full flex flex-col gap-4 text-center">
         <div className="w-full p-4 bg-foreground rounded-md space-y-4">
           <h4>Geradores</h4>
@@ -30,6 +30,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </Transition>
+    </div>
   );
 }

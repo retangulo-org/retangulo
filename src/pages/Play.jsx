@@ -213,21 +213,21 @@ export default function Play() {
   };
 
   return (
-    <Transition className="w-full flex flex-col gap-4 items-center">
+    <div className="w-full flex flex-col gap-4 items-center">
       <Return text="Playground" url="/math" onClick={() => setIsModalExitOpen(true)} />
       <h1 className="my-4">{calcContainer.calculoString}</h1>
       <div className="mb-4">
         <div className="w-full flex flex-row gap-2 mb-2 justify-center flex-wrap">
           {configCalc.mode === 'points' && (
-            <Tag text={`${score} / ${configCalc.mode_config}`} tipo="score" color={color} />
+            <Tag text={`${score} / ${configCalc.mode_config}`} type="score" color={color} />
           )}
           {configCalc.mode === 'timer' && (
             <>
-              <Tag text={pontos} tipo="pontos" />
-              <Tag text={erros} tipo="erros" />
+              <Tag text={pontos} type="pontos" />
+              <Tag text={erros} type="erros" />
             </>
           )}
-          <Tag text={seconds} tipo="time" />
+          <Tag text={seconds} type="time" />
         </div>
       </div>
       {!['maior', 'menor'].includes(configCalc.tipo) && (
@@ -334,6 +334,6 @@ export default function Play() {
           <Button onClick={() => navigate('/math')}>Continuar</Button>
         </Modal.Actions>
       </Modal.Root>
-    </Transition>
+    </div>
   );
 }

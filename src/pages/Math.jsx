@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
-import { ChevronDown, Settings } from 'lucide-react';
-import Transition from '../components/Transition';
+import { Settings } from 'lucide-react';
 import { Modal } from '../components/Modal';
 import Return from '../components/Return';
+import { Select } from '../components/Select';
 
 export default function Math() {
   const [calcSizeInputValue, setCalcSizeInputValue] = useState(() => {
@@ -42,57 +42,12 @@ export default function Math() {
 
   const calcSizeStorage = (event) => {
     localStorage.setItem('calcSizeValue', event.target.value);
-
     setCalcSizeInputValue(event.target.value);
   };
 
   const calcSpeedStorage = (event) => {
     localStorage.setItem('speedValue', event.target.value);
-
     setSpeedInputValue(event.target.value);
-  };
-
-  const CalcTimeToggle = () => {
-    let handleChange = (event) => {
-      setCalcTime(event.target.value);
-    };
-
-    return (
-      <div className="w-full relative flex flex-row justify-center items-center">
-        <ChevronDown className="absolute right-4 text-textAlt pointer-events-none" />
-        <select
-          className="appearance-none actionDefault w-full h-12 rounded-sm cursor-pointer font-semibold text-center select-none"
-          value={calcTime}
-          onChange={handleChange}>
-          <option value="30s">30 segundos</option>
-          <option value="1m">1 minuto</option>
-          <option value="5m">5 minutos</option>
-          <option value="10m">10 minutos</option>
-          <option value="30m">30 minutos</option>
-          <option value="infinito">Sem limite</option>
-        </select>
-      </div>
-    );
-  };
-
-  const CalcNegativeToggle = () => {
-    let handleChange = (event) => {
-      setCalcNegative(event.target.value);
-    };
-
-    return (
-      <div className="w-full relative flex flex-row justify-center items-center">
-        <ChevronDown className="absolute right-4 text-textAlt pointer-events-none" />
-        <select
-          className="appearance-none actionDefault w-full h-12 rounded-sm cursor-pointer font-semibold text-center select-none"
-          value={calcNegative}
-          onChange={handleChange}>
-          <option value="only-positive">Apenas positivo</option>
-          <option value="random-negative">Aleatório</option>
-          <option value="only-negative">Apenas negativo</option>
-        </select>
-      </div>
-    );
   };
 
   const LinkCalc = ({ text, type }) => {
@@ -119,23 +74,19 @@ export default function Math() {
   };
 
   return (
-    <Transition className="flex flex-col justify-center items-center gap-4">
-      <Return text="Matemática" url="/" onClick={() => navigate("/")} />
-      <ul className="w-full flex flex-row justify-center items-center rounded-md font-semibold select-none">
-        <li
-          className={`${calcMode === "points" ? "bg-primary text-neutral-100 cursor-default" : "text-text bg-foreground"} w-full h-12 flex justify-center items-center rounded-l-md text-center cursor-pointer`}
-          onClick={() => setCalcMode('points')}
-        >
+    <div className="flex flex-col justify-center items-center gap-4">
+      <Return text="Matemática" url="/" onClick={() => navigate('/')} />
+      <div className="w-full flex flex-row justify-center items-center gap-4 rounded-md font-semibold select-none">
+        <Button variant={calcMode === 'points' ? 'primary' : 'outline'} onClick={() => setCalcMode('points')}>
           Pontuação
-        </li>
-        <li 
-          className={`${calcMode === "timer" ? "bg-primary text-neutral-100 cursor-default" : "text-text bg-foreground"} w-full h-12 flex justify-center items-center rounded-r-md text-center cursor-pointer`}
-          onClick={() => setCalcMode('timer')}
-        >
+        </Button>
+        <Button variant={calcMode === 'timer' ? 'primary' : 'outline'} onClick={() => setCalcMode('timer')}>
           Tempo
-        </li>
-      </ul>
-      <Button variant="primary" onClick={() => setModal(!modal)}><Settings /> Configuração do gerador</Button>
+        </Button>
+      </div>
+      <Button variant="primary" onClick={() => setModal(!modal)}>
+        <Settings /> Configuração do gerador
+      </Button>
       <Modal.Root isOpen={modal}>
         <Modal.Title>Configuração</Modal.Title>
         <Modal.Content className="flex flex-col gap-4">
@@ -148,7 +99,14 @@ export default function Math() {
             ) : (
               <>
                 <h4>Tempo máximo</h4>
-                <CalcTimeToggle />
+                <Select.Root value={calcTime} onChange={(event) => setCalcTime(event.target.value)}>
+                  <Select.Content value="30s" option="30 segundos" />
+                  <Select.Content value="1m" option="1 minuto" />
+                  <Select.Content value="5m" option="5 minutos" />
+                  <Select.Content value="10m" option="10 minutos" />
+                  <Select.Content value="30m" option="30 minutos" />
+                  <Select.Content value="infinito" option="Sem limite" />
+                </Select.Root>
               </>
             )}
           </div>
@@ -158,7 +116,11 @@ export default function Math() {
           </div>
           <div className="space-y-2">
             <h4>Positivo ou negativo</h4>
-            <CalcNegativeToggle />
+            <Select.Root value={calcNegative} onChange={(event) => setCalcNegative(event.target.value)}>
+              <Select.Content value="only-positive" option="Apenas positivo" />
+              <Select.Content value="random-negative" option="Aleatório" />
+              <Select.Content value="only-negative" option="Apenas negativo" />
+            </Select.Root>
           </div>
         </Modal.Content>
         <Modal.Actions>
@@ -197,6 +159,6 @@ export default function Math() {
           </div>
         </div>
       </div>
-    </Transition>
+    </div>
   );
 }

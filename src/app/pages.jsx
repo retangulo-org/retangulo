@@ -6,7 +6,7 @@ import './index.css';
 import Root from './layout';
 import Home from '../pages/Home';
 import Math from '../pages/Math';
-import Morse from '../pages/Morse'
+import Morse from '../pages/Morse';
 import Play from '../pages/Play';
 import PlayMorse from '../pages/PlayMorse';
 import Options from '../pages/Options';
@@ -20,7 +20,7 @@ const router = createBrowserRouter(
       <Route path="/math" element={<Math />} />
       <Route path="/math/:type/:mode/:mode_config/:negativo/:maximo" element={<Play />} />
       <Route path="/morse" element={<Morse />} />
-      <Route path="/morse/:type/:mode/:mode_config/" element={<PlayMorse />} />
+      <Route path="/morse/:type/:translate/:mode/:mode_config/" element={<PlayMorse />} />
       <Route path="/opcoes" element={<Options />} />
       <Route path="/ui" element={<Ui />} />
       <Route path="/*" element={<ErrorPage />} />

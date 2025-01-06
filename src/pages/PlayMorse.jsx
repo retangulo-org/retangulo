@@ -6,7 +6,6 @@ import Button from '../components/Button';
 import { Collapse } from '../components/Collapse';
 import { Modal } from '../components/Modal';
 import { Check, Clock, Frown, X } from 'lucide-react';
-import Transition from '../components/Transition';
 import Return from '../components/Return';
 import { MorseFormat } from '../scripts/MorseFormat';
 import { faker } from '@faker-js/faker';
@@ -31,10 +30,11 @@ export default function PlayMorse() {
 
   const navigate = useNavigate();
 
-  const { type, mode, mode_config } = useParams();
+  const { type, translate, mode, mode_config } = useParams();
 
   const configCalc = {
-    tipo: type || 'toMorse',
+    type: type || 'word',
+    translate: translate || 'toMorse',
     mode: mode || 'points',
     mode_config: mode_config || '10',
   };
@@ -115,11 +115,17 @@ export default function PlayMorse() {
   };
 
   useEffect(() => {
-    faker.locale = 'pt_BR';
-    setPalavra(faker.word.noun());
+    switch (configCalc.type) {
+      case 'word':
+        setPalavra(faker.word.noun());
+        break;
+      case 'alphabet':
+        setPalavra(faker.string.alpha({ length: 1, casing: 'upper' }));
+        break;
+    }
   }, [change]);
 
-  const morseContainer = MorseFormat(configCalc.tipo, palavra, { n1: stored.n1, n2: stored.n2 });
+  const morseContainer = MorseFormat(configCalc.translate, palavra, { n1: stored.n1, n2: stored.n2 });
 
   function valueCheck() {
     let value = morseContainer.result;
@@ -186,21 +192,21 @@ export default function PlayMorse() {
   };
 
   return (
-    <Transition className="w-full flex flex-col gap-4 items-center">
+    <div className="w-full flex flex-col gap-4 items-center">
       <Return text="Playground" url="/morse" onClick={() => setIsModalExitOpen(true)} />
       <h1 className="my-4">{morseContainer.string}</h1>
       <div className="mb-4">
         <div className="w-full flex flex-row gap-2 mb-2 justify-center flex-wrap">
           {configCalc.mode === 'points' && (
-            <Tag text={`${score} / ${configCalc.mode_config}`} tipo="score" color={color} />
+            <Tag text={`${score} / ${configCalc.mode_config}`} type="score" color={color} />
           )}
           {configCalc.mode === 'timer' && (
             <>
-              <Tag text={pontos} tipo="pontos" />
-              <Tag text={erros} tipo="erros" />
+              <Tag text={pontos} type="pontos" />
+              <Tag text={erros} type="erros" />
             </>
           )}
-          <Tag text={seconds} tipo="time" />
+          <Tag text={seconds} type="time" />
         </div>
       </div>
       <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
@@ -296,6 +302,6 @@ export default function PlayMorse() {
           <Button onClick={() => navigate('/morse')}>Continuar</Button>
         </Modal.Actions>
       </Modal.Root>
-    </Transition>
+    </div>
   );
 }

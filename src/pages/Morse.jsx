@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
 import Button from '../components/Button';
-import { ChevronDown, Settings } from 'lucide-react';
-import Transition from '../components/Transition';
+import { Settings } from 'lucide-react';
 import { Modal } from '../components/Modal';
 import Return from '../components/Return';
+import { Select } from '../components/Select';
 
 export default function Morse() {
-  const [calcMode, setCalcMode] = useState(() => {
+  const [morseMode, setMorseMode] = useState(() => {
     return localStorage.getItem('modeValue') || 'points';
   });
 
@@ -16,8 +16,12 @@ export default function Morse() {
     return localStorage.getItem('speedValue') || 10;
   });
 
-  const [calcTime, setCalcTime] = useState(() => {
+  const [morseTime, setMorseTime] = useState(() => {
     return localStorage.getItem('timerValue') || '1m';
+  });
+
+  const [morseTranslate, setMorseTranslate] = useState(() => {
+    return localStorage.getItem('translateValue') || 'toMorse';
   });
 
   const [modal, setModal] = useState(false);
@@ -25,47 +29,26 @@ export default function Morse() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.setItem('modeValue', calcMode.toString());
+    localStorage.setItem('modeValue', morseMode.toString());
     localStorage.setItem('speedValue', speedInputValue.toString());
-    localStorage.setItem('timerValue', calcTime.toString());
-  }, [calcMode, speedInputValue, calcTime]);
+    localStorage.setItem('timerValue', morseTime.toString());
+    localStorage.setItem('translateValue', morseTranslate.toString());
+  }, [morseMode, speedInputValue, morseTime, morseTranslate]);
 
   const calcSpeedStorage = (event) => {
     localStorage.setItem('speedValue', event.target.value);
-
     setSpeedInputValue(event.target.value);
-  };
-
-  const CalcTimeToggle = () => {
-    let handleChange = (event) => {
-      setCalcTime(event.target.value);
-    };
-
-    return (
-      <div className="w-full relative flex flex-row justify-center items-center">
-        <ChevronDown className="absolute right-4 text-textAlt pointer-events-none" />
-        <select
-          className="appearance-none actionDefault w-full h-12 rounded-sm cursor-pointer font-semibold text-center select-none"
-          value={calcTime}
-          onChange={handleChange}>
-          <option value="30s">30 segundos</option>
-          <option value="1m">1 minuto</option>
-          <option value="5m">5 minutos</option>
-          <option value="10m">10 minutos</option>
-          <option value="30m">30 minutos</option>
-          <option value="infinito">Sem limite</option>
-        </select>
-      </div>
-    );
   };
 
   const LinkCalc = ({ text, type }) => {
     let modeSelect = () => {
-      if (calcMode === 'timer') {
-        return navigate(`/morse/${type}/${calcMode}/${calcTime}`);
+      if (morseMode === 'timer') {
+        return navigate(`/morse/${type}/${morseTranslate}/${morseMode}/${morseTime}`);
       }
 
-      return navigate(`/morse/${type}/${calcMode}/${speedInputValue}`);
+      if (morseMode === 'points') {
+        return navigate(`/morse/${type}/${morseTranslate}/${morseMode}/${speedInputValue}`);
+      }
     };
 
     return (
@@ -79,20 +62,26 @@ export default function Morse() {
   };
 
   return (
-    <Transition className="flex flex-col justify-center items-center gap-4">
+    <div className="flex flex-col justify-center items-center gap-4">
       <Return text="Código Morse (beta)" url="/" onClick={() => navigate('/')} />
-      <ul className="w-full flex flex-row justify-center items-center rounded-md font-semibold select-none">
-        <li
-          className={`${calcMode === 'points' ? 'bg-primary text-neutral-100 cursor-default' : 'text-text bg-foreground'} w-full h-12 flex justify-center items-center rounded-l-md text-center cursor-pointer`}
-          onClick={() => setCalcMode('points')}>
+      <div className="w-full flex flex-row justify-center items-center gap-4 rounded-md font-semibold select-none">
+        <Button variant={morseMode === 'points' ? 'primary' : 'outline'} onClick={() => setMorseMode('points')}>
           Pontuação
-        </li>
-        <li
-          className={`${calcMode === 'timer' ? 'bg-primary text-neutral-100 cursor-default' : 'text-text bg-foreground'} w-full h-12 flex justify-center items-center rounded-r-md text-center cursor-pointer`}
-          onClick={() => setCalcMode('timer')}>
+        </Button>
+        <Button variant={morseMode === 'timer' ? 'primary' : 'outline'} onClick={() => setMorseMode('timer')}>
           Tempo
-        </li>
-      </ul>
+        </Button>
+      </div>
+      <div className="w-full flex flex-row justify-center items-center gap-4 rounded-md font-semibold select-none">
+        <Button
+          variant={morseTranslate === 'toMorse' ? 'primary' : 'outline'}
+          onClick={() => setMorseTranslate('toMorse')}>
+          Texto Para Morse
+        </Button>
+        <Button variant={morseTranslate === 'toTxt' ? 'primary' : 'outline'} onClick={() => setMorseTranslate('toTxt')}>
+          Morse Para Texto
+        </Button>
+      </div>
       <Button variant="primary" onClick={() => setModal(!modal)}>
         <Settings /> Configuração do gerador
       </Button>
@@ -100,7 +89,7 @@ export default function Morse() {
         <Modal.Title>Configuração</Modal.Title>
         <Modal.Content className="flex flex-col gap-4">
           <div className="space-y-2">
-            {calcMode === 'points' ? (
+            {morseMode === 'points' ? (
               <>
                 <h4>Pontuação máxima</h4>
                 <Input value={speedInputValue} onChange={calcSpeedStorage} placeholder="Valor..." type="number" />
@@ -108,7 +97,14 @@ export default function Morse() {
             ) : (
               <>
                 <h4>Tempo máximo</h4>
-                <CalcTimeToggle />
+                <Select.Root value={morseTime} onChange={(event) => setMorseTime(event.target.value)}>
+                  <Select.Content value="30s" option="30 segundos" />
+                  <Select.Content value="1m" option="1 minuto" />
+                  <Select.Content value="5m" option="5 minutos" />
+                  <Select.Content value="10m" option="10 minutos" />
+                  <Select.Content value="30m" option="30 minutos" />
+                  <Select.Content value="infinito" option="Sem limite" />
+                </Select.Root>
               </>
             )}
           </div>
@@ -127,8 +123,8 @@ export default function Morse() {
         <div className="w-full p-4 bg-foreground rounded-md space-y-4">
           <h4>Palavras</h4>
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            <LinkCalc text="Palavra para Morse" type="toMorse" />
-            <LinkCalc text="Morse para Palavra" type="toTxt" />
+            <LinkCalc text="Palavra" type="word" />
+            <LinkCalc text="Letras" type="alphabet" />
           </div>
         </div>
       </div>
@@ -365,6 +361,6 @@ export default function Morse() {
         </table>
       </div>
       <p>lorem ipsum = .-.. --- .-. . -- / .. .--. ... ..- --</p>
-    </Transition>
+    </div>
   );
 }
