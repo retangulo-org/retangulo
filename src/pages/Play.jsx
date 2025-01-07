@@ -179,8 +179,8 @@ export default function Play() {
   };
 
   function valueCheck() {
-    let value = gameContainer.result;
-    let result = input;
+    let value = gameContainer.result.toString().toLowerCase();
+    let result = input.toString().toLowerCase();
 
     if (gameConfig.mode === 'points') {
       if (result != value) {
@@ -291,7 +291,7 @@ export default function Play() {
         </div>
         <h4 className="mt-4 mb-2">Valor máximo</h4>
         <Input
-          value={gameConfig.maximo}
+          value={max}
           onChange={(event) => {
             setMax(event.target.value);
             Reset();
@@ -436,6 +436,7 @@ export default function Play() {
             placeholder="Resultado..."
             required={false}
             autoFocus={true}
+            type={gameConfig === 'math' ? 'number' : 'text'}
             color={color}
           />
           <Button onClick={valueCheck}>Calcular</Button>
@@ -487,7 +488,6 @@ export default function Play() {
                     Reset();
                   }}
                   placeholder="Valor..."
-                  type="number"
                 />
               </>
             ) : (
