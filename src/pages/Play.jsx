@@ -404,7 +404,7 @@ export default function Play() {
           Timer
         </Button>
         <div className="w-3 bg-foreground"></div>
-        <Button variant="primary" icon onClick={() => setIsModalExitOpen(true)}>
+        <Button variant="primary" size="icon" onClick={() => setIsModalExitOpen(true)}>
           <Settings />
         </Button>
       </div>
