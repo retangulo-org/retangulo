@@ -13,7 +13,7 @@ export default function Tag({ text, type, color = undefined }) {
         <Check className="w-5 h-5" /> {text}
       </span>
     );
-  } 
+  }
 
   if (type === 'score') {
     if (color === 'green') {
@@ -33,7 +33,7 @@ export default function Tag({ text, type, color = undefined }) {
     if (color === '') {
       return <span className={`${variant.default} bg-neutral-600 text-neutral-100`}>{text}</span>;
     }
-  };
+  }
 
   if (type === 'erros') {
     return (
