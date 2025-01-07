@@ -20,8 +20,8 @@ export default function Header() {
           `${
             isActive
               ? 'bg-neutral-950 dark:bg-neutral-100 text-neutral-100 dark:text-neutral-950 cursor-default'
-              : 'text-neutral-950 dark:text-neutral-100 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-950'
-          } w-full md:w-auto p-2 rounded-md hover:no-underline flex flex-row gap-2 font-semibold`
+              : 'text-neutral-950 dark:text-neutral-100 dark:hover:bg-neutral-800 hover:bg-neutral-200'
+          } w-full md:w-auto py-2 px-4 rounded-sm hover:no-underline flex flex-row gap-2 font-semibold`
         }>
         {children}
       </NavLink>
@@ -29,7 +29,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-neutral-200 border-gray-200 dark:bg-neutral-800 p-4">
+    <header className="border-b-2 border-foreground p-4">
       <div className="w-full flex flex-wrap items-center justify-between mx-auto">
         <a href="/" className="flex items-center rtl:space-x-reverse">
           <span className="sr-only">Logo do site</span>

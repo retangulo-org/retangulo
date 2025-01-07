@@ -2,19 +2,18 @@ import React from 'react';
 import { ArrowUpRight, Trash2 } from 'lucide-react';
 import Button from '../components/Button';
 import ThemeToggle from '../components/Theme/ThemeToggle';
-import Transition from '../components/Transition';
 
 const links = [
   { title: 'Contato', url: 'mailto:contato@retangulo.org' },
   { title: 'Preview', url: 'https://dev.retangulo.pages.dev/' },
   { title: 'Github', url: 'https://github.com/retangulo-org' },
   { title: 'To-do', url: 'https://github.com/orgs/Retangulo-org/projects/1/views/1' },
-  { title: 'MySaas', url: 'https://mysaas.crom.live/saas/19' }
-]
+  { title: 'MySaas', url: 'https://mysaas.crom.live/saas/19' },
+];
 
 export default function Options() {
   return (
-    <Transition className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center">
       <div className="w-full divide-neutral-200 dark:divide-neutral-800 divide-y-2">
         <div className="w-full py-2 flex flex-row justify-between items-center">
           <h3 className="mb-0 !text-text">Tema</h3>
@@ -46,6 +45,6 @@ export default function Options() {
           </div>
         ))}
       </div>
-    </Transition>
+    </div>
   );
 }

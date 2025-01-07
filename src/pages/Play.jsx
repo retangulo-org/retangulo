@@ -1,19 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import InputCalc from '../components/InputCalc';
+import Input from '../components/Input';
 import Tag from '../components/Tag';
 import Button from '../components/Button';
 import { Collapse } from '../components/Collapse';
+import { Select } from '../components/Select';
 import { Modal } from '../components/Modal';
 import { RandomNumber } from '../scripts/RandomNumber';
 import { StringNegativeFormat } from '../scripts/StringNegativeFormat';
 import { Calc } from '../scripts/Calc';
-import { Check, Clock, Frown, X } from 'lucide-react';
-import Transition from '../components/Transition';
-import Return from '../components/Return';
+import { MorseFormat } from '../scripts/MorseFormat';
+import { Check, Clock, Frown, Settings, X } from 'lucide-react';
+import { faker } from '@faker-js/faker';
 
 export default function Play() {
+  const [game, setGame] = useState('math');
+  const [type, setType] = useState('soma');
+  const [mode, setMode] = useState('points');
+  const [modeConfig, setModeConfig] = useState(10);
+  const [max, setMax] = useState(100);
+  const [negative, setNegative] = useState('only-positive');
+  const [word, setWord] = useState('');
   const [input, setInput] = useState('');
+  const [translate, setTranslate] = useState('toMorse');
   const [math, setMath] = useState({ n1: 0, n2: 0 });
   const [change, setChange] = useState(true);
   const [pontos, setPontos] = useState(0);
@@ -30,16 +39,14 @@ export default function Play() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalExitOpen, setIsModalExitOpen] = useState(false);
 
-  const navigate = useNavigate();
-
-  const { type, mode, mode_config, negativo, maximo } = useParams();
-
-  const configCalc = {
-    tipo: type || 'soma',
-    mode: mode || 'points',
-    mode_config: mode_config || '10',
-    negativo: negativo || 'only-positive',
-    maximo: maximo || 100,
+  const gameConfig = {
+    game: game,
+    type: type,
+    mode: mode,
+    mode_config: modeConfig,
+    negative: negative,
+    maximo: max,
+    translate: translate,
   };
 
   useEffect(() => {
@@ -58,9 +65,9 @@ export default function Play() {
     setTimerEnd(`${minutes}m ${seconds}s ${milliseconds}ms`);
   };
 
-  if (configCalc.mode === 'points') {
+  if (gameConfig.mode === 'points') {
     useEffect(() => {
-      if (score >= Number(configCalc.mode_config)) {
+      if (score >= Number(gameConfig.mode_config)) {
         openModal();
       }
     }, [pontos]);
@@ -76,11 +83,11 @@ export default function Play() {
     return () => clearInterval(interval);
   }, [isActive]);
 
-  if (configCalc.mode === 'timer') {
+  if (gameConfig.mode === 'timer') {
     useEffect(() => {
       let timerSelect;
 
-      switch (configCalc.mode_config) {
+      switch (gameConfig.mode_config) {
         case '30s':
           timerSelect = 30;
           break;
@@ -117,21 +124,44 @@ export default function Play() {
     setIsModalOpen(true);
   };
 
-  useEffect(() => {
-    setMath({
-      n1: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
-      n2: RandomNumber(configCalc.tipo, configCalc.negativo, configCalc.maximo),
-    });
-  }, [change]);
+  if (gameConfig.game === 'math') {
+    useEffect(() => {
+      setMath({
+        n1: RandomNumber(gameConfig.type, gameConfig.negative, gameConfig.maximo),
+        n2: RandomNumber(gameConfig.type, gameConfig.negative, gameConfig.maximo),
+      });
+    }, [change]);
+  }
 
-  const calcContainer = Calc(
-    configCalc.tipo,
-    { n1: math.n1, n2: math.n2 },
-    { n1: stored.n1, n2: stored.n2, n3: stored.n3 },
-  );
+  if (gameConfig.game === 'morse') {
+    useEffect(() => {
+      switch (gameConfig.type) {
+        case 'word':
+          setWord(faker.word.noun());
+          break;
+        case 'alphabet':
+          setWord(faker.string.alpha({ length: 1, casing: 'upper' }));
+          break;
+      }
+    }, [change]);
+  }
+
+  let gameContainer;
+
+  if (gameConfig.game === 'math') {
+    gameContainer = Calc(
+      gameConfig.type,
+      { n1: math.n1, n2: math.n2 },
+      { n1: stored.n1, n2: stored.n2, n3: stored.n3 },
+    );
+  }
+
+  if (gameConfig.game === 'morse') {
+    gameContainer = MorseFormat(gameConfig.translate, word, { n1: stored.n1, n2: stored.n2 });
+  }
 
   const valueCheckDouble = (result) => {
-    let value = calcContainer.calculo;
+    let value = gameContainer.result;
 
     if (result != value) {
       valueChange();
@@ -149,10 +179,10 @@ export default function Play() {
   };
 
   function valueCheck() {
-    let value = calcContainer.calculo;
-    let result = Number(input);
+    let value = gameContainer.result.toString().toLowerCase();
+    let result = input.toString().toLowerCase();
 
-    if (configCalc.mode === 'points') {
+    if (gameConfig.mode === 'points') {
       if (result != value) {
         valueChange();
         setErros(erros + 1);
@@ -167,7 +197,7 @@ export default function Play() {
         setColor('green');
       }
     }
-    if (configCalc.mode === 'timer') {
+    if (gameConfig.mode === 'timer') {
       if (result != value) {
         valueChange();
         setErros(erros + 1);
@@ -194,57 +224,231 @@ export default function Play() {
     setIsActive(true);
     setChange(!change);
     setInput('');
-    setStored({
-      n1: StringNegativeFormat(math.n1),
-      n2: StringNegativeFormat(math.n2),
-      n3: calcContainer.calculo,
-    });
+    if (gameConfig.game === 'math') {
+      setStored({
+        n1: StringNegativeFormat(math.n1),
+        n2: StringNegativeFormat(math.n2),
+        n3: gameContainer.result,
+      });
+    }
+
+    if (gameConfig.game === 'morse') {
+      setStored({
+        n1: gameContainer.string,
+        n2: gameContainer.result,
+      });
+    }
   };
 
   useEffect(() => {
     if (isActive) {
-      return addString(calcContainer.anterior);
+      return addString(gameContainer.anterior);
     }
   }, [stored]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    valueCheck();
+  const Reset = () => {
+    setChange(!change);
+    setInput('');
+    setPontos(0);
+    setScore(0);
+    setErros(0);
+    setColor('');
+    setTimer(false);
+    setTimerStorage(0);
+    setTimerEnd('');
+    setSeconds(0);
+    setIsActive(false);
+    setStored({ n1: '', n2: '', n3: '' });
+    setStoredArry(['']);
   };
 
+  function MathConfig() {
+    return (
+      <>
+        <h4 className="mb-2">Modos</h4>
+        <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground shadow-inner rounded-md">
+          {[
+            ['Soma', 'soma'],
+            ['Subtração', 'subt'],
+            ['Multiplicação', 'mult'],
+            ['Divisão', 'divi'],
+            ['Raiz Quadrada', 'raiz2'],
+            ['Expoente 2', 'expo2'],
+            ['Expoente 3', 'expo3'],
+            ['Maior', 'maior'],
+            ['Menor', 'menor'],
+          ].map(([title, key]) => (
+            <Button
+              key={key}
+              variant={gameConfig.type === key ? 'primary' : 'outline'}
+              onClick={() => {
+                setType(key);
+                Reset();
+              }}>
+              {title}
+            </Button>
+          ))}
+        </div>
+        <h4 className="mt-4 mb-2">Valor máximo</h4>
+        <Input
+          value={max}
+          onChange={(event) => {
+            setMax(event.target.value);
+            Reset();
+          }}
+          placeholder="Valor..."
+        />
+        <h4 className="mt-4 mb-2">Positivo ou negativo</h4>
+        <div className="flex flex-row gap-2 p-2 overflow-x-auto border-2 border-foreground shadow-inner rounded-md">
+          {[
+            ['Apenas positivo', 'only-positive'],
+            ['Aleatório', 'random-negative'],
+            ['Apenas negativo', 'only-negative'],
+          ].map(([title, key]) => (
+            <Button
+              key={key}
+              variant={gameConfig.negative === key ? 'primary' : 'outline'}
+              onClick={() => {
+                setNegative(key);
+                Reset();
+              }}>
+              {title}
+            </Button>
+          ))}
+        </div>
+      </>
+    );
+  }
+
+  function MorseConfig() {
+    return (
+      <>
+        <h4 className="mb-2">Tradução</h4>
+        <div className="flex flex-row gap-2">
+          <Button
+            variant={gameConfig.translate === 'toMorse' ? 'primary' : 'outline'}
+            onClick={() => {
+              setTranslate('toMorse');
+              Reset();
+            }}>
+            Texto Para Morse
+          </Button>
+          <Button
+            variant={gameConfig.translate === 'toTxt' ? 'primary' : 'outline'}
+            onClick={() => {
+              setTranslate('toTxt');
+              Reset();
+            }}>
+            Morse Para Texto
+          </Button>
+        </div>
+        <h4 className="mt-4 mb-2">Modos</h4>
+        <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground shadow-inner rounded-md">
+          {[
+            ['Palavra', 'word'],
+            ['Alfabeto', 'alphabet'],
+          ].map(([title, key]) => (
+            <Button
+              key={key}
+              variant={gameConfig.type === key ? 'primary' : 'outline'}
+              onClick={() => {
+                setType(key);
+                Reset();
+              }}>
+              {title}
+            </Button>
+          ))}
+        </div>
+      </>
+    );
+  }
+
   return (
-    <Transition className="w-full flex flex-col gap-4 items-center">
-      <Return text="Playground" url="/math" onClick={() => setIsModalExitOpen(true)} />
-      <h1 className="my-4">{calcContainer.calculoString}</h1>
+    <div className="w-full flex flex-col gap-4 items-center">
+      <div className="w-full flex flex-row items-center gap-2 p-2 rounded-md overflow-x-auto shadow-inner border-2 border-foreground">
+        <Button
+          variant={gameConfig.game === 'math' ? 'primary' : 'outline'}
+          onClick={() => {
+            setGame('math');
+            setType('soma');
+            Reset();
+          }}>
+          Matemática
+        </Button>
+        <Button
+          variant={gameConfig.game === 'morse' ? 'primary' : 'outline'}
+          onClick={() => {
+            setGame('morse');
+            setType('word');
+            Reset();
+          }}>
+          Morse
+        </Button>
+        <div className="w-3 bg-foreground"></div>
+        <Button
+          variant={gameConfig.mode === 'points' ? 'primary' : 'outline'}
+          onClick={() => {
+            setMode('points');
+            setModeConfig(10);
+            Reset();
+          }}>
+          Pontos
+        </Button>
+        <Button
+          variant={gameConfig.mode === 'timer' ? 'primary' : 'outline'}
+          onClick={() => {
+            setMode('timer');
+            setModeConfig('1m');
+            Reset();
+          }}>
+          Timer
+        </Button>
+        <div className="w-3 bg-foreground"></div>
+        <Button variant="primary" icon onClick={() => setIsModalExitOpen(true)}>
+          <Settings />
+        </Button>
+      </div>
+      <h1 className="my-4">{gameContainer.string}</h1>
       <div className="mb-4">
         <div className="w-full flex flex-row gap-2 mb-2 justify-center flex-wrap">
-          {configCalc.mode === 'points' && (
-            <Tag text={`${score} / ${configCalc.mode_config}`} tipo="score" color={color} />
+          {gameConfig.mode === 'points' && (
+            <Tag text={`${score} / ${gameConfig.mode_config}`} type="score" color={color} />
           )}
-          {configCalc.mode === 'timer' && (
+          {gameConfig.mode === 'timer' && (
             <>
-              <Tag text={pontos} tipo="pontos" />
-              <Tag text={erros} tipo="erros" />
+              <Tag text={pontos} type="pontos" />
+              <Tag text={erros} type="erros" />
             </>
           )}
-          <Tag text={seconds} tipo="time" />
+          <Tag text={seconds} type="time" />
         </div>
       </div>
-      {!['maior', 'menor'].includes(configCalc.tipo) && (
-        <form className="flex flex-col gap-3 items-center w-full" onSubmit={handleSubmit}>
+      {!['maior', 'menor'].includes(gameConfig.type) && (
+        <form
+          className="flex flex-col gap-3 items-center w-full"
+          onSubmit={(e) => {
+            e.preventDefault();
+            valueCheck();
+          }}>
           <InputCalc
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Resultado..."
             required={false}
             autoFocus={true}
+            type={gameConfig === 'math' ? 'number' : 'text'}
             color={color}
           />
           <Button onClick={valueCheck}>Calcular</Button>
         </form>
       )}
-      {['maior', 'menor'].includes(configCalc.tipo) && (
-        <form className="flex flex-row gap-3 items-center w-full" onSubmit={handleSubmit}>
+      {['maior', 'menor'].includes(gameConfig.type) && (
+        <form
+          className="flex flex-row gap-3 items-center w-full"
+          onSubmit={(e) => {
+            e.preventDefault();
+            valueCheck();
+          }}>
           <Button variant="success" onClick={() => valueCheckDouble('verdadeiro')}>
             <Check /> Verdadeiro
           </Button>
@@ -268,7 +472,54 @@ export default function Play() {
           )}
         </Collapse.Content>
       </Collapse.Root>
-      {calcContainer.texto && <p className="text-text">{calcContainer.texto}</p>}
+      {gameContainer.texto && <p className="text-text">{gameContainer.texto}</p>}
+      <Modal.Root isOpen={isModalExitOpen}>
+        <Modal.Content>
+          <div>
+            {game === 'math' && <MathConfig />}
+            {game === 'morse' && <MorseConfig />}
+            {mode === 'points' ? (
+              <>
+                <h4 className="mt-4 mb-2">Pontuação máxima</h4>
+                <Input
+                  value={modeConfig}
+                  onChange={(event) => {
+                    setModeConfig(event.target.value);
+                    Reset();
+                  }}
+                  placeholder="Valor..."
+                />
+              </>
+            ) : (
+              <>
+                <h4 className="mt-4 mb-2">Tempo máximo</h4>
+                <Select.Root
+                  value={modeConfig}
+                  onChange={(event) => {
+                    setModeConfig(event.target.value);
+                    Reset();
+                  }}>
+                  <Select.Content value="30s" option="30 segundos" />
+                  <Select.Content value="1m" option="1 minuto" />
+                  <Select.Content value="5m" option="5 minutos" />
+                  <Select.Content value="10m" option="10 minutos" />
+                  <Select.Content value="30m" option="30 minutos" />
+                  <Select.Content value="infinito" option="Sem limite" />
+                </Select.Root>
+              </>
+            )}
+          </div>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+            variant="danger"
+            onClick={() => {
+              setIsModalExitOpen(false);
+            }}>
+            Fechar
+          </Button>
+        </Modal.Actions>
+      </Modal.Root>
       <Modal.Root isOpen={isModalOpen}>
         <Modal.Title>Pontuação</Modal.Title>
         <Modal.Content>
@@ -289,51 +540,20 @@ export default function Play() {
               <div className="flex flex-row justify-center gap-4">
                 <Clock /> Tempo
               </div>
-              {configCalc.mode === 'points' ? `${timerEnd}` : `${seconds}`}
+              {gameConfig.mode === 'points' ? `${timerEnd}` : `${seconds}`}
             </div>
           </div>
         </Modal.Content>
         <Modal.Actions>
-          <Button variant="outline" onClick={() => navigate('/')}>
-            Gerador
-          </Button>
           <Button
             onClick={() => {
-              setChange(!change);
-              setInput('');
-              setPontos(0);
-              setScore(0);
-              setErros(0);
-              setColor('');
-              setTimer(false);
-              setTimerStorage(0);
-              setTimerEnd('');
-              setSeconds(0);
-              setIsActive(false);
-              setStored({ n1: '', n2: '', n3: '' });
-              setStoredArry(['']);
-              setIsModalOpen(!isModalOpen);
+              Reset();
+              setIsModalOpen(false);
             }}>
             Reiniciar
           </Button>
         </Modal.Actions>
       </Modal.Root>
-      <Modal.Root isOpen={isModalExitOpen}>
-        <Modal.Title>Tem certeza?</Modal.Title>
-        <Modal.Content>
-          <p>Todo o seu progresso será perdido ao continuar.</p>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            variant="outline"
-            onClick={() => {
-              setIsModalExitOpen(false);
-            }}>
-            Cancelar
-          </Button>
-          <Button onClick={() => navigate('/math')}>Continuar</Button>
-        </Modal.Actions>
-      </Modal.Root>
-    </Transition>
+    </div>
   );
 }

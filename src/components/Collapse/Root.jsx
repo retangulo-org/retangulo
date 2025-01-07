@@ -1,9 +1,4 @@
 import React, { useState, createContext } from 'react';
-import PropTypes from 'prop-types';
-
-Root.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export const RootContext = createContext(undefined);
 
