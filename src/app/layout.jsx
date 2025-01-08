@@ -4,16 +4,7 @@ import Header from '../components/Header';
 import ThemeProvider from '../components/Theme/ThemeProvider';
 import { registerSW } from 'virtual:pwa-register';
 
-const updateSW = registerSW({
-  onNeedRefresh() {
-    if (confirm('Nova versão disponível. Deseja atualizar?')) {
-      updateSW(true);
-    }
-  },
-  onOfflineReady() {
-    console.log('App pronto para uso offline!');
-  },
-});
+registerSW({ immediate: true });
 
 export default function Root() {
   return (

@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       injectRegister: 'script' | 'script-defer',
-      registerType: 'prompt',
+      registerType: 'autoUpdate',
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
       },
