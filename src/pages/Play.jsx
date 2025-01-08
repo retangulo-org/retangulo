@@ -298,6 +298,14 @@ export default function Play() {
           }}
           placeholder="Valor..."
         />
+        <Input
+          value={modeConfig}
+          onChange={(event) => {
+            setModeConfig(event.target.value);
+            Reset();
+          }}
+          placeholder="Valor..."
+        />
         <h4 className="mt-4 mb-2">Positivo ou negativo</h4>
         <div className="flex flex-row gap-2 p-2 overflow-x-auto border-2 border-foreground shadow-inner rounded-md">
           {[
@@ -323,7 +331,24 @@ export default function Play() {
   function MorseConfig() {
     return (
       <>
-        <h4 className="mb-2">Tradução</h4>
+        <h4 className="mb-2">Modos</h4>
+        <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground shadow-inner rounded-md">
+          {[
+            ['Alfabeto', 'alphabet'],
+            ['Palavra', 'word'],
+          ].map(([title, key]) => (
+            <Button
+              key={key}
+              variant={gameConfig.type === key ? 'primary' : 'outline'}
+              onClick={() => {
+                setType(key);
+                Reset();
+              }}>
+              {title}
+            </Button>
+          ))}
+        </div>
+        <h4 className="mt-4 mb-2">Tradução</h4>
         <div className="flex flex-row gap-2">
           <Button
             variant={gameConfig.translate === 'toMorse' ? 'primary' : 'outline'}
@@ -341,23 +366,6 @@ export default function Play() {
             }}>
             Morse Para Texto
           </Button>
-        </div>
-        <h4 className="mt-4 mb-2">Modos</h4>
-        <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground shadow-inner rounded-md">
-          {[
-            ['Palavra', 'word'],
-            ['Alfabeto', 'alphabet'],
-          ].map(([title, key]) => (
-            <Button
-              key={key}
-              variant={gameConfig.type === key ? 'primary' : 'outline'}
-              onClick={() => {
-                setType(key);
-                Reset();
-              }}>
-              {title}
-            </Button>
-          ))}
         </div>
       </>
     );
@@ -379,7 +387,7 @@ export default function Play() {
           variant={gameConfig.game === 'morse' ? 'primary' : 'outline'}
           onClick={() => {
             setGame('morse');
-            setType('word');
+            setType('alphabet');
             Reset();
           }}>
           Morse

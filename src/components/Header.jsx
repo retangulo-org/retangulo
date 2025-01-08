@@ -1,11 +1,15 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LogoTipo } from '../assets/LogoTipo';
-import { AlignJustify, X, House, Settings } from 'lucide-react';
+import { AlignJustify, X, House, Settings, ExternalLink } from 'lucide-react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [promoBar, setPromoBar] = useState(() => localStorage.getItem('promoSeen') || 'true');
+
+  useEffect(() => {
+    localStorage.setItem('promoSeen', promoBar);
+  }, [promoBar]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -28,8 +32,35 @@ export default function Header() {
     );
   };
 
+  function PromoBar() {
+    const currentDomain = window.location.hostname;
+
+    if (currentDomain !== 'retangulo.pages.dev') {
+      return (
+        <>
+          {promoBar === 'true' && (
+            <div className="w-full flex flex-row mb-4">
+              <a
+                className="actionPrimary w-full p-2 flex flex-row justify-center items-center gap-2 grow rounded-l-md text-neutral-100"
+                href="https://github.com/Retangulo-org/webview/releases/download/v1.2/retangulo-v1-2.apk"
+                target="_blank">
+                  Baixar aplicativo para Android <ExternalLink className="w-5" />
+              </a>
+              <div className="flex justify-center items-center w-10 actionPrimary rounded-r-md">
+                <X onClick={() => setPromoBar('false')} className="text-neutral-100" />
+              </div>
+            </div>
+          )}
+        </>
+      );
+    }
+
+    return null; // Não exibe a barra se o domínio for "retangulo.pages.dev"
+  };
+
   return (
     <header className="border-b-2 border-foreground p-4">
+      <PromoBar />
       <div className="w-full flex flex-wrap items-center justify-between mx-auto">
         <a href="/" className="flex items-center rtl:space-x-reverse">
           <span className="sr-only">Logo do site</span>
