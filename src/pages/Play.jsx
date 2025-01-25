@@ -262,118 +262,9 @@ export default function Play() {
     setStoredArry(['']);
   };
 
-  function MathConfig() {
-    return (
-      <>
-        <h4 className="mb-2">Modos</h4>
-        <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground shadow-inner rounded-md">
-          {[
-            ['Soma', 'soma'],
-            ['Subtração', 'subt'],
-            ['Multiplicação', 'mult'],
-            ['Divisão', 'divi'],
-            ['Raiz Quadrada', 'raiz2'],
-            ['Expoente 2', 'expo2'],
-            ['Expoente 3', 'expo3'],
-            ['Maior', 'maior'],
-            ['Menor', 'menor'],
-          ].map(([title, key]) => (
-            <Button
-              key={key}
-              variant={gameConfig.type === key ? 'primary' : 'outline'}
-              onClick={() => {
-                setType(key);
-                Reset();
-              }}>
-              {title}
-            </Button>
-          ))}
-        </div>
-        <h4 className="mt-4 mb-2">Valor máximo</h4>
-        <Input
-          value={max}
-          onChange={(event) => {
-            setMax(event.target.value);
-            Reset();
-          }}
-          placeholder="Valor..."
-        />
-        <Input
-          value={modeConfig}
-          onChange={(event) => {
-            setModeConfig(event.target.value);
-            Reset();
-          }}
-          placeholder="Valor..."
-        />
-        <h4 className="mt-4 mb-2">Positivo ou negativo</h4>
-        <div className="flex flex-row gap-2 p-2 overflow-x-auto border-2 border-foreground shadow-inner rounded-md">
-          {[
-            ['Apenas positivo', 'only-positive'],
-            ['Aleatório', 'random-negative'],
-            ['Apenas negativo', 'only-negative'],
-          ].map(([title, key]) => (
-            <Button
-              key={key}
-              variant={gameConfig.negative === key ? 'primary' : 'outline'}
-              onClick={() => {
-                setNegative(key);
-                Reset();
-              }}>
-              {title}
-            </Button>
-          ))}
-        </div>
-      </>
-    );
-  }
-
-  function MorseConfig() {
-    return (
-      <>
-        <h4 className="mb-2">Modos</h4>
-        <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground shadow-inner rounded-md">
-          {[
-            ['Alfabeto', 'alphabet'],
-            ['Palavra', 'word'],
-          ].map(([title, key]) => (
-            <Button
-              key={key}
-              variant={gameConfig.type === key ? 'primary' : 'outline'}
-              onClick={() => {
-                setType(key);
-                Reset();
-              }}>
-              {title}
-            </Button>
-          ))}
-        </div>
-        <h4 className="mt-4 mb-2">Tradução</h4>
-        <div className="flex flex-row gap-2">
-          <Button
-            variant={gameConfig.translate === 'toMorse' ? 'primary' : 'outline'}
-            onClick={() => {
-              setTranslate('toMorse');
-              Reset();
-            }}>
-            Texto Para Morse
-          </Button>
-          <Button
-            variant={gameConfig.translate === 'toTxt' ? 'primary' : 'outline'}
-            onClick={() => {
-              setTranslate('toTxt');
-              Reset();
-            }}>
-            Morse Para Texto
-          </Button>
-        </div>
-      </>
-    );
-  }
-
   return (
     <div className="w-full flex flex-col gap-4 items-center">
-      <div className="w-full flex flex-row items-center gap-2 p-2 rounded-md overflow-x-auto shadow-inner border-2 border-foreground">
+      <div className="w-full flex flex-row items-center gap-2 p-2 rounded-md overflow-x-auto shadow-inner border-2 border-foreground bg-foreground">
         <Button
           variant={gameConfig.game === 'math' ? 'primary' : 'outline'}
           onClick={() => {
@@ -392,7 +283,7 @@ export default function Play() {
           }}>
           Morse
         </Button>
-        <div className="w-3 bg-foreground"></div>
+        <div className="w-3 h-10 bg-background"></div>
         <Button
           variant={gameConfig.mode === 'points' ? 'primary' : 'outline'}
           onClick={() => {
@@ -411,7 +302,7 @@ export default function Play() {
           }}>
           Timer
         </Button>
-        <div className="w-3 bg-foreground"></div>
+        <div className="w-3 h-10 bg-background"></div>
         <Button variant="primary" size="icon" onClick={() => setIsModalExitOpen(true)}>
           <Settings />
         </Button>
@@ -443,8 +334,9 @@ export default function Play() {
             onChange={(e) => setInput(e.target.value)}
             placeholder="Resultado..."
             required={false}
-            autoFocus={true}
+            autoFocus={false}
             type={gameConfig === 'math' ? 'number' : 'text'}
+            inputMode={gameConfig === 'math' ? 'numeric' : 'text'}
             color={color}
           />
           <Button onClick={valueCheck}>Calcular</Button>
@@ -468,11 +360,12 @@ export default function Play() {
       <Collapse.Root>
         <Collapse.Toggle>Histórico</Collapse.Toggle>
         <Collapse.Content>
-          {storedArry.map((string, index) => (
-            <p key={index} className="mb-0 font-semibold">
-              {string}
-            </p>
-          ))}
+          {storedArry[0] != '' &&
+            storedArry.map((string, index) => (
+              <p key={index} className="mb-0 font-semibold">
+                {string}
+              </p>
+            ))}
           {storedArry[0] === '' && (
             <p className="mb-0 font-semibold flex flex-row items-center gap-2">
               Aqui está tão vazio quanto a minha conta bancária... <Frown />
@@ -484,13 +377,112 @@ export default function Play() {
       <Modal.Root isOpen={isModalExitOpen}>
         <Modal.Content>
           <div>
-            {game === 'math' && <MathConfig />}
-            {game === 'morse' && <MorseConfig />}
+            {game === 'math' && (
+              <>
+                <h4 className="mb-2">Modos</h4>
+                <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground bg-foreground shadow-inner rounded-md">
+                  {[
+                    ['Soma', 'soma'],
+                    ['Subtração', 'subt'],
+                    ['Multiplicação', 'mult'],
+                    ['Divisão', 'divi'],
+                    ['Raiz Quadrada', 'raiz2'],
+                    ['Expoente 2', 'expo2'],
+                    ['Expoente 3', 'expo3'],
+                    ['Maior', 'maior'],
+                    ['Menor', 'menor'],
+                  ].map(([title, key]) => (
+                    <Button
+                      key={key}
+                      variant={type === key ? 'primary' : 'outline'}
+                      onClick={() => {
+                        setType(key);
+                        Reset();
+                      }}>
+                      {title}
+                    </Button>
+                  ))}
+                </div>
+                <h4 className="mt-4 mb-2">Valor máximo</h4>
+                <Input
+                  value={max}
+                  onChange={(e) => {
+                    setMax(e.target.value);
+                    Reset();
+                  }}
+                  id="valor-maximo"
+                  name="valor-maximo"
+                  type="number"
+                  inputMode="numeric"
+                  placeholder="Valor..."
+                />
+                <h4 className="mt-4 mb-2">Positivo ou negativo</h4>
+                <div className="flex flex-row gap-2 p-2 overflow-x-auto border-2 border-foreground bg-foreground shadow-inner rounded-md">
+                  {[
+                    ['Apenas positivo', 'only-positive'],
+                    ['Aleatório', 'random-negative'],
+                    ['Apenas negativo', 'only-negative'],
+                  ].map(([title, key]) => (
+                    <Button
+                      key={key}
+                      variant={negative === key ? 'primary' : 'outline'}
+                      onClick={() => {
+                        setNegative(key);
+                        Reset();
+                      }}>
+                      {title}
+                    </Button>
+                  ))}
+                </div>
+              </>
+            )}
+            {game === 'morse' && (
+              <>
+                <h4 className="mb-2">Modos</h4>
+                <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground shadow-inner rounded-md">
+                  {[
+                    ['Alfabeto', 'alphabet'],
+                    ['Palavra', 'word'],
+                  ].map(([title, key]) => (
+                    <Button
+                      key={key}
+                      variant={gameConfig.type === key ? 'primary' : 'outline'}
+                      onClick={() => {
+                        setType(key);
+                        Reset();
+                      }}>
+                      {title}
+                    </Button>
+                  ))}
+                </div>
+                <h4 className="mt-4 mb-2">Tradução</h4>
+                <div className="flex flex-row gap-2">
+                  <Button
+                    variant={gameConfig.translate === 'toMorse' ? 'primary' : 'outline'}
+                    onClick={() => {
+                      setTranslate('toMorse');
+                      Reset();
+                    }}>
+                    Texto Para Morse
+                  </Button>
+                  <Button
+                    variant={gameConfig.translate === 'toTxt' ? 'primary' : 'outline'}
+                    onClick={() => {
+                      setTranslate('toTxt');
+                      Reset();
+                    }}>
+                    Morse Para Texto
+                  </Button>
+                </div>
+              </>
+            )}
             {mode === 'points' ? (
               <>
                 <h4 className="mt-4 mb-2">Pontuação máxima</h4>
                 <Input
                   value={modeConfig}
+                  id="pontuacao-maxima"
+                  name="pontuacao-maxima"
                   onChange={(event) => {
                     setModeConfig(event.target.value);
                     Reset();

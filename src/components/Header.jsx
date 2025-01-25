@@ -35,14 +35,14 @@ export default function Header() {
   function PromoBar() {
     const currentDomain = window.location.hostname;
 
-    if (currentDomain !== 'retangulo.pages.dev') {
+    if (currentDomain !== 'mobile.retangulo.org') {
       return (
         <>
           {promoBar === 'true' && (
             <div className="w-full flex flex-row mb-4">
               <a
                 className="actionPrimary w-full p-2 flex flex-row justify-center items-center gap-2 grow rounded-l-md text-neutral-100"
-                href="https://github.com/Retangulo-org/webview/releases/download/v1.2/retangulo-v1-2.apk"
+                href="https://github.com/Retangulo-org/webview/releases/download/v1.2/retangulo-v1-3.apk"
                 target="_blank">
                   Baixar aplicativo para Android <ExternalLink className="w-5" />
               </a>
@@ -55,7 +55,7 @@ export default function Header() {
       );
     }
 
-    return null; // Não exibe a barra se o domínio for "retangulo.pages.dev"
+    return null;
   };
 
   return (

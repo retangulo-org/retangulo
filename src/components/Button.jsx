@@ -14,8 +14,9 @@ export default function Button({ variant = 'default', size = undefined, children
     <button
       onClick={onClick}
       type="button"
+      name={children}
       className={`${className} ${variants[variant]} ${
-        size === 'icon' ? 'p-2 w-12' : 'px-4 w-full'
+        size === 'icon' ? 'p-2 w-10 h-10' : 'px-4 w-full'
       } h-10 flex flex-row justify-center items-center text-nowrap gap-2 rounded-sm font-semibold hover:shadow-md select-none`}>
       {children}
     </button>

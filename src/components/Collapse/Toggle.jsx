@@ -7,7 +7,7 @@ export default function Toggle({ children }) {
   return (
     <button
       className={`${
-        isOpen ? 'bg-neutral-300 dark:bg-neutral-700' : ''
+        isOpen && 'bg-neutral-300 dark:bg-neutral-700'
       } w-full h-10 relative flex felx-row justify-between items-center text-text font-semibold rounded-lg`}
       onClick={() => setIsOpen(!isOpen)}>
       <span className={`${isOpen ? 'rotate-0' : 'rotate-180'} transition-all duration-300 absolute left-4`}>
