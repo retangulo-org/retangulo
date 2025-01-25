@@ -42,7 +42,7 @@ export default function Header() {
             <div className="w-full flex flex-row mb-4">
               <a
                 className="actionPrimary w-full p-2 flex flex-row justify-center items-center gap-2 grow rounded-l-md text-neutral-100"
-                href="https://github.com/Retangulo-org/webview/releases/download/v1.2/retangulo-v1-3.apk"
+                href="https://github.com/Retangulo-org/webview/releases/download/v1.3/retangulo-v1-3.apk"
                 target="_blank">
                   Baixar aplicativo para Android <ExternalLink className="w-5" />
               </a>
