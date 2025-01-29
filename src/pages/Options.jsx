@@ -23,6 +23,7 @@ export default function Options() {
           <h3 className="mb-0 !text-text">Limpar cache</h3>
           <Button
             size="icon"
+            name="Limpar cache"
             onClick={() => {
               localStorage.clear();
               window.location.href = window.location.href;

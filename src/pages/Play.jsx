@@ -264,26 +264,28 @@ export default function Play() {
 
   return (
     <div className="w-full flex flex-col gap-4 items-center">
-      <div className="w-full flex flex-row items-center gap-2 p-2 rounded-md overflow-x-auto shadow-inner border-2 border-foreground bg-foreground">
-        <Button
-          variant={gameConfig.game === 'math' ? 'primary' : 'outline'}
-          onClick={() => {
-            setGame('math');
-            setType('soma');
-            Reset();
-          }}>
-          Matemática
-        </Button>
-        <Button
-          variant={gameConfig.game === 'morse' ? 'primary' : 'outline'}
-          onClick={() => {
-            setGame('morse');
-            setType('alphabet');
-            Reset();
-          }}>
-          Morse
-        </Button>
-        <div className="w-3 h-10 bg-background"></div>
+      <div className="w-full flex flex-row gap-2 rounded-md overflow-x-auto shadow-inner">
+        <div className="w-full flex flex-row gap-2 p-2 rounded-r-md bg-foreground">
+          <Button
+            variant={gameConfig.game === 'math' ? 'primary' : 'outline'}
+            onClick={() => {
+              setGame('math');
+              setType('soma');
+              Reset();
+            }}>
+            Matemática
+          </Button>
+          <Button
+            variant={gameConfig.game === 'morse' ? 'primary' : 'outline'}
+            onClick={() => {
+              setGame('morse');
+              setType('alphabet');
+              Reset();
+            }}>
+            Morse
+          </Button>
+        </div>
+        <div className="w-full flex flex-row gap-2 p-2 rounded-md bg-foreground">
         <Button
           variant={gameConfig.mode === 'points' ? 'primary' : 'outline'}
           onClick={() => {
@@ -302,10 +304,12 @@ export default function Play() {
           }}>
           Timer
         </Button>
-        <div className="w-3 h-10 bg-background"></div>
-        <Button variant="primary" size="icon" onClick={() => setIsModalExitOpen(true)}>
-          <Settings />
-        </Button>
+        </div>
+        <div className="w-full flex flex-row p-2 basis-0 rounded-l-md bg-foreground">
+          <Button variant="primary" size="icon" name="Configuração" onClick={() => setIsModalExitOpen(true)}>
+            <Settings />
+          </Button>
+        </div>
       </div>
       <h1 className="my-4">{gameContainer.string}</h1>
       <div className="mb-4">
@@ -439,7 +443,7 @@ export default function Play() {
             {game === 'morse' && (
               <>
                 <h4 className="mb-2">Modos</h4>
-                <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground shadow-inner rounded-md">
+                <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground bg-foreground shadow-inner rounded-md">
                   {[
                     ['Alfabeto', 'alphabet'],
                     ['Palavra', 'word'],
