@@ -50,7 +50,7 @@ export default function DarkModeToggle() {
   }, [isDark]);
 
   return (
-    <Button size="icon" onClick={() => setIsDark(!isDark)}>
+    <Button size="icon" name="Mudar tema" onClick={() => setIsDark(!isDark)}>
       {isDark ? <Moon /> : <Sun />}
     </Button>
   );
