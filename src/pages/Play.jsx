@@ -339,8 +339,8 @@ export default function Play() {
             placeholder="Resultado..."
             required={false}
             autoFocus={false}
-            type={gameConfig === 'math' ? 'number' : 'text'}
-            inputMode={gameConfig === 'math' ? 'numeric' : 'text'}
+            type={gameConfig.game === 'math' ? 'number' : 'text'}
+            inputMode={gameConfig.game === 'math' ? 'numeric' : 'text'}
             color={color}
           />
           <Button onClick={valueCheck}>Calcular</Button>
