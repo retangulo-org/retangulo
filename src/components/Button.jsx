@@ -1,6 +1,13 @@
 import React from 'react';
 
-export default function Button({ variant = 'default', size = undefined, children, onClick, className = undefined, name }) {
+export default function Button({
+  variant = 'default',
+  size = undefined,
+  children,
+  onClick,
+  className = undefined,
+  name,
+}) {
   const variants = {
     default: 'actionDefault',
     primary: 'actionPrimary',
