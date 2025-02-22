@@ -4,9 +4,9 @@ import Header from '../components/Header';
 import ThemeProvider from '../components/Theme/ThemeProvider';
 import { registerSW } from 'virtual:pwa-register';
 
-registerSW({ immediate: true });
-
 export default function Root() {
+  registerSW({ immediate: true });
+
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Header />
