@@ -5,10 +5,8 @@ import ThemeToggle from '../components/Theme/ThemeToggle';
 
 const links = [
   { title: 'Contato', url: 'mailto:contato@retangulo.org' },
-  { title: 'Preview', url: 'https://dev.retangulo.pages.dev/' },
+  { title: 'Preview', url: 'https://dev.retangulo.org/' },
   { title: 'Github', url: 'https://github.com/retangulo-org' },
-  { title: 'To-do', url: 'https://github.com/orgs/Retangulo-org/projects/1/views/1' },
-  { title: 'MySaas', url: 'https://mysaas.crom.live/saas/19' },
 ];
 
 export default function Options() {

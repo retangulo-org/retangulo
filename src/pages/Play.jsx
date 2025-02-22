@@ -264,48 +264,50 @@ export default function Play() {
 
   return (
     <div className="w-full flex flex-col gap-4 items-center">
-      <div className="w-full flex flex-row gap-2 rounded-md overflow-x-auto shadow-inner">
-        <div className="w-full flex flex-row gap-2 p-2 rounded-r-md bg-foreground">
-          <Button
-            variant={gameConfig.game === 'math' ? 'primary' : 'outline'}
-            onClick={() => {
-              setGame('math');
-              setType('soma');
-              Reset();
-            }}>
-            Matemática
-          </Button>
-          <Button
-            variant={gameConfig.game === 'morse' ? 'primary' : 'outline'}
-            onClick={() => {
-              setGame('morse');
-              setType('alphabet');
-              Reset();
-            }}>
-            Morse
-          </Button>
+      <div className="w-full flex flex-row gap-2">
+        <div className="w-full flex flex-row gap-2 rounded-md overflow-x-auto shadow-inner">
+          <div className="w-full flex flex-row gap-2 p-2 rounded-r-md bg-foreground">
+            <Button
+              variant={gameConfig.game === 'math' ? 'primary' : 'outline'}
+              onClick={() => {
+                setGame('math');
+                setType('soma');
+                Reset();
+              }}>
+              Matemática
+            </Button>
+            <Button
+              variant={gameConfig.game === 'morse' ? 'primary' : 'outline'}
+              onClick={() => {
+                setGame('morse');
+                setType('alphabet');
+                Reset();
+              }}>
+              Morse
+            </Button>
+          </div>
+          <div className="w-full flex flex-row gap-2 p-2 rounded-md bg-foreground">
+            <Button
+              variant={gameConfig.mode === 'points' ? 'primary' : 'outline'}
+              onClick={() => {
+                setMode('points');
+                setModeConfig(10);
+                Reset();
+              }}>
+              Pontos
+            </Button>
+            <Button
+              variant={gameConfig.mode === 'timer' ? 'primary' : 'outline'}
+              onClick={() => {
+                setMode('timer');
+                setModeConfig('1m');
+                Reset();
+              }}>
+              Timer
+            </Button>
+          </div>
         </div>
-        <div className="w-full flex flex-row gap-2 p-2 rounded-md bg-foreground">
-        <Button
-          variant={gameConfig.mode === 'points' ? 'primary' : 'outline'}
-          onClick={() => {
-            setMode('points');
-            setModeConfig(10);
-            Reset();
-          }}>
-          Pontos
-        </Button>
-        <Button
-          variant={gameConfig.mode === 'timer' ? 'primary' : 'outline'}
-          onClick={() => {
-            setMode('timer');
-            setModeConfig('1m');
-            Reset();
-          }}>
-          Timer
-        </Button>
-        </div>
-        <div className="w-full flex flex-row p-2 basis-0 rounded-l-md bg-foreground">
+        <div className="w-full flex flex-row p-2 basis-0 rounded-md bg-foreground">
           <Button variant="primary" size="icon" name="Configuração" onClick={() => setIsModalExitOpen(true)}>
             <Settings />
           </Button>

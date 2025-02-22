@@ -44,7 +44,7 @@ export default function Header() {
                 className="actionPrimary w-full p-2 flex flex-row justify-center items-center gap-2 grow rounded-l-md text-neutral-100"
                 href="https://github.com/Retangulo-org/webview/releases/download/v1.3/retangulo-v1-3.apk"
                 target="_blank">
-                  Baixar aplicativo para Android <ExternalLink className="w-5" />
+                Baixar aplicativo para Android <ExternalLink className="w-5" />
               </a>
               <div className="flex justify-center items-center w-10 actionPrimary rounded-r-md">
                 <X onClick={() => setPromoBar('false')} className="text-neutral-100" />
@@ -56,7 +56,7 @@ export default function Header() {
     }
 
     return null;
-  };
+  }
 
   return (
     <header className="border-b-2 border-foreground p-4">
