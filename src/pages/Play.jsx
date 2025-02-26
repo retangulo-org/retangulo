@@ -164,7 +164,6 @@ export default function Play() {
       setPontos(pontos + 1);
       setColor('green');
     }
-  
   }
 
   const addString = (anterior) => {
