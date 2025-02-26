@@ -16,8 +16,7 @@ import { faker } from '@faker-js/faker';
 export default function Play() {
   const [game, setGame] = useState('math');
   const [type, setType] = useState('soma');
-  const [mode, setMode] = useState('points');
-  const [modeConfig, setModeConfig] = useState(10);
+  const [modeConfig, setModeConfig] = useState('1m');
   const [max, setMax] = useState(100);
   const [negative, setNegative] = useState('only-positive');
   const [word, setWord] = useState('');
@@ -29,9 +28,6 @@ export default function Play() {
   const [score, setScore] = useState(0);
   const [erros, setErros] = useState(0);
   const [color, setColor] = useState('');
-  const [timer, setTimer] = useState(false);
-  const [timerStorage, setTimerStorage] = useState(0);
-  const [timerEnd, setTimerEnd] = useState('');
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
   const [stored, setStored] = useState({ n1: '', n2: '', n3: '' });
@@ -42,36 +38,11 @@ export default function Play() {
   const gameConfig = {
     game: game,
     type: type,
-    mode: mode,
     mode_config: modeConfig,
     negative: negative,
     maximo: max,
     translate: translate,
   };
-
-  useEffect(() => {
-    setTimerStorage(Date.now());
-  }, [timer]);
-
-  const TimeTracker = () => {
-    let currentTime = Date.now();
-    let elapsedMilliseconds = currentTime - timerStorage;
-    let elapsedSeconds = Math.floor(elapsedMilliseconds / 1000);
-
-    let minutes = Math.floor(elapsedSeconds / 60);
-    let seconds = elapsedSeconds % 60;
-    let milliseconds = elapsedMilliseconds % 1000;
-
-    setTimerEnd(`${minutes}m ${seconds}s ${milliseconds}ms`);
-  };
-
-  if (gameConfig.mode === 'points') {
-    useEffect(() => {
-      if (score >= Number(gameConfig.mode_config)) {
-        openModal();
-      }
-    }, [pontos]);
-  }
 
   useEffect(() => {
     let interval = null;
@@ -83,43 +54,43 @@ export default function Play() {
     return () => clearInterval(interval);
   }, [isActive]);
 
-  if (gameConfig.mode === 'timer') {
-    useEffect(() => {
-      let timerSelect;
+  useEffect(() => {
+    let timerSelect;
 
-      switch (gameConfig.mode_config) {
-        case '30s':
-          timerSelect = 30;
-          break;
-        case '1m':
-          timerSelect = 60;
-          break;
-        case '5m':
-          timerSelect = 300;
-          break;
-        case '10m':
-          timerSelect = 600;
-          break;
-        case '30m':
-          timerSelect = 1800;
-          break;
-        case 'infinito':
-          timerSelect = Infinity;
-          break;
-        default:
-          timerSelect = 60;
-          break;
-      }
+    switch (gameConfig.mode_config) {
+      case '15s':
+        timerSelect = 15;
+        break;
+      case '30s':
+        timerSelect = 30;
+        break;
+      case '1m':
+        timerSelect = 60;
+        break;
+      case '5m':
+        timerSelect = 300;
+        break;
+      case '10m':
+        timerSelect = 600;
+        break;
+      case '30m':
+        timerSelect = 1800;
+        break;
+      case 'infinito':
+        timerSelect = Infinity;
+        break;
+      default:
+        timerSelect = 60;
+        break;
+    }
 
-      if (seconds >= timerSelect) {
-        openModal();
-      }
-    }, [seconds]);
-  }
+    if (seconds >= timerSelect) {
+      openModal();
+    }
+  }, [seconds]);
 
   const openModal = () => {
     document.activeElement.blur();
-    TimeTracker();
     setIsActive(false);
     setIsModalOpen(true);
   };
@@ -182,33 +153,16 @@ export default function Play() {
     let value = gameContainer.result.toString().toLowerCase();
     let result = input.toString().toLowerCase();
 
-    if (gameConfig.mode === 'points') {
-      if (result != value) {
-        valueChange();
-        setErros(erros + 1);
-        setScore(score - 1);
-        setColor('red');
-      }
-
-      if (result === value) {
-        valueChange();
-        setScore(score + 1);
-        setPontos(pontos + 1);
-        setColor('green');
-      }
+    if (result != value) {
+      valueChange();
+      setErros(erros + 1);
+      setColor('red');
     }
-    if (gameConfig.mode === 'timer') {
-      if (result != value) {
-        valueChange();
-        setErros(erros + 1);
-        setColor('red');
-      }
 
-      if (result === value) {
-        valueChange();
-        setPontos(pontos + 1);
-        setColor('green');
-      }
+    if (result === value) {
+      valueChange();
+      setPontos(pontos + 1);
+      setColor('green');
     }
   }
 
@@ -220,7 +174,6 @@ export default function Play() {
   };
 
   const valueChange = () => {
-    setTimer(true);
     setIsActive(true);
     setChange(!change);
     setInput('');
@@ -253,9 +206,6 @@ export default function Play() {
     setScore(0);
     setErros(0);
     setColor('');
-    setTimer(false);
-    setTimerStorage(0);
-    setTimerEnd('');
     setSeconds(0);
     setIsActive(false);
     setStored({ n1: '', n2: '', n3: '' });
@@ -286,26 +236,6 @@ export default function Play() {
               Morse
             </Button>
           </div>
-          <div className="w-full flex flex-row gap-2 p-2 rounded-md bg-foreground">
-            <Button
-              variant={gameConfig.mode === 'points' ? 'primary' : 'outline'}
-              onClick={() => {
-                setMode('points');
-                setModeConfig(10);
-                Reset();
-              }}>
-              Pontos
-            </Button>
-            <Button
-              variant={gameConfig.mode === 'timer' ? 'primary' : 'outline'}
-              onClick={() => {
-                setMode('timer');
-                setModeConfig('1m');
-                Reset();
-              }}>
-              Timer
-            </Button>
-          </div>
         </div>
         <div className="w-full flex flex-row p-2 basis-0 rounded-md bg-foreground">
           <Button variant="primary" size="icon" name="Configuração" onClick={() => setIsModalExitOpen(true)}>
@@ -316,15 +246,8 @@ export default function Play() {
       <h1 className="my-4">{gameContainer.string}</h1>
       <div className="mb-4">
         <div className="w-full flex flex-row gap-2 mb-2 justify-center flex-wrap">
-          {gameConfig.mode === 'points' && (
-            <Tag text={`${score} / ${gameConfig.mode_config}`} type="score" color={color} />
-          )}
-          {gameConfig.mode === 'timer' && (
-            <>
-              <Tag text={pontos} type="pontos" />
-              <Tag text={erros} type="erros" />
-            </>
-          )}
+          <Tag text={pontos} type="pontos" />
+          <Tag text={erros} type="erros" />
           <Tag text={seconds} type="time" />
         </div>
       </div>
@@ -383,9 +306,24 @@ export default function Play() {
       <Modal.Root isOpen={isModalExitOpen}>
         <Modal.Content>
           <div>
+            <h4 className="mb-2">Tempo máximo</h4>
+            <Select.Root
+              value={modeConfig}
+              onChange={(event) => {
+                setModeConfig(event.target.value);
+                Reset();
+              }}>
+              <Select.Content value="15s" option="15 segundos" />
+              <Select.Content value="30s" option="30 segundos" />
+              <Select.Content value="1m" option="1 minuto" />
+              <Select.Content value="5m" option="5 minutos" />
+              <Select.Content value="10m" option="10 minutos" />
+              <Select.Content value="30m" option="30 minutos" />
+              <Select.Content value="infinito" option="Sem limite" />
+            </Select.Root>
             {game === 'math' && (
               <>
-                <h4 className="mb-2">Modos</h4>
+                <h4 className="mt-4 mb-2">Modos</h4>
                 <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground bg-foreground shadow-inner rounded-md">
                   {[
                     ['Soma', 'soma'],
@@ -444,7 +382,7 @@ export default function Play() {
             )}
             {game === 'morse' && (
               <>
-                <h4 className="mb-2">Modos</h4>
+                <h4 className="mt-4 mb-2">Modos</h4>
                 <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground bg-foreground shadow-inner rounded-md">
                   {[
                     ['Alfabeto', 'alphabet'],
@@ -482,38 +420,6 @@ export default function Play() {
                 </div>
               </>
             )}
-            {mode === 'points' ? (
-              <>
-                <h4 className="mt-4 mb-2">Pontuação máxima</h4>
-                <Input
-                  value={modeConfig}
-                  id="pontuacao-maxima"
-                  name="pontuacao-maxima"
-                  onChange={(event) => {
-                    setModeConfig(event.target.value);
-                    Reset();
-                  }}
-                  placeholder="Valor..."
-                />
-              </>
-            ) : (
-              <>
-                <h4 className="mt-4 mb-2">Tempo máximo</h4>
-                <Select.Root
-                  value={modeConfig}
-                  onChange={(event) => {
-                    setModeConfig(event.target.value);
-                    Reset();
-                  }}>
-                  <Select.Content value="30s" option="30 segundos" />
-                  <Select.Content value="1m" option="1 minuto" />
-                  <Select.Content value="5m" option="5 minutos" />
-                  <Select.Content value="10m" option="10 minutos" />
-                  <Select.Content value="30m" option="30 minutos" />
-                  <Select.Content value="infinito" option="Sem limite" />
-                </Select.Root>
-              </>
-            )}
           </div>
         </Modal.Content>
         <Modal.Actions>
@@ -546,7 +452,7 @@ export default function Play() {
               <div className="flex flex-row justify-center gap-4">
                 <Clock /> Tempo
               </div>
-              {gameConfig.mode === 'points' ? `${timerEnd}` : `${seconds}`}
+              {seconds}
             </div>
           </div>
         </Modal.Content>
