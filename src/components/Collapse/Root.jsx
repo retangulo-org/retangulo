@@ -7,7 +7,7 @@ export default function Root({ children }) {
 
   return (
     <RootContext.Provider value={{ isOpen, setIsOpen }}>
-      <div className="w-full bg-foreground rounded-lg">{children}</div>
+      <div className="w-full bg-foreground rounded-md">{children}</div>
     </RootContext.Provider>
   );
 }
