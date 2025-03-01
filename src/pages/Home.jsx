@@ -13,7 +13,7 @@ import { MorseFormat } from '../scripts/MorseFormat';
 import { Check, Clock, Frown, Settings, X } from 'lucide-react';
 import { faker } from '@faker-js/faker';
 
-export default function Play() {
+export default function Home() {
   const [game, setGame] = useState('math');
   const [type, setType] = useState('soma');
   const [modeConfig, setModeConfig] = useState('1m');
@@ -215,29 +215,25 @@ export default function Play() {
   return (
     <div className="w-full flex flex-col gap-4 items-center">
       <div className="w-full flex flex-row gap-2">
-        <div className="w-full flex flex-row gap-2 rounded-md overflow-x-auto shadow-inner">
-          <div className="w-full flex flex-row gap-2 p-2 rounded-r-md bg-foreground">
-            <Button
-              variant={gameConfig.game === 'math' ? 'primary' : 'outline'}
-              onClick={() => {
-                setGame('math');
-                setType('soma');
-                Reset();
-              }}>
-              Matemática
-            </Button>
-            <Button
-              variant={gameConfig.game === 'morse' ? 'primary' : 'outline'}
-              onClick={() => {
-                setGame('morse');
-                setType('alphabet');
-                Reset();
-              }}>
-              Morse
-            </Button>
-          </div>
-        </div>
-        <div className="w-full flex flex-row p-2 basis-0 rounded-md bg-foreground">
+        <Button
+          variant={gameConfig.game === 'math' ? 'primary' : 'outline'}
+          onClick={() => {
+            setGame('math');
+            setType('soma');
+            Reset();
+          }}>
+          Matemática
+        </Button>
+        <Button
+          variant={gameConfig.game === 'morse' ? 'primary' : 'outline'}
+          onClick={() => {
+            setGame('morse');
+            setType('alphabet');
+            Reset();
+          }}>
+          Morse
+        </Button>
+        <div className="w-full flex flex-row basis-0">
           <Button variant="primary" size="icon" name="Configuração" onClick={() => setIsModalExitOpen(true)}>
             <Settings />
           </Button>
@@ -247,8 +243,8 @@ export default function Play() {
       <div className="mb-4">
         <div className="w-full flex flex-row gap-2 mb-2 justify-center flex-wrap">
           <Tag text={pontos} type="pontos" />
-          <Tag text={erros} type="erros" />
           <Tag text={seconds} type="time" />
+          <Tag text={erros} type="erros" />
         </div>
       </div>
       {!['maior', 'menor'].includes(gameConfig.type) && (
@@ -312,14 +308,19 @@ export default function Play() {
               onChange={(event) => {
                 setModeConfig(event.target.value);
                 Reset();
-              }}>
-              <Select.Content value="15s" option="15 segundos" />
-              <Select.Content value="30s" option="30 segundos" />
-              <Select.Content value="1m" option="1 minuto" />
-              <Select.Content value="5m" option="5 minutos" />
-              <Select.Content value="10m" option="10 minutos" />
-              <Select.Content value="30m" option="30 minutos" />
-              <Select.Content value="infinito" option="Sem limite" />
+              }}
+            >
+              {[
+                ['15 segundos', '15s'],
+                ['30 segundos', '30s'],
+                ['1 minuto', '1m'],
+                ['5 minutos', '5m'],
+                ['10 minutos', '10m'],
+                ['30 minutos', '30m'],
+                ['Sem limite', 'infinito'],
+              ].map(([tempo_title, tempo]) => (
+                <Select.Content value={tempo} option={tempo_title} />
+              ))}
             </Select.Root>
             {game === 'math' && (
               <>
@@ -335,12 +336,12 @@ export default function Play() {
                     ['Expoente 3', 'expo3'],
                     ['Maior', 'maior'],
                     ['Menor', 'menor'],
-                  ].map(([title, key]) => (
+                  ].map(([title, arit]) => (
                     <Button
-                      key={key}
-                      variant={type === key ? 'primary' : 'outline'}
+                      key={arit}
+                      variant={type === arit ? 'primary' : 'outline'}
                       onClick={() => {
-                        setType(key);
+                        setType(arit);
                         Reset();
                       }}>
                       {title}
