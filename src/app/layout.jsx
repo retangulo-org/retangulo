@@ -2,11 +2,8 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import ThemeProvider from '../components/Theme/ThemeProvider';
-import { registerSW } from 'virtual:pwa-register';
 
 export default function Root() {
-  registerSW({ immediate: true });
-
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Header />
