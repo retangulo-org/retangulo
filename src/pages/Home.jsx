@@ -249,7 +249,7 @@ export default function Home() {
       </div>
       {!['maior', 'menor'].includes(gameConfig.type) && (
         <form
-          className="flex flex-col gap-3 items-center w-full"
+          className="flex flex-col gap-4 items-center w-full"
           onSubmit={(e) => {
             e.preventDefault();
             valueCheck();
