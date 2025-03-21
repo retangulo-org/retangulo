@@ -4,9 +4,9 @@ import Button from '../components/Button';
 import ThemeToggle from '../components/Theme/ThemeToggle';
 
 const links = [
-  { title: 'Contato', url: 'mailto:contato@retangulo.org' },
-  { title: 'Preview', url: 'https://dev.retangulo.org/' },
-  { title: 'Github', url: 'https://github.com/retangulo-org' },
+  { id: 1, title: 'Contato', url: 'mailto:contato@retangulo.org' },
+  { id: 2, title: 'Preview', url: 'https://dev.retangulo.org/' },
+  { id: 3, title: 'Github', url: 'https://github.com/retangulo-org' },
 ];
 
 export default function Options() {
@@ -33,7 +33,7 @@ export default function Options() {
       <h2 className="mt-8">Links</h2>
       <div className="w-full divide-neutral-200 dark:divide-neutral-800 divide-y-2">
         {links.map((link) => (
-          <div className="w-full flex flex-row justify-between items-center">
+          <div key={link.id} className="w-full flex flex-row justify-between items-center">
             <a
               className="w-full py-2 flex flex-row justify-between items-center hover:underline underline-offset-4 text-text"
               href={link.url}

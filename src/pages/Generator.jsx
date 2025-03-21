@@ -12,8 +12,9 @@ import { Calc } from '../scripts/Calc';
 import { MorseFormat } from '../scripts/MorseFormat';
 import { Check, Clock, Frown, Settings, X } from 'lucide-react';
 import { faker } from '@faker-js/faker';
+import Donation from '../components/Donation';
 
-export default function Home() {
+export default function Generator() {
   const [game, setGame] = useState('math');
   const [type, setType] = useState('soma');
   const [modeConfig, setModeConfig] = useState('1m');
@@ -308,8 +309,7 @@ export default function Home() {
               onChange={(event) => {
                 setModeConfig(event.target.value);
                 Reset();
-              }}
-            >
+              }}>
               {[
                 ['15 segundos', '15s'],
                 ['30 segundos', '30s'],
@@ -327,7 +327,7 @@ export default function Home() {
                 <h4 className="mt-4 mb-2">Modos</h4>
                 <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground bg-foreground shadow-inner rounded-md">
                   {[
-                    ['Soma', 'soma'],
+                    ['Adição', 'soma'],
                     ['Subtração', 'subt'],
                     ['Multiplicação', 'mult'],
                     ['Divisão', 'divi'],
@@ -467,6 +467,7 @@ export default function Home() {
           </Button>
         </Modal.Actions>
       </Modal.Root>
+      <Donation />
     </div>
   );
 }
