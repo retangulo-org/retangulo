@@ -4,14 +4,14 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 
 import './index.css';
 import Root from './layout';
-import Home from '../pages/Home';
+import Generator from '../pages/Generator';
 import Options from '../pages/Options';
 import ErrorPage from '../pages/ErrorPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Root />}>
-      <Route index element={<Home />} />
+      <Route index element={<Generator />} />
       <Route path="/opcoes" element={<Options />} />
       <Route path="/*" element={<ErrorPage />} />
     </Route>,
