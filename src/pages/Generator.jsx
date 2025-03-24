@@ -12,7 +12,6 @@ import { Calc } from '../scripts/Calc';
 import { MorseFormat } from '../scripts/MorseFormat';
 import { Check, Clock, Frown, Settings, X } from 'lucide-react';
 import { faker } from '@faker-js/faker';
-import Donation from '../components/Donation';
 
 export default function Generator() {
   const [game, setGame] = useState('math');
@@ -467,7 +466,6 @@ export default function Generator() {
           </Button>
         </Modal.Actions>
       </Modal.Root>
-      <Donation />
     </div>
   );
 }
