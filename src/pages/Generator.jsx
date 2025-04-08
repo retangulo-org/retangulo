@@ -264,7 +264,7 @@ export default function Generator() {
             inputMode={gameConfig.game === 'math' ? 'numeric' : 'text'}
             color={color}
           />
-          <Button onClick={valueCheck}>Resultado</Button>
+          <Button onClick={valueCheck}>Confirmar</Button>
         </form>
       )}
       {['maior', 'menor'].includes(gameConfig.type) && (

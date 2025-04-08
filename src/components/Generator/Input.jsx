@@ -1,9 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
+import InputCalc from '../InputCalc';
 
 export default function Input({children}) {
+  const [input, setInput] = useState('');
+
   return (
-    <div className="text-text">
-      {children}
-    </div>
+    <InputCalc
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      placeholder="Resultado..."
+      required={false}
+      autoFocus={false}
+      type={'number'}
+      inputMode={'numeric'}
+      color={'red'}
+    />
   );
 }
