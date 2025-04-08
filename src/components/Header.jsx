@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { LogoTipo } from '../assets/LogoTipo';
-import { AlignJustify, X, House, Settings, ExternalLink } from 'lucide-react';
+import { AlignJustify, X, House, Settings } from 'lucide-react';
 
 export default function Header() {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -30,7 +31,7 @@ export default function Header() {
   return (
     <header className="border-b-4 border-foreground p-4">
       <div className="w-full flex flex-wrap items-center justify-between mx-auto">
-        <a href="/" className="flex items-center rtl:space-x-reverse">
+        <a onClick={() => navigate('/')} className="flex items-center rtl:space-x-reverse">
           <span className="sr-only">Logo do site</span>
           <LogoTipo className="w-20 h-auto fill-neutral-950 dark:fill-neutral-100" />
         </a>
