@@ -59,7 +59,7 @@ export default function Header() {
   }
 
   return (
-    <header className="border-b-2 border-foreground p-4">
+    <header className="border-b-4 border-foreground p-4">
       <PromoBar />
       <div className="w-full flex flex-wrap items-center justify-between mx-auto">
         <a href="/" className="flex items-center rtl:space-x-reverse">
@@ -69,7 +69,7 @@ export default function Header() {
         <button
           onClick={toggleMenu}
           type="button"
-          className="inline-flex items-center p-2 w-10 h-10 bg-neutral-100 dark:bg-neutral-900 justify-center text-neutral-950 rounded-lg md:hidden hover:bg-neutral-50 dark:text-neutral-100 dark:hover:bg-neutral-950">
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-neutral-950 rounded-lg md:hidden hover:bg-neutral-200 dark:text-neutral-100 dark:hover:bg-neutral-800">
           <span className="sr-only">Abrir menu</span>
           {isMenuOpen ? <X className="w-10 h-10" /> : <AlignJustify className="w-10 h-10" />}
         </button>

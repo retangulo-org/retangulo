@@ -13,7 +13,7 @@ export default function Options() {
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="w-full divide-neutral-200 dark:divide-neutral-800 divide-y-2">
-        <div className="w-full py-2 flex flex-row justify-between items-center">
+        <div className="w-full pb-2 flex flex-row justify-between items-center">
           <h3 className="mb-0 !text-text">Tema</h3>
           <ThemeToggle />
         </div>
@@ -44,15 +44,6 @@ export default function Options() {
           </div>
         ))}
       </div>
-      <p className="text-text mt-4">
-        Desenvolvido por{' '}
-        <a
-          className="text-blue-500 font-bold hover:underline hover:underline-offset-4"
-          href="https://leydsonandrey.github.io">
-          Leydson Andrey
-        </a>{' '}
-        🌴
-      </p>
     </div>
   );
 }
