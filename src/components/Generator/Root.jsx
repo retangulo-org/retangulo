@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { createContext } from 'react';
 
-export default function Root({children}) {
+export const RootContext = createContext(undefined);
+
+export default function Root({ children }) {
   return (
-    <div className="text-text">
-      {children}
-    </div>
+    <RootContext.Provider>
+      <div className="w-full bg-foreground rounded-md">{children}</div>
+    </RootContext.Provider>
   );
 }

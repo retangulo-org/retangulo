@@ -9,19 +9,14 @@ import { Modal } from '../components/Modal';
 import { RandomNumber } from '../scripts/RandomNumber';
 import { StringNegativeFormat } from '../scripts/StringNegativeFormat';
 import { Calc } from '../scripts/Calc';
-import { MorseFormat } from '../scripts/MorseFormat';
 import { Check, Clock, Frown, Settings, X } from 'lucide-react';
-import { faker } from '@faker-js/faker';
 
 export default function Generator() {
-  const [game, setGame] = useState('math');
   const [type, setType] = useState('soma');
   const [modeConfig, setModeConfig] = useState('1m');
   const [max, setMax] = useState(100);
   const [negative, setNegative] = useState('only-positive');
-  const [word, setWord] = useState('');
   const [input, setInput] = useState('');
-  const [translate, setTranslate] = useState('toMorse');
   const [math, setMath] = useState({ n1: 0, n2: 0 });
   const [change, setChange] = useState(true);
   const [pontos, setPontos] = useState(0);
@@ -36,12 +31,10 @@ export default function Generator() {
   const [isModalExitOpen, setIsModalExitOpen] = useState(false);
 
   const gameConfig = {
-    game: game,
     type: type,
     mode_config: modeConfig,
     negative: negative,
     maximo: max,
-    translate: translate,
   };
 
   useEffect(() => {
@@ -95,41 +88,16 @@ export default function Generator() {
     setIsModalOpen(true);
   };
 
-  if (gameConfig.game === 'math') {
-    useEffect(() => {
-      setMath({
-        n1: RandomNumber(gameConfig.type, gameConfig.negative, gameConfig.maximo),
-        n2: RandomNumber(gameConfig.type, gameConfig.negative, gameConfig.maximo),
-      });
-    }, [change]);
-  }
-
-  if (gameConfig.game === 'morse') {
-    useEffect(() => {
-      switch (gameConfig.type) {
-        case 'word':
-          setWord(faker.word.noun());
-          break;
-        case 'alphabet':
-          setWord(faker.string.alpha({ length: 1, casing: 'upper' }));
-          break;
-      }
-    }, [change]);
-  }
+  useEffect(() => {
+    setMath({
+      n1: RandomNumber(gameConfig.type, gameConfig.negative, gameConfig.maximo),
+      n2: RandomNumber(gameConfig.type, gameConfig.negative, gameConfig.maximo),
+    });
+  }, [change]);
 
   let gameContainer;
 
-  if (gameConfig.game === 'math') {
-    gameContainer = Calc(
-      gameConfig.type,
-      { n1: math.n1, n2: math.n2 },
-      { n1: stored.n1, n2: stored.n2, n3: stored.n3 },
-    );
-  }
-
-  if (gameConfig.game === 'morse') {
-    gameContainer = MorseFormat(gameConfig.translate, word, { n1: stored.n1, n2: stored.n2 });
-  }
+  gameContainer = Calc(gameConfig.type, { n1: math.n1, n2: math.n2 }, { n1: stored.n1, n2: stored.n2, n3: stored.n3 });
 
   const valueCheckDouble = (result) => {
     let value = gameContainer.result;
@@ -177,20 +145,11 @@ export default function Generator() {
     setIsActive(true);
     setChange(!change);
     setInput('');
-    if (gameConfig.game === 'math') {
-      setStored({
-        n1: StringNegativeFormat(math.n1),
-        n2: StringNegativeFormat(math.n2),
-        n3: gameContainer.result,
-      });
-    }
-
-    if (gameConfig.game === 'morse') {
-      setStored({
-        n1: gameContainer.string,
-        n2: gameContainer.result,
-      });
-    }
+    setStored({
+      n1: StringNegativeFormat(math.n1),
+      n2: StringNegativeFormat(math.n2),
+      n3: gameContainer.result,
+    });
   };
 
   useEffect(() => {
@@ -214,31 +173,6 @@ export default function Generator() {
 
   return (
     <div className="w-full flex flex-col gap-4 items-center">
-      <div className="w-full flex flex-row gap-2">
-        <Button
-          variant={gameConfig.game === 'math' ? 'primary' : 'outline'}
-          onClick={() => {
-            setGame('math');
-            setType('soma');
-            Reset();
-          }}>
-          Matemática
-        </Button>
-        <Button
-          variant={gameConfig.game === 'morse' ? 'primary' : 'outline'}
-          onClick={() => {
-            setGame('morse');
-            setType('alphabet');
-            Reset();
-          }}>
-          Morse
-        </Button>
-        <div className="w-full flex flex-row basis-0">
-          <Button variant="primary" size="icon" name="Configuração" onClick={() => setIsModalExitOpen(true)}>
-            <Settings />
-          </Button>
-        </div>
-      </div>
       <h1 className="my-4">{gameContainer.string}</h1>
       <div className="mb-4">
         <div className="w-full flex flex-row gap-2 mb-2 justify-center flex-wrap">
@@ -260,8 +194,8 @@ export default function Generator() {
             placeholder="Resultado..."
             required={false}
             autoFocus={false}
-            type={gameConfig.game === 'math' ? 'number' : 'text'}
-            inputMode={gameConfig.game === 'math' ? 'numeric' : 'text'}
+            type={'number'}
+            inputMode={'numeric'}
             color={color}
           />
           <Button onClick={valueCheck}>Confirmar</Button>
@@ -282,156 +216,28 @@ export default function Generator() {
           </Button>
         </form>
       )}
-      <Collapse.Root>
-        <Collapse.Toggle>Histórico</Collapse.Toggle>
-        <Collapse.Content>
-          {storedArry[0] != '' &&
-            storedArry.map((string, index) => (
-              <p key={index} className="mb-0 font-semibold">
-                {string}
-              </p>
-            ))}
-          {storedArry[0] === '' && (
-            <p className="mb-0 font-semibold flex flex-row items-center gap-2">
-              Aqui está tão vazio quanto a minha conta bancária... <Frown />
-            </p>
-          )}
-        </Collapse.Content>
-      </Collapse.Root>
-      {gameContainer.texto && <p className="text-text">{gameContainer.texto}</p>}
-      <Modal.Root isOpen={isModalExitOpen}>
-        <Modal.Content>
-          <div>
-            <h4 className="mb-2">Tempo máximo</h4>
-            <Select.Root
-              value={modeConfig}
-              onChange={(event) => {
-                setModeConfig(event.target.value);
-                Reset();
-              }}>
-              {[
-                ['15 segundos', '15s'],
-                ['30 segundos', '30s'],
-                ['1 minuto', '1m'],
-                ['5 minutos', '5m'],
-                ['10 minutos', '10m'],
-                ['30 minutos', '30m'],
-                ['Sem limite', 'infinito'],
-              ].map(([tempo_title, tempo]) => (
-                <Select.Content value={tempo} option={tempo_title} />
+      <div className="w-full flex flex-row gap-2">
+        <Collapse.Root>
+          <Collapse.Toggle>Histórico</Collapse.Toggle>
+          <Collapse.Content>
+            {storedArry[0] != '' &&
+              storedArry.map((string, index) => (
+                <p key={index} className="mb-0 font-semibold">
+                  {string}
+                </p>
               ))}
-            </Select.Root>
-            {game === 'math' && (
-              <>
-                <h4 className="mt-4 mb-2">Modos</h4>
-                <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground bg-foreground shadow-inner rounded-md">
-                  {[
-                    ['Adição', 'soma'],
-                    ['Subtração', 'subt'],
-                    ['Multiplicação', 'mult'],
-                    ['Divisão', 'divi'],
-                    ['Raiz Quadrada', 'raiz2'],
-                    ['Expoente 2', 'expo2'],
-                    ['Expoente 3', 'expo3'],
-                    ['Maior', 'maior'],
-                    ['Menor', 'menor'],
-                  ].map(([title, arit]) => (
-                    <Button
-                      key={arit}
-                      variant={type === arit ? 'primary' : 'outline'}
-                      onClick={() => {
-                        setType(arit);
-                        Reset();
-                      }}>
-                      {title}
-                    </Button>
-                  ))}
-                </div>
-                <h4 className="mt-4 mb-2">Valor máximo</h4>
-                <Input
-                  value={max}
-                  onChange={(e) => {
-                    setMax(e.target.value);
-                    Reset();
-                  }}
-                  id="valor-maximo"
-                  name="valor-maximo"
-                  type="number"
-                  inputMode="numeric"
-                  placeholder="Valor..."
-                />
-                <h4 className="mt-4 mb-2">Positivo ou negativo</h4>
-                <div className="flex flex-row gap-2 p-2 overflow-x-auto border-2 border-foreground bg-foreground shadow-inner rounded-md">
-                  {[
-                    ['Apenas positivo', 'only-positive'],
-                    ['Aleatório', 'random-negative'],
-                    ['Apenas negativo', 'only-negative'],
-                  ].map(([title, key]) => (
-                    <Button
-                      key={key}
-                      variant={negative === key ? 'primary' : 'outline'}
-                      onClick={() => {
-                        setNegative(key);
-                        Reset();
-                      }}>
-                      {title}
-                    </Button>
-                  ))}
-                </div>
-              </>
+            {storedArry[0] === '' && (
+              <p className="mb-0 font-semibold flex flex-row items-center gap-2">
+                Aqui está tão vazio quanto a minha conta bancária... <Frown />
+              </p>
             )}
-            {game === 'morse' && (
-              <>
-                <h4 className="mt-4 mb-2">Modos</h4>
-                <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground bg-foreground shadow-inner rounded-md">
-                  {[
-                    ['Alfabeto', 'alphabet'],
-                    ['Palavra', 'word'],
-                  ].map(([title, key]) => (
-                    <Button
-                      key={key}
-                      variant={gameConfig.type === key ? 'primary' : 'outline'}
-                      onClick={() => {
-                        setType(key);
-                        Reset();
-                      }}>
-                      {title}
-                    </Button>
-                  ))}
-                </div>
-                <h4 className="mt-4 mb-2">Tradução</h4>
-                <div className="flex flex-row gap-2">
-                  <Button
-                    variant={gameConfig.translate === 'toMorse' ? 'primary' : 'outline'}
-                    onClick={() => {
-                      setTranslate('toMorse');
-                      Reset();
-                    }}>
-                    Texto Para Morse
-                  </Button>
-                  <Button
-                    variant={gameConfig.translate === 'toTxt' ? 'primary' : 'outline'}
-                    onClick={() => {
-                      setTranslate('toTxt');
-                      Reset();
-                    }}>
-                    Morse Para Texto
-                  </Button>
-                </div>
-              </>
-            )}
-          </div>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            variant="danger"
-            onClick={() => {
-              setIsModalExitOpen(false);
-            }}>
-            Fechar
-          </Button>
-        </Modal.Actions>
-      </Modal.Root>
+          </Collapse.Content>
+        </Collapse.Root>
+        <Button variant="primary" size="icon" name="Configuração" onClick={() => setIsModalExitOpen(true)}>
+          <Settings />
+        </Button>
+      </div>
+      {gameContainer.texto && <p className="text-text">{gameContainer.texto}</p>}
       <Modal.Root isOpen={isModalOpen}>
         <Modal.Title>Pontuação</Modal.Title>
         <Modal.Content>
@@ -463,6 +269,103 @@ export default function Generator() {
               setIsModalOpen(false);
             }}>
             Reiniciar
+          </Button>
+        </Modal.Actions>
+      </Modal.Root>
+      <Modal.Root isOpen={isModalExitOpen}>
+        <Modal.Content>
+          <div className="flex flex-col gap-6">
+            <div>
+              <h4 className="mb-2">Tempo máximo</h4>
+              <Select.Root
+                value={modeConfig}
+                onChange={(event) => {
+                  setModeConfig(event.target.value);
+                  Reset();
+                }}>
+                {[
+                  ['15 segundos', '15s'],
+                  ['30 segundos', '30s'],
+                  ['1 minuto', '1m'],
+                  ['5 minutos', '5m'],
+                  ['10 minutos', '10m'],
+                  ['30 minutos', '30m'],
+                  ['Sem limite', 'infinito'],
+                ].map(([tempo_title, tempo]) => (
+                  <Select.Content value={tempo} option={tempo_title} />
+                ))}
+              </Select.Root>
+            </div>
+            <div>
+              <h4 className="mt-4 mb-2">Modos</h4>
+              <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground bg-foreground shadow-inner rounded-md">
+                {[
+                  ['Adição', 'soma'],
+                  ['Subtração', 'subt'],
+                  ['Multiplicação', 'mult'],
+                  ['Divisão', 'divi'],
+                  ['Raiz Quadrada', 'raiz2'],
+                  ['Expoente 2', 'expo2'],
+                  ['Expoente 3', 'expo3'],
+                  ['Maior', 'maior'],
+                  ['Menor', 'menor'],
+                ].map(([title, arit]) => (
+                  <Button
+                    key={arit}
+                    variant={type === arit ? 'primary' : 'outline'}
+                    onClick={() => {
+                      setType(arit);
+                      Reset();
+                    }}>
+                    {title}
+                  </Button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h4 className="mt-4 mb-2">Valor máximo</h4>
+              <Input
+                value={max}
+                onChange={(e) => {
+                  setMax(e.target.value);
+                  Reset();
+                }}
+                id="valor-maximo"
+                name="valor-maximo"
+                type="number"
+                inputMode="numeric"
+                placeholder="Valor..."
+              />
+            </div>
+            <div>
+              <h4 className="mt-4 mb-2">Positivo ou negativo</h4>
+              <div className="flex flex-row gap-2 p-2 overflow-x-auto border-2 border-foreground bg-foreground shadow-inner rounded-md">
+                {[
+                  ['Apenas positivo', 'only-positive'],
+                  ['Aleatório', 'random-negative'],
+                  ['Apenas negativo', 'only-negative'],
+                ].map(([title, key]) => (
+                  <Button
+                    key={key}
+                    variant={negative === key ? 'primary' : 'outline'}
+                    onClick={() => {
+                      setNegative(key);
+                      Reset();
+                    }}>
+                    {title}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+            variant="danger"
+            onClick={() => {
+              setIsModalExitOpen(false);
+            }}>
+            Fechar
           </Button>
         </Modal.Actions>
       </Modal.Root>

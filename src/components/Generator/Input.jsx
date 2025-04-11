@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import InputCalc from '../InputCalc';
 
-export default function Input({children}) {
+export default function Input() {
   const [input, setInput] = useState('');
 
   return (

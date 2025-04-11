@@ -4,6 +4,7 @@ import { ChevronUp } from 'lucide-react';
 
 export default function Toggle({ children }) {
   const { isOpen, setIsOpen } = useContext(RootContext);
+  
   return (
     <button
       className={`${
