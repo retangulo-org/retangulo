@@ -7,7 +7,7 @@ import Root from './layout';
 import Home from '../pages/Home';
 import Generator from '../pages/Generator';
 import Options from '../pages/Options';
-import Teste from '../pages/Teste'
+import Teste from '../pages/Teste';
 import ErrorPage from '../pages/ErrorPage';
 
 const router = createBrowserRouter(

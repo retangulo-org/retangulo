@@ -46,10 +46,6 @@ export default function Header() {
                 <House />
                 Início
               </Link>
-              <Link link="/gerador">
-                <Gamepad2 />
-                Gerador
-              </Link>
               <Link link="/opcoes">
                 <Settings />
                 Opções
@@ -73,10 +69,6 @@ export default function Header() {
             <Link link="/">
               <House />
               Início
-            </Link>
-            <Link link="/gerador">
-              <Gamepad2 />
-              Gerador
             </Link>
             <Link link="/opcoes">
               <Settings />
