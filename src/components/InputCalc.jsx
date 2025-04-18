@@ -13,7 +13,7 @@ export default function InputCalc({
   return (
     <div className="w-full rounded-md hover:ring-2 hover:ring-neutral-500 hover:shadow-md">
       <input
-        className={`w-full h-12 bg-neutral-200 dark:bg-neutral-800 text-neutral-950 dark:text-neutral-100 rounded-t-md text-center font-bold text-2xl outline-0`}
+        className={`w-full h-10 bg-neutral-200 dark:bg-neutral-800 text-neutral-950 dark:text-neutral-100 rounded-t-md text-center font-bold text-xl outline-0`}
         value={value}
         onChange={onChange}
         placeholder={placeholder}

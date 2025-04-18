@@ -13,10 +13,10 @@
     --background: theme(colors.neutral.100);
     --foreground: theme(colors.neutral.200);
     --primary: theme(colors.blue.600);
+    --secundary: theme(colors.neutral.900);
     --success: theme(colors.green.600);
     --danger: theme(colors.red.600);
     --warning: theme(colors.yellow.600);
-    --secundary: theme(colors.neutral.900);
     --text: theme(colors.neutral.950);
     --text-alt: theme(colors.neutral.100);
     --border: theme(colors.neutral.300);
@@ -52,7 +52,7 @@
   }
 
   .actionDefault {
-    @apply bg-neutral-800 hover:bg-neutral-900 active:bg-neutral-950 text-neutral-100 dark:bg-neutral-100 dark:hover:bg-neutral-200 dark:active:bg-neutral-300 dark:text-neutral-950 hover:shadow-md select-none;
+    @apply bg-neutral-800 hover:bg-neutral-800 active:bg-neutral-950 text-neutral-100 dark:bg-neutral-100 dark:hover:bg-neutral-200 dark:active:bg-neutral-300 dark:text-neutral-950 hover:shadow-md select-none;
   }
 
   .actionPrimary {
