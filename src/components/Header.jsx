@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LogoTipo } from '../assets/LogoTipo';
-import { AlignJustify, X, House, Settings, Gamepad2 } from 'lucide-react';
+import { AlignJustify, X, House, Settings, FlaskConical } from 'lucide-react';
 import { Desktop, Mobile } from './Responsive';
 
 export default function Header() {
@@ -25,13 +25,32 @@ export default function Header() {
     );
   };
 
+  function Links() {
+    return (
+      <>
+        <Link link="/">
+          <House />
+          Início
+        </Link>
+        <Link link="/opcoes">
+          <Settings />
+          Opções
+        </Link>
+        <Link link="/lab">
+          <FlaskConical />
+          Lab
+        </Link>
+      </>
+    );
+  }
+
   function MobileMenu() {
     return (
       <div className="w-full flex flex-wrap items-center justify-between mx-auto">
-        <a onClick={() => navigate('/')} className="flex items-center rtl:space-x-reverse">
+        <button onClick={() => navigate('/')} className="flex items-center rtl:space-x-reverse">
           <span className="sr-only">Logo do site</span>
           <LogoTipo className="w-20 h-auto fill-neutral-950 dark:fill-neutral-100" />
-        </a>
+        </button>
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           type="button"
@@ -42,14 +61,7 @@ export default function Header() {
         {isMenuOpen && (
           <div className="overflow-hidden w-full">
             <div className="font-medium mt-4 w-full flex items-center flex-col space-y-4 select-none">
-              <Link link="/">
-                <House />
-                Início
-              </Link>
-              <Link link="/opcoes">
-                <Settings />
-                Opções
-              </Link>
+              <Links />
             </div>
           </div>
         )}
@@ -66,14 +78,7 @@ export default function Header() {
         </a>
         <div className="w-auto">
           <div className="font-medium w-full flex flex-row items-center justify-between gap-4 select-none">
-            <Link link="/">
-              <House />
-              Início
-            </Link>
-            <Link link="/opcoes">
-              <Settings />
-              Opções
-            </Link>
+            <Links />
           </div>
         </div>
       </div>

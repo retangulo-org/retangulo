@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import InputCalc from '../InputCalc';
+import { RootContext } from './Root';
 
-export default function Input() {
-  const [input, setInput] = useState('');
+export default function input() {
+  const { input, setInput, color } = useContext(RootContext);
 
   return (
     <InputCalc
@@ -13,7 +14,7 @@ export default function Input() {
       autoFocus={false}
       type={'number'}
       inputMode={'numeric'}
-      color={'red'}
+      color={color}
     />
   );
 }

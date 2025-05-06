@@ -8,7 +8,7 @@ import { Modal } from '../components/Modal';
 import { RandomNumber } from '../scripts/RandomNumber';
 import { StringNegativeFormat } from '../scripts/StringNegativeFormat';
 import { Calc } from '../scripts/Calc';
-import { ArrowLeft, Check, Clock, Frown, Settings, X } from 'lucide-react';
+import { ArrowLeft, Check, Clock, Frown, X } from 'lucide-react';
 
 export default function Generator() {
   const [input, setInput] = useState('');
@@ -36,7 +36,7 @@ export default function Generator() {
   const gameConfig = {
     type: params.get('type'),
     mode_config: params.get('time'),
-    negative: params.get('negative'),
+    negative: params.get('int'),
     maximo: params.get('max'),
   };
 
@@ -93,8 +93,8 @@ export default function Generator() {
 
   useEffect(() => {
     setMath({
-      n1: RandomNumber(gameConfig.type, gameConfig.negative, gameConfig.maximo),
-      n2: RandomNumber(gameConfig.type, gameConfig.negative, gameConfig.maximo),
+      n1: RandomNumber(gameConfig.negative, gameConfig.maximo),
+      n2: RandomNumber(gameConfig.negative, gameConfig.maximo),
     });
   }, [change]);
 

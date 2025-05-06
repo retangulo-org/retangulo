@@ -16,7 +16,8 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="/gerador" element={<Generator />} />
       <Route path="/opcoes" element={<Options />} />
-      <Route path="/teste" element={<Teste />} />
+      <Route path="/lab" element={<Teste />} />
+      <Route path="/basico" element={<Teste />} />
       <Route path="/*" element={<ErrorPage />} />
     </Route>,
   ),

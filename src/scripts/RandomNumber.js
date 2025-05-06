@@ -1,17 +1,21 @@
-const RandomNumber = (tipo, negativo, maximo) => {
-  if (tipo === 'raiz2') {
-    return Math.floor(Math.random() * (maximo - 1 + 1)) + 1;
+const RandomNumber = (int, max) => {
+  if (int === 'random') {
+    const number = Math.floor(Math.random() * (max - -max + 1)) + -max;
+
+    if (number < 0) {
+      return `(${number})`;
+    } else {
+      return number;
+    }
   }
 
-  if (negativo === 'random-negative') {
-    return Math.floor(Math.random() * (maximo - -maximo + 1)) + -maximo;
+  if (int === 'positive') {
+    return Math.floor(Math.random() * (max - 1 + 1)) + 1;
   }
 
-  if (negativo === 'only-positive') {
-    return Math.floor(Math.random() * (maximo - 1 + 1)) + 1;
+  if (int === 'negative') {
+    return `(${Math.floor(Math.random() * (-1 - -max + 1) + -max)})`;
   }
-
-  return Math.floor(Math.random() * (-1 - -100 + 1) + -100);
 };
 
 export { RandomNumber };

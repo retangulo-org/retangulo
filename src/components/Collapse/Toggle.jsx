@@ -7,6 +7,7 @@ export default function Toggle({ children }) {
 
   return (
     <button
+      type="button"
       className={`${
         isOpen && 'bg-neutral-300 dark:bg-neutral-700'
       } w-full h-10 relative flex felx-row justify-between items-center text-text font-semibold rounded-md hover:shadow-md`}
