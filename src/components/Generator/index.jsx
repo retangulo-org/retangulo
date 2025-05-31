@@ -6,7 +6,6 @@ import Input from './Input';
 import Confirm from './Confirm';
 import History from './History';
 import Score from './Score';
-import Double from './Double';
 import Warning from './Warning';
 
 export const Generator = {
@@ -18,6 +17,5 @@ export const Generator = {
   Confirm,
   History,
   Score,
-  Double,
-  Warning
+  Warning,
 };

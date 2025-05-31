@@ -23,6 +23,9 @@ npm install
 
 ```bash
 npm run dev
+
+# acesso remoto
+npm run host
 ```
 
 ## Mensagens de commit

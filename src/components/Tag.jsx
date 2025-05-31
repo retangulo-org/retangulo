@@ -1,5 +1,4 @@
 import { ArrowLeft, Check, Clock, X } from 'lucide-react';
-import React from 'react';
 
 export default function Tag({ text, type }) {
   const variant = {

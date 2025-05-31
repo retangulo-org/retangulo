@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function InputCalc({
   onChange,
   value,
@@ -9,7 +7,7 @@ export default function InputCalc({
   required,
   type,
   inputMode,
-  step
+  step,
 }) {
   return (
     <div className="w-full rounded-md hover:ring-2 hover:ring-neutral-500 hover:shadow-md">

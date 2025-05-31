@@ -1,5 +1,5 @@
 import { ArrowUpRight, Trash2 } from 'lucide-react';
-import Button from '../components/Button';
+import Button from '../components/ui/Button';
 import ThemeToggle from '../components/Theme/ThemeToggle';
 
 const links = [
