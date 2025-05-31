@@ -7,6 +7,25 @@
  */
 export const RandomMath = (size, max, int, type) => {
   const numbers = [];
+  const opcoes = [];
+
+  switch (type) {
+    case 'soma':
+      opcoes.push('+');
+      break;
+    case 'subt':
+      opcoes.push('-');
+      break;
+    case 'mult':
+      opcoes.push('*');
+      break;
+    case 'divi':
+      opcoes.push('/');
+      break;
+    default:
+      opcoes.push('+');
+      break;
+  }
 
   for (var i = 0; i < size; i++) {
     if (int === 'random') {
@@ -26,25 +45,6 @@ export const RandomMath = (size, max, int, type) => {
     if (int === 'negative') {
       numbers.push(`(${Math.floor(Math.random() * (-1 - -max + 1) + -max)})`);
     }
-
-    const opcoes = [];
-
-    switch (type) {
-      case 'soma':
-        opcoes.push('+');
-        break;
-      case 'subt':
-        opcoes.push('-');
-        break;
-      case 'mult':
-        opcoes.push('*');
-        break;
-      case 'divi':
-        opcoes.push('/');
-        break;
-      default:
-        break;
-    };
 
     const sorteio = opcoes[Math.floor(Math.random() * opcoes.length)];
 

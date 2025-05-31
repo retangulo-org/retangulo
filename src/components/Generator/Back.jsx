@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import Button from '../Button';
+import Button from '../ui/Button';
 import { ArrowLeft } from 'lucide-react';
 
 export default function Back({ title }) {

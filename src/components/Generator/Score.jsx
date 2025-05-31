@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { RootContext } from './Root';
 import { Modal } from '../Modal';
-import Button from '../Button';
+import Button from '../ui/Button';
 import { Check, X, Clock } from 'lucide-react';
 
 export default function Score() {

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LogoTipo } from '../assets/LogoTipo';
-import { AlignJustify, X, House, Settings, FlaskConical } from 'lucide-react';
-import { Desktop, Mobile } from './Responsive';
+import { AlignJustify, X, House, Settings } from 'lucide-react';
+import { Desktop, Mobile } from './ui/Responsive';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ export default function Header() {
           <House />
           Início
         </Link>
-        <Link link="/opcoes">
+        <Link link="/options">
           <Settings />
           Opções
         </Link>

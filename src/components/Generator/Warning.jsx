@@ -1,12 +1,7 @@
-import { useContext } from 'react';
-import { RootContext } from './Root';
-
-export default function Warning() {
-  const { warning } = useContext(RootContext);
-
+export default function Warning({text}) {
   return (
-    <p className="my-6 p-0 text-center font-mono tracking-[0.1rem]">
-      {warning}
+    <p className="my-2 p-0 text-center font-sans">
+      {text}
     </p>
   );
 }
