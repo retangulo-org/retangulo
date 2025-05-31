@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowUpRight, Trash2 } from 'lucide-react';
 import Button from '../components/Button';
 import ThemeToggle from '../components/Theme/ThemeToggle';

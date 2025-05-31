@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/Button';
 import { Settings } from 'lucide-react';
 import { useState } from 'react';
@@ -11,6 +11,7 @@ function Basic() {
   const [basicType, setBasicType] = useState('soma');
   const [basicTime, setBasicTime] = useState('1m');
   const [basicMax, setBasicMax] = useState(100);
+  const [basicSize, setBasicSize] = useState(2);
   const [basicInt, setBasicInt] = useState('positive');
 
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Basic() {
           <div className="w-full flex flex-row gap-4">
             <Button
               variant="primary"
-              onClick={() => navigate(`/basico?type=${basicType}&time=${basicTime}&max=${basicMax}&int=${basicInt}`)}>
+              onClick={() => navigate(`/math?type=${basicType}&time=${basicTime}&max=${basicMax}&int=${basicInt}&size=${basicSize}`)}>
               Iniciar
             </Button>
             <Button variant="primary" onClick={() => setBasicModal(!basicModal)} size="icon">
@@ -93,6 +94,20 @@ function Basic() {
               />
             </div>
             <div>
+              <h4 className="mt-4 mb-2">Tamanho máximo</h4>
+              <Input
+                value={basicSize}
+                onChange={(e) => {
+                  setBasicSize(e.target.value);
+                }}
+                id="tamanho-maximo"
+                name="tamanho-maximo"
+                type="number"
+                inputMode="numeric"
+                placeholder="Valor..."
+              />
+            </div>
+            <div>
               <h4 className="mt-4 mb-2">Positivo ou negativo</h4>
               <div className="flex flex-row gap-2 p-2 overflow-x-auto border-2 border-foreground bg-foreground shadow-inner rounded-md">
                 {[
@@ -127,28 +142,7 @@ function Basic() {
   );
 }
 
-function Morse() {
-  return (
-    <>
-      <div className="w-full flex flex-col bg-foreground border-4 border-foreground rounded-3xl">
-        <div className="p-4">
-          <div className="mb-4">
-            <h2 className="m-0 p-0">Morse</h2>
-            <p className="m-0 p-0">Gere códigos morse aleatórios.</p>
-          </div>
-          <div className="w-full flex flex-row gap-4">
-            <Button variant="primary">Em breve</Button>
-            <Button variant="primary" size="icon">
-              <Settings />
-            </Button>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
-
-export default function Home() {
+function Math() {
   const [mathModal, setMathModal] = useState(false);
   const [type, setType] = useState('soma');
   const [time, setTime] = useState('1m');
@@ -159,47 +153,23 @@ export default function Home() {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <div className="w-full flex flex-col bg-foreground border-4 border-foreground rounded-3xl">
-          <div className="p-4">
-            <div className="mb-4">
-              <h2 className="m-0 p-0">Matemática</h2>
-              <p className="m-0 p-0">Gere cálculos matemáticos aleatórios.</p>
-            </div>
-            <div className="w-full flex flex-row gap-4">
-              <Button
-                variant="primary"
-                onClick={() => navigate(`/gerador?type=${type}&time=${time}&max=${max}&int=${int}`)}>
-                Iniciar
-              </Button>
-              <Button variant="primary" onClick={() => setMathModal(!mathModal)} size="icon">
-                <Settings />
-              </Button>
-            </div>
+      <div className="w-full flex flex-col bg-foreground border-4 border-foreground rounded-3xl">
+        <div className="p-4">
+          <div className="mb-4">
+            <h2 className="m-0 p-0">Matemática</h2>
+            <p className="m-0 p-0">Gere cálculos matemáticos aleatórios. Versão antiga.</p>
+          </div>
+          <div className="w-full flex flex-row gap-4">
+            <Button
+              variant="primary"
+              onClick={() => navigate(`/gerador?type=${type}&time=${time}&max=${max}&int=${int}`)}>
+              Iniciar
+            </Button>
+            <Button variant="primary" onClick={() => setMathModal(!mathModal)} size="icon">
+              <Settings />
+            </Button>
           </div>
         </div>
-
-        <div className="w-full flex flex-col bg-foreground border-4 border-foreground rounded-3xl">
-          <div className="p-4">
-            <div className="mb-4">
-              <h2 className="m-0 p-0">Lab</h2>
-              <p className="m-0 p-0">Gere cálculos matemáticos aleatórios.</p>
-            </div>
-            <div className="w-full flex flex-row gap-4">
-              <Button
-                variant="primary"
-                onClick={() => navigate(`/lab?type=${type}&time=${time}&max=${max}&int=${int}`)}>
-                Iniciar
-              </Button>
-              <Button variant="primary" onClick={() => setMathModal(!mathModal)} size="icon">
-                <Settings />
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        <Basic />
-        <Morse />
       </div>
       <Modal.Root isOpen={mathModal}>
         <Modal.Content>
@@ -294,6 +264,17 @@ export default function Home() {
           </Button>
         </Modal.Actions>
       </Modal.Root>
+    </>
+  )
+}
+
+export default function Home() {
+  return (
+    <>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <Math />
+        <Basic />
+      </div>
     </>
   );
 }

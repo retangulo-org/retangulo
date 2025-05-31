@@ -9,6 +9,7 @@ export default function InputCalc({
   required,
   type,
   inputMode,
+  step
 }) {
   return (
     <div className="w-full rounded-md hover:ring-2 hover:ring-neutral-500 hover:shadow-md">
@@ -21,6 +22,7 @@ export default function InputCalc({
         inputMode={inputMode ? inputMode : 'numeric'}
         autoFocus={autoFocus}
         required={required}
+        step={step}
       />
       <div
         className={`

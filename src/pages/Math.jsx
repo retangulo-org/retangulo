@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Generator } from '../components/Generator';
 import { RandomMath } from '../scripts/random';
 
-export default function Teste() {
+export default function Math() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -18,13 +18,14 @@ export default function Teste() {
     type: searchParams.get('type'),
     max: Number(searchParams.get('max')),
     int: searchParams.get('int'),
+    size: Number(searchParams.get('size')),
   };
 
-  const [random, setRandom] = useState(() => RandomMath(2, params.max, params.int));
+  const [random, setRandom] = useState(() => RandomMath( params.size, params.max, params.int, params.type));
   const [change, setChange] = useState(true);
 
   useEffect(() => {
-    setRandom(() => RandomMath(2, params.max, params.int));
+    setRandom(() => RandomMath(params.size, params.max, params.int, params.type));
   }, [change]);
 
   return (
@@ -40,6 +41,7 @@ export default function Teste() {
       <Generator.Confirm />
       <Generator.History />
       <Generator.Score />
+      <Generator.Warning />
     </Generator.Root>
   );
 }

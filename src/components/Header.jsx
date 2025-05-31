@@ -36,10 +36,6 @@ export default function Header() {
           <Settings />
           Opções
         </Link>
-        <Link link="/lab">
-          <FlaskConical />
-          Lab
-        </Link>
       </>
     );
   }

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { RootContext } from './Root';
 
 export default function Output() {
@@ -7,8 +7,8 @@ export default function Output() {
   return (
     <h1 className="my-6 p-0 text-center font-mono tracking-[0.1rem]">
       {output}
-      <br />
-      <div className="text-neutral-500 text-base">{result}</div>
+      {/* <br />
+      <div className="text-neutral-500 text-base">{result}</div> */}
     </h1>
   );
 }

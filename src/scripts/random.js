@@ -5,7 +5,7 @@
  * @param {string} type - tipo da geração
  * @return {obj} retorna uma array do calculo gerado
  */
-export const RandomMath = (size, max, int) => {
+export const RandomMath = (size, max, int, type) => {
   const numbers = [];
 
   for (var i = 0; i < size; i++) {
@@ -27,7 +27,24 @@ export const RandomMath = (size, max, int) => {
       numbers.push(`(${Math.floor(Math.random() * (-1 - -max + 1) + -max)})`);
     }
 
-    const opcoes = ['+', '-', '*', '/'];
+    const opcoes = [];
+
+    switch (type) {
+      case 'soma':
+        opcoes.push('+');
+        break;
+      case 'subt':
+        opcoes.push('-');
+        break;
+      case 'mult':
+        opcoes.push('*');
+        break;
+      case 'divi':
+        opcoes.push('/');
+        break;
+      default:
+        break;
+    };
 
     const sorteio = opcoes[Math.floor(Math.random() * opcoes.length)];
 

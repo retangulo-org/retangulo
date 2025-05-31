@@ -15,6 +15,7 @@ export default function input() {
       type={'number'}
       inputMode={'numeric'}
       color={color}
+      step={'any'}
     />
   );
 }

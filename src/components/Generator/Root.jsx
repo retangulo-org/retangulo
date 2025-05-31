@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext } from 'react';
 
 export const RootContext = createContext(undefined);
 
@@ -12,6 +12,7 @@ export default function Root({ children, time, output, result, onRegenerate }) {
   const [stored, setStored] = useState({ n1: '', n2: '', n3: '' });
   const [storedArray, setStoredArray] = useState(['']);
   const [score, setScore] = useState(false);
+  const [double, setDouble] = useState();
 
   useEffect(() => {
     let interval = null;
@@ -82,12 +83,12 @@ export default function Root({ children, time, output, result, onRegenerate }) {
     let inputCheck = input;
     let resultCheck = result;
 
-    if (inputCheck != resultCheck) {
+    if (inputCheck != resultCheck.toString().toLowerCase()) {
       setWrong(wrong + 1);
       setColor('red');
     }
 
-    if (inputCheck === resultCheck) {
+    if (inputCheck === resultCheck.toString().toLowerCase()) {
       setCorrect(correct + 1);
       setColor('green');
     }
@@ -115,7 +116,7 @@ export default function Root({ children, time, output, result, onRegenerate }) {
 
   useEffect(() => {
     if (isActive) {
-      return addString(`${stored.n1.join('').toString()} = ${stored.n2} — R: ${stored.n3 === '' ? ':(' : stored.n3}`);
+      return addString(`${stored.n1.join('').toString()} = ${stored.n2} — R: ${stored.n3 === '' ? 'input vazio' : stored.n3}`);
     }
   }, [stored]);
 
@@ -134,6 +135,8 @@ export default function Root({ children, time, output, result, onRegenerate }) {
         storedArray,
         score,
         setScore,
+        double,
+        setDouble
       }}>
       <form
         onSubmit={(e) => {
