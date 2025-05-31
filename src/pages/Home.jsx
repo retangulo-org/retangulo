@@ -1,20 +1,38 @@
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/ui/Button';
 import { Settings } from 'lucide-react';
-import { useState } from 'react';
 import { Modal } from '../components/Modal';
 import { Select } from '../components/Select';
 import Input from '../components/ui/Input';
 
 function Math() {
   const [mathModal, setMathModal] = useState(false);
-  const [mathType, setMathType] = useState('soma');
-  const [mathTime, setMathTime] = useState('1m');
-  const [mathMax, setMathMax] = useState(100);
-  const [mathSize, setMathSize] = useState(2);
-  const [mathInt, setMathInt] = useState('positive');
+  const [mathType, setMathType] = useState(() => {
+    return localStorage.getItem('mathType') || 'soma';
+  });
+  const [mathTime, setMathTime] = useState(() => {
+    return localStorage.getItem('mathTime') || '1m';
+  });
+  const [mathMax, setMathMax] = useState(() => {
+    return localStorage.getItem('mathMax') || 100;
+  });
+  const [mathSize, setMathSize] = useState(() => {
+    return localStorage.getItem('mathSize') || 2;
+  });
+  const [mathInt, setMathInt] = useState(() => {
+    return localStorage.getItem('mathInt') || 'positive';
+  });
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    localStorage.setItem('mathType', mathType);
+    localStorage.setItem('mathTime', mathTime);
+    localStorage.setItem('mathMax', mathMax);
+    localStorage.setItem('mathSize', mathSize);
+    localStorage.setItem('mathInt', mathInt);
+  }, [mathType, mathTime, mathMax, mathSize, mathInt]);
 
   return (
     <>
