@@ -162,11 +162,49 @@ function Math() {
   );
 }
 
+function Morse() {
+  const [morseModal, setMorseModal] = useState(false);
+
+  return (
+    <>
+      <div className="w-full flex flex-col bg-foreground border-4 border-foreground rounded-3xl">
+        <div className="p-4">
+          <div className="mb-8">
+            <h2 className="m-0 p-0">Morse</h2>
+            <p className="m-0 p-0">Gere código morse aleatórios e traduza-os.</p>
+          </div>
+          <div className="w-full flex flex-row gap-4">
+            <Button variant="primary" onClick={() => setMorseModal(true)}>
+              Em breve
+            </Button>
+            <Button variant="primary" size="icon" onClick={() => setMorseModal(true)}>
+              <Settings />
+            </Button>
+          </div>
+        </div>
+      </div>
+      <Modal.Root isOpen={morseModal}>
+        <Modal.Content>Em breve esse modo estará disponível.</Modal.Content>
+        <Modal.Actions>
+          <Button
+            variant="danger"
+            onClick={() => {
+              setMorseModal(false);
+            }}>
+            Fechar
+          </Button>
+        </Modal.Actions>
+      </Modal.Root>
+    </>
+  );
+}
+
 export default function Home() {
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Math />
+        <Morse />
       </div>
     </>
   );
