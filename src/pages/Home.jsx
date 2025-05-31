@@ -38,11 +38,7 @@ function Math() {
     <>
       <div className="w-full flex flex-col bg-foreground border-4 border-foreground rounded-3xl">
         <div className="p-4">
-<<<<<<< HEAD
           <div className="mb-8">
-=======
-          <div className="mb-4">
->>>>>>> 0710067bc6cf195d7a10abf285f6c5a5c5b9bc81
             <h2 className="m-0 p-0">Matemática</h2>
             <p className="m-0 p-0">Gere cálculos matemáticos aleatórios.</p>
           </div>
@@ -50,11 +46,7 @@ function Math() {
             <Button
               variant="primary"
               onClick={() =>
-<<<<<<< HEAD
                 navigate(`/math?type=${mathType}&time=${mathTime}&max=${mathMax}&int=${mathInt}&size=${mathSize}`)
-=======
-                navigate(`/math?type=${basicType}&time=${basicTime}&max=${basicMax}&int=${basicInt}&size=${basicSize}`)
->>>>>>> 0710067bc6cf195d7a10abf285f6c5a5c5b9bc81
               }>
               Iniciar
             </Button>
@@ -147,11 +139,7 @@ function Math() {
                     key={key}
                     variant={mathInt === key ? 'primary' : 'outline'}
                     onClick={() => {
-<<<<<<< HEAD
                       setMathInt(key);
-=======
-                      setBasicInt(key);
->>>>>>> 0710067bc6cf195d7a10abf285f6c5a5c5b9bc81
                     }}>
                     {title}
                   </Button>
@@ -164,11 +152,7 @@ function Math() {
           <Button
             variant="danger"
             onClick={() => {
-<<<<<<< HEAD
               setMathModal(false);
-=======
-              setBasicModal(false);
->>>>>>> 0710067bc6cf195d7a10abf285f6c5a5c5b9bc81
             }}>
             Fechar
           </Button>
@@ -182,11 +166,7 @@ export default function Home() {
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-<<<<<<< HEAD
         <Math />
-=======
-        <Basic />
->>>>>>> 0710067bc6cf195d7a10abf285f6c5a5c5b9bc81
       </div>
     </>
   );
