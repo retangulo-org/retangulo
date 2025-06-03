@@ -8,20 +8,23 @@ export default function Math() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if ([...searchParams].length === 0) {
+    const requiredParams = ['type', 'time', 'max', 'int', 'size'];
+    const missingParam = requiredParams.find((param) => !searchParams.get(param));
+
+    if (missingParam) {
       navigate('/');
     }
   }, [searchParams, navigate]);
 
   const params = {
-    time: searchParams.get('time'),
     type: searchParams.get('type'),
+    time: searchParams.get('time'),
     max: Number(searchParams.get('max')),
     int: searchParams.get('int'),
     size: Number(searchParams.get('size')),
   };
 
-  const [random, setRandom] = useState(() => RandomMath( params.size, params.max, params.int, params.type));
+  const [random, setRandom] = useState(() => RandomMath(params.size, params.max, params.int, params.type));
   const [change, setChange] = useState(true);
 
   useEffect(() => {
