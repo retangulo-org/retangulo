@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function Input({ onChange, value, placeholder, type, inputMode, id, name }) {
   return (
     <input

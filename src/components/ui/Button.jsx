@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function Button({
   variant = 'default',
   size = undefined,
