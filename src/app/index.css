@@ -36,11 +36,11 @@
   }
 
   .success {
-    @apply text-neutral-100 bg-green-600;
+    @apply text-neutral-100 bg-gradient-to-b from-green-600 to-green-700;
   }
 
   .danger {
-    @apply text-neutral-100 bg-red-600;
+    @apply text-neutral-100 bg-gradient-to-b from-red-600 to-red-700;
   }
 
   .warning {
@@ -52,11 +52,11 @@
   }
 
   .actionDefault {
-    @apply bg-neutral-800 hover:bg-neutral-800 active:bg-neutral-950 text-neutral-100 dark:bg-neutral-100 dark:hover:bg-neutral-200 dark:active:bg-neutral-300 dark:text-neutral-950 hover:shadow-md select-none;
+    @apply bg-gradient-to-b from-neutral-800 to-neutral-900 hover:from-neutral-800 hover:to-neutral-800 dark:from-neutral-100 dark:to-neutral-300 dark:hover:from-neutral-300 dark:hover:to-neutral-300 text-neutral-100 dark:text-neutral-950 hover:shadow-md select-none;
   }
 
   .actionPrimary {
-    @apply text-neutral-100 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 hover:shadow-md select-none;
+    @apply text-blue-50 bg-gradient-to-b from-blue-500 to-blue-600 hover:from-blue-700 hover:to-blue-700 hover:shadow-md select-none;
   }
 
   .actionSuccess {
@@ -64,7 +64,7 @@
   }
 
   .actionDanger {
-    @apply text-neutral-100 bg-red-600 hover:bg-red-700 active:bg-red-800 hover:shadow-md select-none;
+    @apply text-red-50 bg-gradient-to-b from-red-500 to-red-600 hover:from-red-700 hover:to-red-700 hover:shadow-md select-none;
   }
 
   .actionWarning {

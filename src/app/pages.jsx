@@ -5,19 +5,17 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import './index.css';
 import Root from './layout';
 import Home from '../pages/Home';
-import Generator from '../pages/Generator';
 import Options from '../pages/Options';
-import Teste from '../pages/Teste';
-import ErrorPage from '../pages/ErrorPage';
+import Math from '../pages/Math';
+import Error from '../pages/Error';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<Root />}>
       <Route index element={<Home />} />
-      <Route path="/gerador" element={<Generator />} />
-      <Route path="/opcoes" element={<Options />} />
-      <Route path="/teste" element={<Teste />} />
-      <Route path="/*" element={<ErrorPage />} />
+      <Route path="/options" element={<Options />} />
+      <Route path="/math" element={<Math />} />
+      <Route path="/*" element={<Error />} />
     </Route>,
   ),
 );

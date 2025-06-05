@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function Button({
   variant = 'default',
   size = undefined,
@@ -7,6 +5,7 @@ export default function Button({
   onClick,
   className = undefined,
   name,
+  type,
 }) {
   const variants = {
     default: 'actionDefault',
@@ -20,7 +19,7 @@ export default function Button({
   return (
     <button
       onClick={onClick}
-      type="button"
+      type={type ? type : 'button'}
       name={size === 'icon' ? name : children}
       title={size === 'icon' ? name : children}
       className={`${className} ${variants[variant]} ${
