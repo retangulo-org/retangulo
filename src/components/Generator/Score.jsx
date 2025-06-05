@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { RootContext } from './Root';
 import { Modal } from '../Modal';
 import Button from '../ui/Button';
@@ -6,6 +6,19 @@ import { Check, X, Clock } from 'lucide-react';
 
 export default function Score() {
   const { score, setScore, correct, wrong, seconds } = useContext(RootContext);
+  const [correctContainer, setCorrectContainer] = useState();
+  const [wrongContainer, setWrongContainer] = useState();
+  const [secondsContainer, setSecondsContainer] = useState();
+
+  useEffect(() => {
+    if (!score) {
+      setCorrectContainer(correct);
+      setWrongContainer(wrong);
+      setSecondsContainer(seconds);
+    }
+  }, [correct, wrong, seconds]);
+
+  console.log(correctContainer);
 
   return (
     <Modal.Root isOpen={score} center>
@@ -16,19 +29,19 @@ export default function Score() {
             <div className="flex flex-row justify-center gap-4">
               <Check /> Certos
             </div>
-            {correct}
+            {correctContainer}
           </div>
           <div className="w-full py-2 px-4 flex flex-row justify-between gap-4 bg-danger text-neutral-100 font-semibold">
             <div className="flex flex-row justify-center gap-4">
               <X /> Errados
             </div>
-            {wrong}
+            {wrongContainer}
           </div>
           <div className="w-full py-2 px-4 flex flex-row justify-between gap-4 bg-warning text-neutral-100 font-semibold rounded-b-sm">
             <div className="flex flex-row justify-center gap-4">
               <Clock /> Tempo
             </div>
-            {seconds}
+            {secondsContainer}
           </div>
         </div>
       </Modal.Content>
