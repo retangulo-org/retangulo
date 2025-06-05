@@ -34,6 +34,18 @@ function Math() {
     localStorage.setItem('mathInt', mathInt);
   }, [mathType, mathTime, mathMax, mathSize, mathInt]);
 
+  useEffect(() => {
+    if (mathMax > 100000) {
+      alert('Valor máximo muito grande! Pode travar seu dispositivo.');
+      setMathMax(100000);
+    }
+
+    if (mathSize > 100) {
+      alert('Quantidade de termos muito grande! Pode travar seu dispositivo.');
+      setMathSize(100);
+    }
+  }, [mathMax, mathSize]);
+
   return (
     <>
       <div className="w-full flex flex-col bg-foreground border-4 border-foreground rounded-xl">
