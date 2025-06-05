@@ -26,7 +26,7 @@ export default function Tag({ text, type }) {
     );
   } else if (type === 'time') {
     return (
-      <span className={`${variant.default} bg-neutral-600 text-neutral-100`}>
+      <span className={`${variant.default} text-neutral-100 bg-gradient-to-b from-neutral-600 to-neutral-700`}>
         <Clock className="w-5 h-5" /> {text}s
       </span>
     );

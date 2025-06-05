@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { RootContext } from './Root';
 import { Modal } from '../Modal';
 import Button from '../ui/Button';
@@ -8,7 +8,7 @@ export default function Score() {
   const { score, setScore, correct, wrong, seconds } = useContext(RootContext);
 
   return (
-    <Modal.Root isOpen={score}>
+    <Modal.Root isOpen={score} center>
       <Modal.Title>Pontuação</Modal.Title>
       <Modal.Content>
         <div className="w-full flex flex-col justify-center items-center">

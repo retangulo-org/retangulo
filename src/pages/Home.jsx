@@ -36,7 +36,7 @@ function Math() {
 
   return (
     <>
-      <div className="w-full flex flex-col bg-foreground border-4 border-foreground rounded-3xl">
+      <div className="w-full flex flex-col bg-foreground border-4 border-foreground rounded-xl">
         <div className="p-4">
           <div className="mb-8">
             <h2 className="m-0 p-0">Matemática</h2>
@@ -167,7 +167,7 @@ function Morse() {
 
   return (
     <>
-      <div className="w-full flex flex-col bg-foreground border-4 border-foreground rounded-3xl">
+      <div className="w-full flex flex-col bg-foreground border-4 border-foreground rounded-xl">
         <div className="p-4">
           <div className="mb-8">
             <h2 className="m-0 p-0">Morse</h2>
@@ -183,8 +183,8 @@ function Morse() {
           </div>
         </div>
       </div>
-      <Modal.Root isOpen={morseModal}>
-        <Modal.Content>Em breve esse modo estará disponível.</Modal.Content>
+      <Modal.Root isOpen={morseModal} center>
+        <Modal.Content>Estará modo estará disponível em breve.</Modal.Content>
         <Modal.Actions>
           <Button
             variant="danger"
