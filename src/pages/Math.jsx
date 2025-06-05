@@ -31,10 +31,21 @@ export default function Math() {
     setRandom(() => RandomMath(params.size, params.max, params.int, params.type));
   }, [change]);
 
+  const changeChar = random.map((char) => {
+    switch (char.toString()) {
+      case '*':
+        return '×';
+      case '/':
+        return '÷';
+      default:
+        return char;
+    }
+  });
+
   return (
     <Generator.Root
       time={params.time}
-      output={random}
+      output={changeChar}
       result={eval(random.join(''))}
       onRegenerate={() => setChange(!change)}>
       <Generator.Back title="Matemática" />
