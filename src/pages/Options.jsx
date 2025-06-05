@@ -13,7 +13,7 @@ export default function Options() {
     <div className="flex flex-col justify-center items-center">
       <div className="w-full divide-neutral-200 dark:divide-neutral-800 divide-y-2">
         <div className="w-full pb-2 flex flex-row justify-between items-center">
-          <h3 className="mb-0 !text-text">Tema</h3>
+          <h3 className="mb-0 !text-text">Aparência</h3>
           <ThemeToggle />
         </div>
         <div className="w-full py-2 flex flex-row justify-between items-center">

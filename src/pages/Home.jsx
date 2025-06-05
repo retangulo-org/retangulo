@@ -39,7 +39,7 @@ function Math() {
       <div className="w-full flex flex-col bg-foreground border-4 border-foreground rounded-xl">
         <div className="p-4">
           <div className="mb-8">
-            <h2 className="m-0 p-0">Matemática</h2>
+            <h2 className="m-0 p-0">Matemática básica</h2>
             <p className="m-0 p-0">Gere cálculos matemáticos aleatórios.</p>
           </div>
           <div className="w-full flex flex-row gap-4">
@@ -60,7 +60,7 @@ function Math() {
         <Modal.Content>
           <div className="flex flex-col gap-2">
             <div>
-              <h4 className="mb-2">Tempo máximo</h4>
+              <h4 className="mb-2">Tempo limite</h4>
               <Select.Root
                 value={mathTime}
                 onChange={(event) => {
@@ -80,7 +80,7 @@ function Math() {
               </Select.Root>
             </div>
             <div>
-              <h4 className="mt-4 mb-2">Modos</h4>
+              <h4 className="mt-4 mb-2">Operacões</h4>
               <div className="flex flex-row gap-2 p-2 overflow-x-scroll border-2 border-foreground bg-foreground shadow-inner rounded-md">
                 {[
                   ['Adição', 'soma'],
@@ -114,7 +114,7 @@ function Math() {
               />
             </div>
             <div>
-              <h4 className="mt-4 mb-2">Tamanho máximo</h4>
+              <h4 className="mt-4 mb-2">Quantidade de termos</h4>
               <Input
                 value={mathSize}
                 onChange={(e) => {
@@ -128,12 +128,12 @@ function Math() {
               />
             </div>
             <div>
-              <h4 className="mt-4 mb-2">Positivo ou negativo</h4>
+              <h4 className="mt-4 mb-2">Tipo de valores</h4>
               <div className="flex flex-row gap-2 p-2 overflow-x-auto border-2 border-foreground bg-foreground shadow-inner rounded-md">
                 {[
-                  ['Apenas positivo', 'positive'],
-                  ['Aleatório', 'random'],
-                  ['Apenas negativo', 'negative'],
+                  ['Apenas positivos', 'positive'],
+                  ['Aleatórios', 'random'],
+                  ['Apenas negativos', 'negative'],
                 ].map(([title, key]) => (
                   <Button
                     key={key}
