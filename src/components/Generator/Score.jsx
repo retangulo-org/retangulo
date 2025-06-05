@@ -18,8 +18,6 @@ export default function Score() {
     }
   }, [correct, wrong, seconds]);
 
-  console.log(correctContainer);
-
   return (
     <Modal.Root isOpen={score} center>
       <Modal.Title>Pontuação</Modal.Title>
