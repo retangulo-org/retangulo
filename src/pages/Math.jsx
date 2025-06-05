@@ -55,7 +55,6 @@ export default function Math() {
       <Generator.Confirm />
       <Generator.History />
       <Generator.Score />
-      <Generator.Warning text="Modo em desenvolvimento. Pode aprensentar falhas." />
     </Generator.Root>
   );
 }
