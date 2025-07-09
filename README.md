@@ -6,6 +6,7 @@ O [Retangulo.org](https://retangulo.org) é um gerador de cálculos matemáticos
 
 - [retangulo.org](https://retangulo.org): site principal
 - [dev.retangulo.org](https://dev.retangulo.org): site preview
+- [Github](https://github.com/Retangulo-org): github do projeto
 
 ## Dev
 
@@ -23,9 +24,6 @@ npm install
 
 ```bash
 npm run dev
-
-# acesso remoto
-npm run host
 ```
 
 ## Mensagens de commit

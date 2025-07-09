@@ -15,7 +15,7 @@ export default function Header() {
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         className={({ isActive }) =>
           `${
-            isActive ? 'actionDefault cursor-default' : 'text-neutral-950 dark:text-neutral-100 hover:bg-background'
+            isActive ? 'actionDefault cursor-default' : 'text-neutral-100 hover:glass'
           } w-full py-2 px-4 rounded-sm hover:no-underline flex flex-row gap-2 font-semibold`
         }>
         {children}
@@ -43,12 +43,12 @@ export default function Header() {
       <div className="w-full flex flex-wrap items-center justify-between mx-auto">
         <button onClick={() => navigate('/')} className="flex items-center rtl:space-x-reverse">
           <span className="sr-only">Logo do site</span>
-          <LogoTipo className="w-20 h-auto fill-neutral-950 dark:fill-neutral-100" />
+          <LogoTipo className="w-20 h-auto fill-neutral-100" />
         </button>
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           type="button"
-          className={`${isMenuOpen && 'bg-background'} inline-flex items-center p-2 w-10 h-10 justify-center text-neutral-950 rounded-lg hover:bg-background dark:text-neutral-100`}>
+          className={`${isMenuOpen && 'bg-foreground'} inline-flex items-center p-2 w-10 h-10 justify-center rounded-lg hover:bg-foreground text-neutral-100`}>
           <span className="sr-only">Abrir menu</span>
           {isMenuOpen ? <X className="w-12 h-12" /> : <AlignJustify className="w-12 h-12" />}
         </button>
@@ -68,7 +68,7 @@ export default function Header() {
       <div className="w-full flex flex-wrap items-center justify-between mx-auto">
         <a onClick={() => navigate('/')} className="flex items-center rtl:space-x-reverse">
           <span className="sr-only">Logo do site</span>
-          <LogoTipo className="w-20 h-auto fill-neutral-950 dark:fill-neutral-100" />
+          <LogoTipo className="w-20 h-auto fill-neutral-100" />
         </a>
         <div className="w-auto">
           <div className="font-medium w-full flex flex-row items-center justify-between gap-4 select-none">
@@ -80,7 +80,7 @@ export default function Header() {
   }
 
   return (
-    <header className="bg-foreground p-4 rounded-b-xl">
+    <header className="glass p-4">
       <Desktop>
         <PcMenu />
       </Desktop>
