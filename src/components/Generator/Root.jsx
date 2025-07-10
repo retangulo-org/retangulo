@@ -2,7 +2,7 @@ import { useState, useEffect, createContext } from 'react';
 
 export const RootContext = createContext(undefined);
 
-export default function Root({ children, time, output, result, onRegenerate }) {
+export default function Root({ children, math, time, output, result, onRegenerate }) {
   const [input, setInput] = useState('');
   const [correct, setCorrect] = useState(0);
   const [wrong, setWrong] = useState(0);
@@ -116,7 +116,7 @@ export default function Root({ children, time, output, result, onRegenerate }) {
   useEffect(() => {
     if (isActive) {
       return addString(
-        `${stored.n1.join('').toString()} = ${stored.n2} — R: ${stored.n3 === '' ? 'input vazio' : stored.n3}`,
+        `${math ? stored.n1.join('').toString() : stored.n1.toString()} = ${stored.n2} — R: ${stored.n3 === '' ? 'sem resposta' : stored.n3}`,
       );
     }
   }, [stored]);

@@ -7,6 +7,7 @@ import Root from './layout';
 import Home from '../pages/Home';
 import Options from '../pages/Options';
 import Math from '../pages/Math';
+import Morse from '../pages/Morse';
 import Error from '../pages/Error';
 
 const router = createBrowserRouter(
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="/options" element={<Options />} />
       <Route path="/math" element={<Math />} />
+      <Route path="/morse" element={<Morse />} />
       <Route path="/*" element={<Error />} />
     </Route>,
   ),

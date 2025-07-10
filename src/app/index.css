@@ -4,28 +4,19 @@
 
 * {
   box-sizing: border-box;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 @layer base {
   :root {
     --radius: 0.75rem;
-    --background: theme(colors.neutral.100);
-    --foreground: theme(colors.neutral.200);
+    --background: theme(colors.neutral.950);
+    --foreground: theme(colors.neutral.800);
     --primary: theme(colors.blue.600);
-    --secundary: theme(colors.neutral.900);
+    --secundary: theme(colors.neutral.100);
     --success: theme(colors.green.600);
     --danger: theme(colors.red.600);
     --warning: theme(colors.yellow.600);
-    --text: theme(colors.neutral.950);
-    --text-alt: theme(colors.neutral.100);
-    --border: theme(colors.neutral.300);
-  }
-
-  .dark {
-    --background: theme(colors.neutral.950);
-    --foreground: theme(colors.neutral.800);
-    --secundary: theme(colors.neutral.100);
     --text: theme(colors.neutral.100);
     --text-alt: theme(colors.neutral.950);
     --border: theme(colors.neutral.700);
@@ -52,7 +43,7 @@
   }
 
   .actionDefault {
-    @apply bg-gradient-to-b from-neutral-800 to-neutral-900 hover:from-neutral-800 hover:to-neutral-800 dark:from-neutral-100 dark:to-neutral-300 dark:hover:from-neutral-300 dark:hover:to-neutral-300 text-neutral-100 dark:text-neutral-950 hover:shadow-md select-none;
+    @apply bg-gradient-to-b from-neutral-100 to-neutral-300 hover:from-neutral-300 hover:to-neutral-300 text-neutral-950 hover:shadow-md select-none;
   }
 
   .actionPrimary {
@@ -72,11 +63,17 @@
   }
 
   .actionOutline {
-    @apply text-neutral-950 bg-background dark:text-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-800 border border-neutral-300 dark:border-neutral-700 hover:shadow-md select-none;
+    @apply text-neutral-100 hover:bg-background border border-neutral-700 hover:shadow-md select-none;
   }
 
   html {
-    @apply bg-background selection:bg-[var(--primary)] selection:text-neutral-200 font-sans antialiased;
+    @apply selection:bg-[var(--primary)] selection:text-neutral-100 font-sans antialiased;
+  }
+
+  body {
+    @apply min-h-screen
+    bg-neutral-900
+    bg-fixed;
   }
 
   input {
@@ -84,31 +81,31 @@
   }
 
   h1 {
-    @apply mb-4 text-4xl font-black text-neutral-950 dark:text-neutral-100;
+    @apply mb-4 text-4xl font-black text-neutral-100;
   }
 
   h2 {
-    @apply mb-3 text-3xl font-bold text-neutral-900 dark:text-neutral-200;
+    @apply mb-3 text-3xl font-bold text-neutral-200;
   }
 
   h3 {
-    @apply mb-2 text-2xl font-semibold text-neutral-800 dark:text-neutral-300;
+    @apply mb-2 text-2xl font-semibold text-neutral-300;
   }
 
   h4 {
-    @apply text-xl font-semibold text-neutral-700 dark:text-neutral-400;
+    @apply text-xl font-semibold text-neutral-400;
   }
 
   h5 {
-    @apply text-lg font-semibold text-neutral-600 dark:text-neutral-500;
+    @apply text-lg font-semibold text-neutral-500;
   }
 
   h6 {
-    @apply text-base font-semibold text-neutral-600 dark:text-neutral-500;
+    @apply text-base font-semibold text-neutral-500;
   }
 
   p {
-    @apply mb-4 text-base text-neutral-700 dark:text-neutral-300;
+    @apply mb-4 text-base text-neutral-300;
   }
 
   table {
@@ -141,5 +138,9 @@
 
   summary {
     @apply text-neutral-800 dark:text-neutral-200;
+  }
+
+  .glass {
+    @apply bg-neutral-100/5;
   }
 }

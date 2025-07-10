@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import Meta from '../components/Meta';
 import { Generator } from '../components/Generator';
-import { RandomMath } from '../scripts/random';
+import { RandomMath } from '../scripts/randomMath';
 
 export default function Math() {
   const [searchParams] = useSearchParams();
@@ -43,18 +44,23 @@ export default function Math() {
   });
 
   return (
-    <Generator.Root
-      time={params.time}
-      output={changeChar}
-      result={eval(random.join(''))}
-      onRegenerate={() => setChange(!change)}>
-      <Generator.Back title="Matemática" />
-      <Generator.Output />
-      <Generator.Tags />
-      <Generator.Input />
-      <Generator.Confirm />
-      <Generator.History />
-      <Generator.Score />
-    </Generator.Root>
+    <Meta
+      title="Matemática Básica — Gerador de Cálculos Matemáticos — Retangulo.org"
+      canonical="https://retangulo.org/math">
+      <Generator.Root
+        math
+        time={params.time}
+        output={changeChar}
+        result={eval(random.join(''))}
+        onRegenerate={() => setChange(!change)}>
+        <Generator.Back title="Matemática Básica" />
+        <Generator.Output />
+        <Generator.Tags />
+        <Generator.Input />
+        <Generator.Confirm />
+        <Generator.History />
+        <Generator.Score />
+      </Generator.Root>
+    </Meta>
   );
 }

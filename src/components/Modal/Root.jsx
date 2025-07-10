@@ -4,7 +4,7 @@ export default function Root({ children, isOpen, center }) {
       {isOpen && (
         <div
           className={`${center ? 'fixed inset-0 bg-neutral-800 bg-opacity-75 flex justify-center items-center' : 'fixed inset-0 bg-neutral-800 bg-opacity-75 flex flex-col items-center z-50 overflow-y-scroll overflow-x-hidden'}`}>
-          <div className="bg-background text-text p-6 m-12 rounded-xl shadow-lg relative max-w-xl w-[95%]">
+          <div className="bg-neutral-900 text-text p-6 m-12 rounded-xl shadow-lg relative max-w-xl w-[95%]">
             {children}
           </div>
         </div>
