@@ -139,8 +139,4 @@
   summary {
     @apply text-neutral-800 dark:text-neutral-200;
   }
-
-  .glass {
-    @apply bg-neutral-100/5;
-  }
 }
