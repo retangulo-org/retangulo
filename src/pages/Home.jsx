@@ -1,34 +1,14 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Meta from '../components/Meta';
+import { Generator } from '../components/Generator';
+import { RandomMath } from '../scripts/randomMath';
 import Button from '../components/ui/Button';
 import { Settings } from 'lucide-react';
 import { Modal } from '../components/Modal';
 import { Select } from '../components/Select';
 import Input from '../components/ui/Input';
 
-function Card({ title, desc, initFun, settingsFun }) {
-  return (
-    <div className="w-full flex flex-col glass rounded-xl">
-      <div className="p-4">
-        <div className="mb-8">
-          <h2 className="m-0 p-0">{title}</h2>
-          <p className="m-0 p-0">{desc}</p>
-        </div>
-        <div className="w-full flex flex-row gap-4">
-          <Button variant="primary" onClick={initFun}>
-            Iniciar
-          </Button>
-          <Button variant="default" onClick={settingsFun} size="icon">
-            <Settings />
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Math() {
+export default function Home() {
   const [mathModal, setMathModal] = useState(false);
   const [mathType, setMathType] = useState(() => {
     return localStorage.getItem('mathType') || 'soma';
@@ -45,8 +25,6 @@ function Math() {
   const [mathInt, setMathInt] = useState(() => {
     return localStorage.getItem('mathInt') || 'positive';
   });
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     localStorage.setItem('mathType', mathType);
@@ -68,16 +46,44 @@ function Math() {
     }
   }, [mathMax, mathSize]);
 
+  const [random, setRandom] = useState(() => RandomMath(mathSize, mathMax, mathInt, mathType));
+  const [change, setChange] = useState(true);
+
+  useEffect(() => {
+    setRandom(() => RandomMath(mathSize, mathMax, mathInt, mathType));
+  }, [change]);
+
+  const changeChar = random.map((char) => {
+    switch (char.toString()) {
+      case '*':
+        return '×';
+      case '/':
+        return '÷';
+      default:
+        return char;
+    }
+  });
+
   return (
-    <>
-      <Card
-        title="Matemática básica"
-        desc="Gere cálculos matemáticos aleatórios."
-        initFun={() =>
-          navigate(`/math?type=${mathType}&time=${mathTime}&max=${mathMax}&int=${mathInt}&size=${mathSize}`)
-        }
-        settingsFun={() => setMathModal(!mathModal)}
-      />
+    <Meta
+      title="Matemática Básica — Gerador de Cálculos Matemáticos — Retangulo.org"
+      canonical="https://retangulo.org/">
+      <Button variant="outline" className="mb-4" onClick={() => setMathModal(!mathModal)}>
+        Configurações do Gerador <Settings />
+      </Button>
+      <Generator.Root
+        math
+        time={mathTime}
+        output={changeChar}
+        result={eval(random.join(''))}
+        onRegenerate={() => setChange(!change)}>
+        <Generator.Output />
+        <Generator.Tags />
+        <Generator.Input />
+        <Generator.Confirm />
+        <Generator.History />
+        <Generator.Score />
+      </Generator.Root>
       <Modal.Root isOpen={mathModal}>
         <Modal.Content>
           <div className="flex flex-col gap-2">
@@ -177,127 +183,12 @@ function Math() {
             variant="danger"
             onClick={() => {
               setMathModal(false);
+              setChange(!change);
             }}>
             Fechar
           </Button>
         </Modal.Actions>
       </Modal.Root>
-    </>
-  );
-}
-
-function Morse() {
-  const [morseModal, setMorseModal] = useState(false);
-  const [morseType, setMorseType] = useState(() => {
-    return localStorage.getItem('morseType') || 'letter';
-  });
-  const [morseTime, setMorseTime] = useState(() => {
-    return localStorage.getItem('morseTime') || '1m';
-  });
-  const [morseTrans, setMorseTrans] = useState(() => {
-    return localStorage.getItem('morseTrans') || 'toMorse';
-  });
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    localStorage.setItem('morseType', morseType);
-    localStorage.setItem('morseTime', morseTime);
-    localStorage.setItem('morseTrans', morseTrans);
-  }, [morseType, morseTime, morseTrans]);
-
-  return (
-    <>
-      <Card
-        title="Código Morse"
-        desc="Gere código morse aleatórios e traduza-os."
-        initFun={() => navigate(`/morse?type=${morseType}&time=${morseTime}&trans=${morseTrans}`)}
-        settingsFun={() => setMorseModal(true)}
-      />
-      <Modal.Root isOpen={morseModal} center>
-        <Modal.Content>
-          <div className="flex flex-col gap-2">
-            <div>
-              <h4 className="mb-2">Tempo limite</h4>
-              <Select.Root
-                value={morseTime}
-                onChange={(event) => {
-                  setMorseTime(event.target.value);
-                }}>
-                {[
-                  ['15 segundos', '15s'],
-                  ['30 segundos', '30s'],
-                  ['1 minuto', '1m'],
-                  ['5 minutos', '5m'],
-                  ['10 minutos', '10m'],
-                  ['30 minutos', '30m'],
-                  ['Sem limite', 'infinito'],
-                ].map(([tempo_title, tempo]) => (
-                  <Select.Content value={tempo} option={tempo_title} />
-                ))}
-              </Select.Root>
-            </div>
-            <div>
-              <h4 className="mt-4 mb-2">Tradução</h4>
-              <div className="flex flex-row flex-wrap gap-2">
-                {[
-                  ['Para texto', 'toTxt'],
-                  ['Para morse', 'toMorse'],
-                ].map(([title, arit]) => (
-                  <Button
-                    key={arit}
-                    size={'default'}
-                    variant={morseTrans === arit ? 'primary' : 'outline'}
-                    onClick={() => {
-                      setMorseTrans(arit);
-                    }}>
-                    {title}
-                  </Button>
-                ))}
-              </div>
-            </div>
-            <div>
-              <h4 className="mt-4 mb-2">Modos</h4>
-              <div className="flex flex-row flex-wrap gap-2">
-                {[
-                  ['Letras', 'letter'],
-                  ['Palavras', 'word'],
-                ].map(([title, arit]) => (
-                  <Button
-                    key={arit}
-                    size={'default'}
-                    variant={morseType === arit ? 'primary' : 'outline'}
-                    onClick={() => {
-                      setMorseType(arit);
-                    }}>
-                    {title}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            variant="danger"
-            onClick={() => {
-              setMorseModal(false);
-            }}>
-            Fechar
-          </Button>
-        </Modal.Actions>
-      </Modal.Root>
-    </>
-  );
-}
-
-export default function Home() {
-  return (
-    <Meta title="Gerador de Cálculos Matemáticos — Retangulo.org" canonical="https://retangulo.org/">
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        <Math />
-        <Morse />
-      </div>
     </Meta>
   );
 }

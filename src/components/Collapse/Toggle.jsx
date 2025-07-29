@@ -9,7 +9,7 @@ export default function Toggle({ children }) {
   return (
     <Button
       variant="outline"
-      className={`relative flex flex-row justify-between items-center`}
+      className={`relative flex flex-row justify-between items-center bg-background hover:bg-foreground`}
       onClick={() => setIsOpen(!isOpen)}>
       <span className={`${isOpen ? 'rotate-0' : 'rotate-180'} transition-all duration-300 absolute left-3`}>
         <ChevronUp />
