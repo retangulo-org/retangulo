@@ -15,7 +15,7 @@ export default function Header() {
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         className={({ isActive }) =>
           `${
-            isActive ? 'actionDefault cursor-default' : 'text-neutral-100 hover:glass'
+            isActive ? 'actionDefault cursor-default' : 'text-neutral-100 hover:bg-background'
           } w-full py-2 px-4 rounded-sm hover:no-underline flex flex-row gap-2 font-semibold`
         }>
         {children}
@@ -48,7 +48,7 @@ export default function Header() {
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           type="button"
-          className={`${isMenuOpen && 'bg-foreground'} inline-flex items-center p-2 w-10 h-10 justify-center rounded-lg hover:bg-foreground text-neutral-100`}>
+          className={`${isMenuOpen && 'bg-background'} inline-flex items-center p-2 w-10 h-10 justify-center rounded-lg hover:bg-background text-neutral-100`}>
           <span className="sr-only">Abrir menu</span>
           {isMenuOpen ? <X className="w-12 h-12" /> : <AlignJustify className="w-12 h-12" />}
         </button>
@@ -80,7 +80,7 @@ export default function Header() {
   }
 
   return (
-    <header className="glass p-4">
+    <header className="bg-foreground p-4">
       <Desktop>
         <PcMenu />
       </Desktop>
