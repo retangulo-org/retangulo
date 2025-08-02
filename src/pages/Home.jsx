@@ -65,9 +65,7 @@ export default function Home() {
   });
 
   return (
-    <Meta
-      title="Matemática Básica — Gerador de Cálculos Matemáticos — Retangulo.org"
-      canonical="https://retangulo.org/">
+    <Meta title="Gerador de Cálculos Matemáticos — Retangulo.org" canonical="https://retangulo.org/">
       <Button variant="outline" className="mb-4" onClick={() => setMathModal(!mathModal)}>
         Configurações do Gerador <Settings />
       </Button>
