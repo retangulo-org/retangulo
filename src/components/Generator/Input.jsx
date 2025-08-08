@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import InputCalc from '../InputCalc';
 import { RootContext } from './Root';
 
-export default function input({ notNumber }) {
+export default function input() {
   const { input, setInput, color } = useContext(RootContext);
 
   return (
@@ -12,8 +12,8 @@ export default function input({ notNumber }) {
       placeholder="Resultado..."
       required={false}
       autoFocus={false}
-      type={notNumber ? 'text' : 'number'}
-      inputMode={notNumber ? 'text' : 'numeric'}
+      type={localStorage.getItem('keyType') === 'number' ? 'number' : 'text'}
+      inputMode={localStorage.getItem('keyType') === 'number' ? 'decimal' : 'text'}
       color={color}
       step={'any'}
     />
