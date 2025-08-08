@@ -44,7 +44,7 @@ export default function Options() {
               <Select.Root
                 value={keyType}
                 className="!w-auto"
-                childrenClassName="!text-left pl-4 w-36"
+                childrenClassName="!text-left !pl-4 !w-36"
                 onChange={(event) => {
                   setKeyType(event.target.value);
                 }}>
