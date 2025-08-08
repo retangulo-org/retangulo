@@ -12,7 +12,7 @@ O [Retangulo.org](https://retangulo.org) é um gerador de cálculos matemáticos
 
 ### Dependências globais
 
-- Node.js LTS v18
+- Node.js LTS v22
 
 ### Dependências locais
 
