@@ -1,4 +1,5 @@
 import Root from './Root';
+import Modal from './Modal';
 import Back from './Back';
 import Output from './Output';
 import Tags from './Tags';
@@ -10,6 +11,7 @@ import Warning from './Warning';
 
 export const Generator = {
   Root,
+  Modal,
   Back,
   Output,
   Tags,
