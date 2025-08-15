@@ -1,17 +1,22 @@
-import { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { LogoTipo } from '../assets/LogoTipo';
 import { AlignJustify, X, House, Settings } from 'lucide-react';
 import { Desktop, Mobile } from './ui/Responsive';
+import Button from './ui/Button';
+import { useTranslation } from 'react-i18next';
 
 export default function Header() {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language.split('-')[0];
 
   const Link = ({ link, children }) => {
     return (
       <NavLink
         to={link}
+        end
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         className={({ isActive }) =>
           `${
@@ -26,13 +31,13 @@ export default function Header() {
   function Links() {
     return (
       <>
-        <Link link="/">
+        <Link link={`/${currentLang}`}>
           <House />
-          Início
+          {t('bHome')}
         </Link>
-        <Link link="/options">
+        <Link link={`/${currentLang}/options`}>
           <Settings />
-          Opções
+          {t('bOptions')}
         </Link>
       </>
     );
@@ -41,7 +46,7 @@ export default function Header() {
   function MobileMenu() {
     return (
       <div className="w-full flex flex-wrap items-center justify-between mx-auto">
-        <button onClick={() => navigate('/')} className="flex items-center rtl:space-x-reverse">
+        <button onClick={() => navigate(`/${currentLang}`)} className="flex items-center rtl:space-x-reverse">
           <span className="sr-only">Logo do site</span>
           <LogoTipo className="w-20 h-auto fill-neutral-100" />
         </button>
@@ -66,7 +71,7 @@ export default function Header() {
   function PcMenu() {
     return (
       <div className="w-full flex flex-wrap items-center justify-between mx-auto">
-        <button onClick={() => navigate('/')} className="flex items-center rtl:space-x-reverse">
+        <button onClick={() => navigate(`/${currentLang}`)} className="flex items-center rtl:space-x-reverse">
           <span className="sr-only">Logo do site</span>
           <LogoTipo className="w-20 h-auto fill-neutral-100" />
         </button>
@@ -79,8 +84,51 @@ export default function Header() {
     );
   }
 
+  const SUPPORTED_LANGS = ['pt', 'en'];
+
+  function SwitchToBrowserLang() {
+    const { i18n } = useTranslation();
+    const navigate = useNavigate();
+    const { lang } = useParams();
+    const [visible, setVisible] = useState(() => {
+      return localStorage.getItem('visible') || 'visible';
+    });
+
+    useEffect(() => {
+      localStorage.setItem('visible', visible);
+    }, [visible]);
+
+    const browserLang = navigator.language.split('-')[0];
+    const validBrowserLang = SUPPORTED_LANGS.includes(browserLang) ? browserLang : 'en';
+
+    if (lang === validBrowserLang) return null;
+
+    const handleClick = () => {
+      i18n.changeLanguage(validBrowserLang);
+      navigate(`/${validBrowserLang}`, { replace: true });
+    };
+
+    return (
+      <>
+        {visible === 'visible' && (
+          <div className="flex flex- mb-4">
+            <button
+              className="w-full flex flex-row justify-start items-center gap-2 py-2 px-4 bg-primary  text-text rounded-l-md"
+              onClick={handleClick}>
+              {t('tClickToChangeLanguageToEnglish')}
+            </button>
+            <Button className="rounded-l-none" variant="default" size="icon" onClick={() => setVisible('NotVisible')}>
+              <X />
+            </Button>
+          </div>
+        )}
+      </>
+    );
+  }
+
   return (
     <header className="bg-foreground p-4">
+      <SwitchToBrowserLang />
       <Desktop>
         <PcMenu />
       </Desktop>

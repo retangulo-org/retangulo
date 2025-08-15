@@ -1,9 +1,12 @@
 import Meta from '../components/Meta';
 import { Generator } from '../components/Generator';
+import { useTranslation } from 'react-i18next';
 
 export default function Home() {
+  const { t } = useTranslation();
+
   return (
-    <Meta title="Gerador de Cálculos Matemáticos — Retangulo.org" canonical="https://retangulo.org/">
+    <Meta title={t('title')} canonical="https://retangulo.org/" desc={t('desc')}>
       <Generator.Root math>
         <Generator.Modal />
         <Generator.Output />
