@@ -66,10 +66,10 @@ export default function Header() {
   function PcMenu() {
     return (
       <div className="w-full flex flex-wrap items-center justify-between mx-auto">
-        <a onClick={() => navigate('/')} className="flex items-center rtl:space-x-reverse">
+        <button onClick={() => navigate('/')} className="flex items-center rtl:space-x-reverse">
           <span className="sr-only">Logo do site</span>
           <LogoTipo className="w-20 h-auto fill-neutral-100" />
-        </a>
+        </button>
         <div className="w-auto">
           <div className="font-medium w-full flex flex-row items-center justify-between gap-4 select-none">
             <Links />
