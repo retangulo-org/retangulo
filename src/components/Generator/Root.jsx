@@ -4,10 +4,12 @@ import Button from '../ui/Button';
 import { Select } from '../Select';
 import Input from '../ui/Input';
 import { RandomMath } from '../../scripts/randomMath';
+import { useTranslation } from 'react-i18next';
 
 export const RootContext = createContext(undefined);
 
 export default function Root({ children, math }) {
+  const { t } = useTranslation();
   const [input, setInput] = useState('');
   const [correct, setCorrect] = useState(0);
   const [wrong, setWrong] = useState(0);
@@ -52,12 +54,12 @@ export default function Root({ children, math }) {
 
   useEffect(() => {
     if (mathMax > 100000) {
-      alert('Valor máximo muito grande! Pode travar seu dispositivo.');
+      alert(t('tMaxValueTooLarge'));
       setMathMax(100000);
     }
 
     if (mathSize > 50) {
-      alert('Quantidade de termos muito grande! Pode travar seu dispositivo.');
+      alert(t('tNumberOfTermsTooLarge'));
       setMathSize(50);
     }
   }, [mathMax, mathSize]);
@@ -215,33 +217,33 @@ export default function Root({ children, math }) {
         <Modal.Content>
           <div className="flex flex-col gap-2">
             <div>
-              <h4 className="mb-2">Tempo limite</h4>
+              <h4 className="mb-2">{t('tTimeLimit')}</h4>
               <Select.Root
                 value={mathTime}
                 onChange={(event) => {
                   setMathTime(event.target.value);
                 }}>
                 {[
-                  ['15 segundos', '15s'],
-                  ['30 segundos', '30s'],
-                  ['1 minuto', '1m'],
-                  ['5 minutos', '5m'],
-                  ['10 minutos', '10m'],
-                  ['30 minutos', '30m'],
-                  ['Sem limite', 'infinito'],
+                  [`15 ${t('bSeconds')}`, '15s'],
+                  [`30 ${t('bSeconds')}`, '30s'],
+                  [`1 ${t('bMinute')}`, '1m'],
+                  [`5 ${t('bMinutes')}`, '5m'],
+                  [`10 ${t('bMinutes')}`, '10m'],
+                  [`30 ${t('bMinutes')}`, '30m'],
+                  [t('bNoLimit'), 'infinito'],
                 ].map(([tempo_title, tempo]) => (
                   <Select.Content value={tempo} option={tempo_title} />
                 ))}
               </Select.Root>
             </div>
             <div>
-              <h4 className="mt-4 mb-2">Operacões</h4>
+              <h4 className="mt-4 mb-2">{t('tOperations')}</h4>
               <div className="flex flex-row flex-wrap gap-2">
                 {[
-                  ['Adição', 'soma'],
-                  ['Subtração', 'subt'],
-                  ['Multiplicação', 'mult'],
-                  ['Divisão', 'divi'],
+                  [t('bAddition'), 'soma'],
+                  [t('bSubtraction'), 'subt'],
+                  [t('bMultiplication'), 'mult'],
+                  [t('bDivision'), 'divi'],
                 ].map(([title, arit]) => (
                   <Button
                     key={arit}
@@ -256,7 +258,7 @@ export default function Root({ children, math }) {
               </div>
             </div>
             <div>
-              <h4 className="mt-4 mb-2">Valor máximo</h4>
+              <h4 className="mt-4 mb-2">{t('tMaxValue')}</h4>
               <Input
                 value={mathMax}
                 onChange={(e) => {
@@ -266,11 +268,11 @@ export default function Root({ children, math }) {
                 name="valor-maximo"
                 type="number"
                 inputMode="numeric"
-                placeholder="Valor..."
+                placeholder={t('tValue')}
               />
             </div>
             <div>
-              <h4 className="mt-4 mb-2">Quantidade de termos</h4>
+              <h4 className="mt-4 mb-2">{t('tNumberOfTerms')}</h4>
               <Input
                 value={mathSize}
                 onChange={(e) => {
@@ -280,16 +282,16 @@ export default function Root({ children, math }) {
                 name="tamanho-maximo"
                 type="number"
                 inputMode="numeric"
-                placeholder="Valor..."
+                placeholder={t('tValue')}
               />
             </div>
             <div>
-              <h4 className="mt-4 mb-2">Tipo de valores</h4>
+              <h4 className="mt-4 mb-2">{t('tTypeOfValues')}</h4>
               <div className="flex flex-row flex-wrap gap-2">
                 {[
-                  ['Apenas positivos', 'positive'],
-                  ['Aleatórios', 'random'],
-                  ['Apenas negativos', 'negative'],
+                  [t('bOnlyPositive'), 'positive'],
+                  [t('bRandom'), 'random'],
+                  [t('bOnlyNegative'), 'negative'],
                 ].map(([title, key]) => (
                   <Button
                     key={key}
@@ -312,7 +314,7 @@ export default function Root({ children, math }) {
               setModal(false);
               Reset();
             }}>
-            Fechar
+            {t('bClose')}
           </Button>
         </Modal.Actions>
       </Modal.Root>
