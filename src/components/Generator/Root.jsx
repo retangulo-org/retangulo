@@ -1,8 +1,13 @@
 import { useState, useEffect, createContext } from 'react';
+import { Modal } from '../Modal';
+import Button from '../ui/Button';
+import { Select } from '../Select';
+import Input from '../ui/Input';
+import { RandomMath } from '../../scripts/randomMath';
 
 export const RootContext = createContext(undefined);
 
-export default function Root({ children, math, time, output, result, onRegenerate }) {
+export default function Root({ children, math }) {
   const [input, setInput] = useState('');
   const [correct, setCorrect] = useState(0);
   const [wrong, setWrong] = useState(0);
@@ -12,6 +17,50 @@ export default function Root({ children, math, time, output, result, onRegenerat
   const [stored, setStored] = useState({ n1: '', n2: '', n3: '' });
   const [storedArray, setStoredArray] = useState(['']);
   const [score, setScore] = useState(false);
+  const [modal, setModal] = useState(false);
+
+  const [mathType, setMathType] = useState(() => {
+    return localStorage.getItem('mathType') || 'soma';
+  });
+  const [mathTime, setMathTime] = useState(() => {
+    return localStorage.getItem('mathTime') || '1m';
+  });
+  const [mathMax, setMathMax] = useState(() => {
+    return localStorage.getItem('mathMax') || 100;
+  });
+  const [mathSize, setMathSize] = useState(() => {
+    return localStorage.getItem('mathSize') || 2;
+  });
+  const [mathInt, setMathInt] = useState(() => {
+    return localStorage.getItem('mathInt') || 'positive';
+  });
+
+  const [random, setRandom] = useState(() => RandomMath(mathSize, mathMax, mathInt, mathType));
+  const [result, setResult] = useState(eval(random.join('')));
+
+  useEffect(() => {
+    setResult(eval(random.join('')));
+  }, [random]);
+
+  useEffect(() => {
+    localStorage.setItem('mathType', mathType);
+    localStorage.setItem('mathTime', mathTime);
+    localStorage.setItem('mathMax', mathMax);
+    localStorage.setItem('mathSize', mathSize);
+    localStorage.setItem('mathInt', mathInt);
+  }, [mathType, mathTime, mathMax, mathSize, mathInt]);
+
+  useEffect(() => {
+    if (mathMax > 100000) {
+      alert('Valor máximo muito grande! Pode travar seu dispositivo.');
+      setMathMax(100000);
+    }
+
+    if (mathSize > 50) {
+      alert('Quantidade de termos muito grande! Pode travar seu dispositivo.');
+      setMathSize(50);
+    }
+  }, [mathMax, mathSize]);
 
   useEffect(() => {
     let interval = null;
@@ -26,7 +75,7 @@ export default function Root({ children, math, time, output, result, onRegenerat
   useEffect(() => {
     let timerSelect;
 
-    switch (time) {
+    switch (mathTime) {
       case '15s':
         timerSelect = 15;
         break;
@@ -54,7 +103,6 @@ export default function Root({ children, math, time, output, result, onRegenerat
     }
 
     if (seconds >= timerSelect) {
-      console.log(seconds, timerSelect);
       document.activeElement.blur();
       setIsActive(false);
       setScore(true);
@@ -62,14 +110,20 @@ export default function Root({ children, math, time, output, result, onRegenerat
     }
   }, [seconds]);
 
+  useEffect(() => {
+    if (score === false) {
+      Reset();
+    }
+  }, [score]);
+
   function Reset() {
     setIsActive(false);
+    setRandom(() => RandomMath(mathSize, mathMax, mathInt, mathType));
     setCorrect(0);
     setWrong(0);
     setSeconds(0);
     setColor('');
     setStoredArray(['']);
-    onRegenerate?.();
     setInput('');
     setStored({
       n1: '',
@@ -97,7 +151,7 @@ export default function Root({ children, math, time, output, result, onRegenerat
 
   function ValueChange() {
     if (isActive === false) setIsActive(true);
-    onRegenerate?.();
+    setRandom(() => RandomMath(mathSize, mathMax, mathInt, mathType));
     setInput('');
     setStored({
       n1: output,
@@ -121,6 +175,17 @@ export default function Root({ children, math, time, output, result, onRegenerat
     }
   }, [stored]);
 
+  const output = random.map((char) => {
+    switch (char.toString()) {
+      case '*':
+        return '×';
+      case '/':
+        return '÷';
+      default:
+        return char;
+    }
+  });
+
   return (
     <RootContext.Provider
       value={{
@@ -136,6 +201,7 @@ export default function Root({ children, math, time, output, result, onRegenerat
         storedArray,
         score,
         setScore,
+        setModal,
       }}>
       <form
         onSubmit={(e) => {
@@ -145,6 +211,111 @@ export default function Root({ children, math, time, output, result, onRegenerat
         className="w-full flex flex-col gap-4">
         {children}
       </form>
+      <Modal.Root isOpen={modal}>
+        <Modal.Content>
+          <div className="flex flex-col gap-2">
+            <div>
+              <h4 className="mb-2">Tempo limite</h4>
+              <Select.Root
+                value={mathTime}
+                onChange={(event) => {
+                  setMathTime(event.target.value);
+                }}>
+                {[
+                  ['15 segundos', '15s'],
+                  ['30 segundos', '30s'],
+                  ['1 minuto', '1m'],
+                  ['5 minutos', '5m'],
+                  ['10 minutos', '10m'],
+                  ['30 minutos', '30m'],
+                  ['Sem limite', 'infinito'],
+                ].map(([tempo_title, tempo]) => (
+                  <Select.Content value={tempo} option={tempo_title} />
+                ))}
+              </Select.Root>
+            </div>
+            <div>
+              <h4 className="mt-4 mb-2">Operacões</h4>
+              <div className="flex flex-row flex-wrap gap-2">
+                {[
+                  ['Adição', 'soma'],
+                  ['Subtração', 'subt'],
+                  ['Multiplicação', 'mult'],
+                  ['Divisão', 'divi'],
+                ].map(([title, arit]) => (
+                  <Button
+                    key={arit}
+                    size={'default'}
+                    variant={mathType === arit ? 'primary' : 'outline'}
+                    onClick={() => {
+                      setMathType(arit);
+                    }}>
+                    {title}
+                  </Button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h4 className="mt-4 mb-2">Valor máximo</h4>
+              <Input
+                value={mathMax}
+                onChange={(e) => {
+                  setMathMax(e.target.value);
+                }}
+                id="valor-maximo"
+                name="valor-maximo"
+                type="number"
+                inputMode="numeric"
+                placeholder="Valor..."
+              />
+            </div>
+            <div>
+              <h4 className="mt-4 mb-2">Quantidade de termos</h4>
+              <Input
+                value={mathSize}
+                onChange={(e) => {
+                  setMathSize(e.target.value);
+                }}
+                id="tamanho-maximo"
+                name="tamanho-maximo"
+                type="number"
+                inputMode="numeric"
+                placeholder="Valor..."
+              />
+            </div>
+            <div>
+              <h4 className="mt-4 mb-2">Tipo de valores</h4>
+              <div className="flex flex-row flex-wrap gap-2">
+                {[
+                  ['Apenas positivos', 'positive'],
+                  ['Aleatórios', 'random'],
+                  ['Apenas negativos', 'negative'],
+                ].map(([title, key]) => (
+                  <Button
+                    key={key}
+                    size={'default'}
+                    variant={mathInt === key ? 'primary' : 'outline'}
+                    onClick={() => {
+                      setMathInt(key);
+                    }}>
+                    {title}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+            variant="danger"
+            onClick={() => {
+              setModal(false);
+              Reset();
+            }}>
+            Fechar
+          </Button>
+        </Modal.Actions>
+      </Modal.Root>
     </RootContext.Provider>
   );
 }
