@@ -1,7 +1,7 @@
 export default {
   title: {
     pt: 'Gerador de Cálculos Matemáticos — Retangulo.org',
-    en: 'Mathematical Calculations Generato — Retangulo.org',
+    en: 'Mathematical Calculation Generator — Retangulo.org',
   },
   desc: {
     pt: 'Resolva cálculos matemáticos aleatórios & melhore seu cálculo mental.',
@@ -12,12 +12,12 @@ export default {
     en: 'Generator Settings',
   },
   tMaxValueTooLarge: {
-    pt: 'Valor máximo muito grande! Pode travar seu dispositivo.',
-    en: 'Maximum value too large! It may crash your device.',
+    pt: 'Valor máximo muito grande!',
+    en: 'Maximum value too large!',
   },
   tNumberOfTermsTooLarge: {
-    pt: 'Quantidade de termos muito grande! Pode travar seu dispositivo.',
-    en: 'Number of terms too large! It may crash your device.',
+    pt: 'Quantidade de termos muito grande!',
+    en: 'Number of terms too large!',
   },
   inputResult: {
     pt: 'Resultado...',
