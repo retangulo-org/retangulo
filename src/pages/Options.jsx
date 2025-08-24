@@ -33,7 +33,8 @@ export default function Options() {
   const links = [
     { id: 1, title: t('linkContact'), url: 'mailto:contato@retangulo.org' },
     { id: 2, title: 'Preview', url: 'https://dev.retangulo.org/' },
-    { id: 3, title: 'Github', url: 'https://github.com/retangulo-org' },
+    { id: 3, title: 'Backup', url: 'https://alt.retangulo.org/' },
+    { id: 4, title: 'Github', url: 'https://github.com/retangulo-org' },
   ];
 
   return (
