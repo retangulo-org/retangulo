@@ -58,10 +58,13 @@ export default function Options() {
             </div>
           </div>
           <div className="w-full py-2 flex flex-col ">
-            <div className="w-full pb-1 flex flex-row justify-between items-start">
-              <h3 className="mb-0 !text-text">
-                {t('tKeyboard')} <span className="text-sm">({t('tKeyboardAlt')})</span>
-              </h3>
+            <div className="w-full pb-1 flex flex-row justify-between items-center">
+              <div className="mb-0 flex flex-col">
+                <h3 className="!text-text">
+                  {t('tKeyboard')} <span className="text-sm">({t('tKeyboardAlt')})</span>
+                </h3>
+                <h6>{t('tKeyboardDesc')}</h6>
+              </div>
               <Select.Root
                 value={keyType}
                 className="!w-auto"
@@ -77,7 +80,6 @@ export default function Options() {
                 ))}
               </Select.Root>
             </div>
-            <h6>{t('tKeyboardDesc')}</h6>
           </div>
           <div className="w-full py-2 flex flex-row justify-between items-center">
             <h3 className="mb-0 !text-text">{t('tCache')}</h3>
