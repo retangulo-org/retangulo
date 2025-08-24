@@ -19,7 +19,7 @@ i18n
     fallbackLng: 'pt',
     interpolation: { escapeValue: false },
     detection: {
-      order: ['querystring', 'localStorage', 'navigator'],
+      order: ['querystring', 'localStorage'],
       caches: ['localStorage'],
       lookupLocalStorage: 'i18nextLng',
       checkWhitelist: true,
