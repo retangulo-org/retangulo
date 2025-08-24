@@ -12,14 +12,14 @@ Object.keys(translations).forEach((key) => {
 });
 
 i18n
-  .use(LanguageDetector) // 👈 precisa disso
+  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
     fallbackLng: 'pt',
     interpolation: { escapeValue: false },
     detection: {
-      order: ['localStorage', 'querystring', 'navigator'],
+      order: ['querystring', 'localStorage', 'navigator'],
       caches: ['localStorage'],
       lookupLocalStorage: 'i18nextLng',
       checkWhitelist: true,
