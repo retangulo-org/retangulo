@@ -25,8 +25,7 @@ export default function Options() {
     const newLang = e.target.value;
     i18n.changeLanguage(newLang);
 
-    // Mantém o caminho atual, só troca o prefixo /:lang
-    const parts = location.pathname.split('/').slice(2); // remove o /:lang
+    const parts = location.pathname.split('/').slice(2);
     const newPath = `/${newLang}/${parts.join('/')}`;
     navigate(newPath, { replace: true });
   };
