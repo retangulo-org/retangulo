@@ -3,6 +3,10 @@ export default {
     pt: 'Gerador de Cálculos Matemáticos — Retangulo.org',
     en: 'Mathematical Calculation Generator — Retangulo.org',
   },
+  lang: {
+    pt: 'pt',
+    en: 'en',
+  },
   desc: {
     pt: 'Resolva cálculos matemáticos aleatórios & melhore seu cálculo mental.',
     en: 'Solve random math calculations & improve your mental math.',
