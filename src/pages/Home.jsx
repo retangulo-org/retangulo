@@ -6,7 +6,7 @@ export default function Home() {
   const { t } = useTranslation();
 
   return (
-    <Meta title={t('title')} canonical="https://retangulo.org/" desc={t('desc')}>
+    <Meta title={t('title')} canonical={`https://retangulo.org/${t('lang')}`} desc={t('desc')}>
       <Generator.Root math>
         <Generator.Modal />
         <Generator.Output />

@@ -38,7 +38,7 @@ export default function Options() {
   ];
 
   return (
-    <Meta title={t('titleOptions')} canonical="https://retangulo.org/options" desc={t('desc')}>
+    <Meta title={t('titleOptions')} canonical={`https://retangulo.org/${t('lang')}/options`} desc={t('desc')}>
       <div className="flex flex-col justify-center items-center">
         <div className="w-full divide-foreground dark:divide-neutral-800 divide-y-2">
           <div className="w-full py-2 flex flex-col ">
