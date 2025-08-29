@@ -133,7 +133,7 @@ export default function Header() {
           onClick={handleClick}>
           {message}
         </button>
-        <Button className="rounded-l-none" variant="default" size="icon" onClick={() => setVisible(false)}>
+        <Button className="rounded-l-none" variant="default" size="icon" name="close" onClick={() => setVisible(false)}>
           <X />
         </Button>
       </div>
