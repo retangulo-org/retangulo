@@ -4,24 +4,27 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function Root() {
-  const SUPPORTED_LANGS = ['pt', 'en'];
+  const SUPPORTED_LANGS = ['pt', 'en', 'es'];
+  const { i18n } = useTranslation();
+  const { lang } = useParams();
+  const navigate = useNavigate();
 
-  function LanguageSync() {
-    const { lang } = useParams();
-    const { i18n } = useTranslation();
-    const navigate = useNavigate();
+  useEffect(() => {
+    // se não tem :lang (rota "/"), deixa o redirect do index.js cuidar
+    if (!lang) return;
 
-    useEffect(() => {
-      const currentLang = i18n.language.split('-')[0];
-      const validLang = SUPPORTED_LANGS.includes(currentLang) ? currentLang : 'en';
+    // se lang inválido, redireciona para /pt (padrão)
+    if (!SUPPORTED_LANGS.includes(lang)) {
+      navigate('/pt', { replace: true });
+      return;
+    }
 
-      if (lang !== validLang) {
-        navigate(`/${validLang}`, { replace: true });
-      }
-    }, [lang, i18n.language, navigate]);
-
-    return null;
-  }
+    // sincroniza i18n com a rota quando necessário
+    const current = (i18n.language || '').split('-')[0];
+    if (current !== lang) {
+      i18n.changeLanguage(lang).catch(() => {});
+    }
+  }, [lang, i18n, navigate]);
 
   return (
     <div className="min-h-full">
@@ -31,7 +34,6 @@ export default function Root() {
           <Outlet />
         </div>
       </main>
-      <LanguageSync />
     </div>
   );
 }
