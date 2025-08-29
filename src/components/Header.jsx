@@ -84,45 +84,59 @@ export default function Header() {
     );
   }
 
-  const SUPPORTED_LANGS = ['pt', 'en'];
-
   function SwitchToBrowserLang() {
     const { i18n } = useTranslation();
     const navigate = useNavigate();
     const { lang } = useParams();
-    const [visible, setVisible] = useState(() => {
-      return localStorage.getItem('visible') || 'visible';
-    });
+    const [visible, setVisible] = useState(() => localStorage.getItem('switchLangVisible') !== 'false');
 
-    useEffect(() => {
-      localStorage.setItem('visible', visible);
-    }, [visible]);
+    const SUPPORTED_LANGS = ['pt', 'en', 'es'];
 
-    const browserLang = navigator.language.split('-')[0];
-    const validBrowserLang = SUPPORTED_LANGS.includes(browserLang) ? browserLang : 'en';
-
-    if (lang === validBrowserLang) return null;
-
-    const handleClick = () => {
-      i18n.changeLanguage(validBrowserLang);
-      navigate(`/${validBrowserLang}`, { replace: true });
+    const languageSwitchMessages = {
+      pt: 'Mudar o idioma para {suggestedLang}?',
+      en: 'Switch language to {suggestedLang}?',
+      es: '¿Cambiar idioma a {suggestedLang}?',
     };
 
+    // nomes completos dos idiomas
+    const LANG_FULL_NAMES = {
+      pt: { pt: 'Português', en: 'Portuguese', es: 'Portugués' },
+      en: { pt: 'Inglês', en: 'English', es: 'Inglés' },
+      es: { pt: 'Espanhol', en: 'Spanish', es: 'Español' },
+    };
+
+    useEffect(() => {
+      localStorage.setItem('switchLangVisible', visible);
+    }, [visible]);
+
+    const navLangRaw = navigator.language.split('-')[0];
+    const browserLang = SUPPORTED_LANGS.includes(navLangRaw) ? navLangRaw : 'en';
+
+    if (!visible || lang === browserLang) return null;
+
+    const handleClick = () => {
+      i18n.changeLanguage(browserLang).catch(() => {});
+      navigate(`/${browserLang}`, { replace: true });
+      setVisible(false);
+    };
+
+    // define mensagem no idioma que vai ser mudado
+    const messageTemplate = languageSwitchMessages[browserLang] || languageSwitchMessages.pt;
+    const message = messageTemplate
+      .replace('{lang}', LANG_FULL_NAMES[navLangRaw]?.[browserLang] || navLangRaw)
+      .replace('{suggestedLang}', LANG_FULL_NAMES[browserLang][browserLang]);
+
     return (
-      <>
-        {visible === 'visible' && (
-          <div className="flex flex- mb-4">
-            <button
-              className="w-full flex flex-row justify-start items-center gap-2 py-2 px-4 bg-primary  text-text rounded-l-md"
-              onClick={handleClick}>
-              {t('tClickToChangeLanguageToEnglish')}
-            </button>
-            <Button className="rounded-l-none" variant="default" size="icon" onClick={() => setVisible('NotVisible')}>
-              <X />
-            </Button>
-          </div>
-        )}
-      </>
+      <div className="flex mb-4">
+        <button
+          className="w-full flex flex-row justify-start items-center gap-2 py-2 px-4 bg-primary text-text rounded-l-md"
+          onClick={handleClick}>
+          {message}
+        </button>
+        <Button className="rounded-l-none" variant="default" size="icon" onClick={() => setVisible(false)}>
+          <X />
+        </Button>
+      </div>
     );
   }
 

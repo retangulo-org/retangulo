@@ -52,6 +52,7 @@ export default function Options() {
                 {[
                   ['Português', 'pt'],
                   ['English', 'en'],
+                  ['Español', 'es'],
                 ].map(([lang_title, language]) => (
                   <Select.Content value={language} option={lang_title} />
                 ))}
