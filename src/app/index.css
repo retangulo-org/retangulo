@@ -43,11 +43,11 @@
   }
 
   .actionDefault {
-    @apply bg-gradient-to-b from-neutral-100 to-neutral-300 hover:from-neutral-300 hover:to-neutral-300 text-neutral-950 hover:shadow-md select-none;
+    @apply bg-gradient-to-b from-neutral-100 to-neutral-300 hover:from-neutral-300 hover:to-neutral-300 text-neutral-950 select-none;
   }
 
   .actionPrimary {
-    @apply text-blue-50 bg-gradient-to-b from-blue-500 to-blue-600 hover:from-blue-700 hover:to-blue-700 hover:shadow-md select-none;
+    @apply text-blue-50 bg-gradient-to-b from-blue-500 to-blue-600 hover:from-blue-700 hover:to-blue-700 select-none;
   }
 
   .actionSuccess {
@@ -55,15 +55,15 @@
   }
 
   .actionDanger {
-    @apply text-red-50 bg-gradient-to-b from-red-500 to-red-600 hover:from-red-700 hover:to-red-700 hover:shadow-md select-none;
+    @apply text-red-50 bg-gradient-to-b from-red-500 to-red-600 hover:from-red-700 hover:to-red-700 select-none;
   }
 
   .actionWarning {
-    @apply text-neutral-100 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 hover:shadow-md select-none;
+    @apply text-neutral-100 bg-yellow-600 hover:bg-yellow-700 active:bg-yellow-800 select-none;
   }
 
   .actionOutline {
-    @apply text-neutral-100 hover:bg-foreground border border-neutral-700 hover:shadow-md select-none;
+    @apply text-neutral-100 hover:bg-foreground border border-neutral-700 select-none;
   }
 
   html {
@@ -106,6 +106,18 @@
 
   p {
     @apply mb-4 text-base text-neutral-300;
+  }
+
+  ul {
+    @apply text-base text-neutral-300 list-disc list-inside mb-4
+  }
+
+  /* a {
+    @apply text-base text-blue-500 hover:underline hover:text-blue-400
+  } */
+
+  img {
+    @apply mb-4 rounded-md w-[80%] text-center mx-auto
   }
 
   table {

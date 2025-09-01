@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { LogoTipo } from '../assets/LogoTipo';
-import { AlignJustify, X, House, Settings } from 'lucide-react';
+import { AlignJustify, X, House, Settings, BookText } from 'lucide-react';
 import { Desktop, Mobile } from './ui/Responsive';
 import Button from './ui/Button';
 import { useTranslation } from 'react-i18next';
@@ -19,8 +19,9 @@ export default function Header() {
         end
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         className={({ isActive }) =>
+          // TODO: Concertar as cores
           `${
-            isActive ? 'actionDefault cursor-default' : 'text-neutral-100 hover:bg-background'
+            isActive ? '!actionDefault hover:text-neutral-950 cursor-default' : '!text-neutral-100 hover:bg-background'
           } w-full py-2 px-4 rounded-sm hover:no-underline flex flex-row gap-2 font-semibold`
         }>
         {children}
@@ -34,6 +35,10 @@ export default function Header() {
         <Link link={`/${currentLang}`}>
           <House />
           {t('bHome')}
+        </Link>
+        <Link link={`/${currentLang}/blog`}>
+          <BookText />
+          Blog
         </Link>
         <Link link={`/${currentLang}/options`}>
           <Settings />
