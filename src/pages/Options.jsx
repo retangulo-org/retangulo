@@ -33,7 +33,7 @@ export default function Options() {
                 <h3 className="!text-text">
                   {'Teclado'} <span className="text-sm">({'Dispositivos móveis'})</span>
                 </h3>
-                <h6>
+                <h6 className="pr-10">
                   {
                     'Altera o tipo de teclado virtual: normal (teclado padrão) ou numérico. Alguns teclados numéricos não possuem o sinal de menos (-), isso impossibilita responder com números negativos.'
                   }
