@@ -116,10 +116,6 @@
     @apply text-base text-blue-500 hover:underline hover:text-blue-400
   } */
 
-  img {
-    @apply mb-4 rounded-md w-[80%] text-center mx-auto
-  }
-
   table {
     @apply w-full text-center text-text bg-foreground border-2 border-primary rounded-xl table-fixed;
   }
