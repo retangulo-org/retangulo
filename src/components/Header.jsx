@@ -1,16 +1,12 @@
-import { useState, useEffect } from 'react';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { LogoTipo } from '../assets/LogoTipo';
 import { AlignJustify, X, House, Settings, BookText } from 'lucide-react';
 import { Desktop, Mobile } from './ui/Responsive';
-import Button from './ui/Button';
-import { useTranslation } from 'react-i18next';
 
 export default function Header() {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { t, i18n } = useTranslation();
-  const currentLang = i18n.language.split('-')[0];
 
   const Link = ({ link, children }) => {
     return (
@@ -32,17 +28,17 @@ export default function Header() {
   function Links() {
     return (
       <>
-        <Link link={`/${currentLang}`}>
+        <Link link="/">
           <House />
-          {t('bHome')}
+          Início
         </Link>
-        <Link link={`/${currentLang}/blog`}>
+        <Link link="/blog">
           <BookText />
           Blog
         </Link>
-        <Link link={`/${currentLang}/options`}>
+        <Link link="/options">
           <Settings />
-          {t('bOptions')}
+          Opções
         </Link>
       </>
     );
@@ -51,7 +47,7 @@ export default function Header() {
   function MobileMenu() {
     return (
       <div className="w-full flex flex-wrap items-center justify-between mx-auto">
-        <button onClick={() => navigate(`/${currentLang}`)} className="flex items-center rtl:space-x-reverse">
+        <button onClick={() => navigate('/')} className="flex items-center rtl:space-x-reverse">
           <span className="sr-only">Logo do site</span>
           <LogoTipo className="w-20 h-auto fill-neutral-100" />
         </button>
@@ -76,7 +72,7 @@ export default function Header() {
   function PcMenu() {
     return (
       <div className="w-full flex flex-wrap items-center justify-between mx-auto">
-        <button onClick={() => navigate(`/${currentLang}`)} className="flex items-center rtl:space-x-reverse">
+        <button onClick={() => navigate('/')} className="flex items-center rtl:space-x-reverse">
           <span className="sr-only">Logo do site</span>
           <LogoTipo className="w-20 h-auto fill-neutral-100" />
         </button>
@@ -89,65 +85,8 @@ export default function Header() {
     );
   }
 
-  function SwitchToBrowserLang() {
-    const { i18n } = useTranslation();
-    const navigate = useNavigate();
-    const { lang } = useParams();
-    const [visible, setVisible] = useState(() => localStorage.getItem('switchLangVisible') !== 'false');
-
-    const SUPPORTED_LANGS = ['pt', 'en', 'es'];
-
-    const languageSwitchMessages = {
-      pt: 'Mudar o idioma para {suggestedLang}?',
-      en: 'Switch language to {suggestedLang}?',
-      es: '¿Cambiar idioma a {suggestedLang}?',
-    };
-
-    // nomes completos dos idiomas
-    const LANG_FULL_NAMES = {
-      pt: { pt: 'Português', en: 'Portuguese', es: 'Portugués' },
-      en: { pt: 'Inglês', en: 'English', es: 'Inglés' },
-      es: { pt: 'Espanhol', en: 'Spanish', es: 'Español' },
-    };
-
-    useEffect(() => {
-      localStorage.setItem('switchLangVisible', visible);
-    }, [visible]);
-
-    const navLangRaw = navigator.language.split('-')[0];
-    const browserLang = SUPPORTED_LANGS.includes(navLangRaw) ? navLangRaw : 'en';
-
-    if (!visible || lang === browserLang) return null;
-
-    const handleClick = () => {
-      i18n.changeLanguage(browserLang).catch(() => {});
-      navigate(`/${browserLang}`, { replace: true });
-      setVisible(false);
-    };
-
-    // define mensagem no idioma que vai ser mudado
-    const messageTemplate = languageSwitchMessages[browserLang] || languageSwitchMessages.pt;
-    const message = messageTemplate
-      .replace('{lang}', LANG_FULL_NAMES[navLangRaw]?.[browserLang] || navLangRaw)
-      .replace('{suggestedLang}', LANG_FULL_NAMES[browserLang][browserLang]);
-
-    return (
-      <div className="flex mb-4">
-        <button
-          className="w-full flex flex-row justify-start items-center gap-2 py-2 px-4 bg-primary text-text rounded-l-md"
-          onClick={handleClick}>
-          {message}
-        </button>
-        <Button className="rounded-l-none" variant="default" size="icon" name="close" onClick={() => setVisible(false)}>
-          <X />
-        </Button>
-      </div>
-    );
-  }
-
   return (
     <header className="bg-foreground p-4">
-      <SwitchToBrowserLang />
       <Desktop>
         <PcMenu />
       </Desktop>
