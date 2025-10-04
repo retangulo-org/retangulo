@@ -2,15 +2,13 @@ import { useContext } from 'react';
 import { RootContext } from './Root';
 import { Collapse } from '../Collapse';
 import { Frown } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 
 export default function History() {
   const { storedArray } = useContext(RootContext);
-  const { t } = useTranslation();
 
   return (
     <Collapse.Root>
-      <Collapse.Toggle>{t('bHistory')}</Collapse.Toggle>
+      <Collapse.Toggle>Histórico</Collapse.Toggle>
       <Collapse.Content>
         {storedArray[0] != '' &&
           storedArray.map((string, index) => (
@@ -20,7 +18,7 @@ export default function History() {
           ))}
         {storedArray[0] === '' && (
           <p className="mb-0 font-semibold flex flex-row items-center gap-2">
-            {t('bHistoryEmpty')} <Frown />
+            Aqui está tão vazio quanto a minha conta bancária… <Frown />
           </p>
         )}
       </Collapse.Content>
