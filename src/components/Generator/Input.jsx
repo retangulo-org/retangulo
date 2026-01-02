@@ -1,9 +1,18 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import InputCalc from '../InputCalc';
 import { RootContext } from './Root';
 
 export default function input() {
   const { input, setInput, color } = useContext(RootContext);
+
+  // TODO: mudar isso mds
+  useEffect(() => {
+    const valor = localStorage.getItem('keyType');
+
+    if (valor === null || valor === '') {
+      localStorage.setItem('keyType', 'number');
+    }
+  }, []);
 
   return (
     <InputCalc
