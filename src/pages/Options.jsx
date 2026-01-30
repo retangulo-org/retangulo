@@ -47,8 +47,8 @@ export default function Options() {
                   setKeyType(event.target.value);
                 }}>
                 {[
-                  ['Normal', 'text'],
                   ['Numérico', 'number'],
+                  ['Normal', 'text'],
                 ].map(([key_title, key]) => (
                   <Select.Content value={key} option={key_title} />
                 ))}

@@ -15,12 +15,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
-    "prettier": "npx prettier . --check --write"
+    "prettier": "npx prettier . --check --write",
+    "sitemap": "node ./src/scripts/generateSitemap.js"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.1",
     "@mdx-js/rollup": "^3.1.1",
-    "gray-matter": "^4.0.3",
     "lucide-react": "^0.454.0",
     "motion": "^11.11.17",
     "react": "^18.2.0",
@@ -28,7 +28,8 @@
     "react-helmet-async": "^2.0.5",
     "react-i18next": "^15.6.1",
     "react-responsive": "^10.0.1",
-    "react-router-dom": "^6.26.1"
+    "react-router-dom": "^6.26.1",
+    "sitemap": "^9.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
