@@ -10,7 +10,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="p-4">
+    <footer className="p-4 mb-4">
       <div className="w-full flex flex-col md:gap-0 gap-4 md:flex-row justify-between">
         <LogoTipo className="w-20 h-auto fill-neutral-100" />
         <div className="flex flex-col md:flex-row gap-0 md:gap-4">
