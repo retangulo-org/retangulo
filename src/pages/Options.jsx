@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ArrowUpRight, Trash2 } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { Select } from '../components/Select';
 import Button from '../components/ui/Button';
 import Meta from '../components/Meta';
@@ -12,13 +12,6 @@ export default function Options() {
   useEffect(() => {
     localStorage.setItem('keyType', keyType);
   }, [keyType]);
-
-  const links = [
-    { id: 1, title: 'Contato', url: 'mailto:contato@retangulo.org' },
-    { id: 2, title: 'Preview', url: 'https://dev.retangulo.org/' },
-    { id: 3, title: 'Backup', url: 'https://alt.retangulo.org/' },
-    { id: 4, title: 'Github', url: 'https://github.com/retangulo-org' },
-  ];
 
   return (
     <Meta
@@ -68,20 +61,6 @@ export default function Options() {
               <Trash2 />
             </Button>
           </div>
-        </div>
-        <h2 className="mt-8">Links</h2>
-        <div className="w-full divide-foreground divide-y-2">
-          {links.map((link) => (
-            <div key={link.id} className="w-full flex flex-row justify-between items-center">
-              <a
-                className="w-full py-2 flex flex-row justify-between items-center hover:underline underline-offset-4 text-text"
-                href={link.url}
-                target="_blank">
-                <h3 className="!text-text">{link.title}</h3>
-                <ArrowUpRight className="w-8 h-8 text-text" />
-              </a>
-            </div>
-          ))}
         </div>
       </div>
     </Meta>
