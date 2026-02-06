@@ -4,6 +4,7 @@ import Button from '../ui/Button';
 import { Select } from '../Select';
 import Input from '../ui/Input';
 import { RandomMath } from '../../scripts/randomMath';
+import { RotateCcw, X } from 'lucide-react';
 
 export const RootContext = createContext(undefined);
 
@@ -48,19 +49,26 @@ export default function Root({ children, math }) {
     localStorage.setItem('mathMax', mathMax);
     localStorage.setItem('mathSize', mathSize);
     localStorage.setItem('mathInt', mathInt);
+    Reset();
   }, [mathType, mathTime, mathMax, mathSize, mathInt]);
 
+  const [tempMathType, setTempMathType] = useState(mathType);
+  const [tempMathTime, setTempMathTime] = useState(mathTime);
+  const [tempMathMax, setTempMathMax] = useState(mathMax);
+  const [tempMathSize, setTempMathSize] = useState(mathSize);
+  const [tempMathInt, setTempMathInt] = useState(mathInt);
+
   useEffect(() => {
-    if (mathMax > 100000) {
+    if (tempMathMax > 100000) {
       alert('Valor máximo muito grande!');
       setMathMax(100000);
     }
 
-    if (mathSize > 50) {
+    if (tempMathSize > 50) {
       alert('Quantidade de termos muito grande!');
       setMathSize(50);
     }
-  }, [mathMax, mathSize]);
+  }, [tempMathMax, tempMathSize]);
 
   useEffect(() => {
     let interval = null;
@@ -212,14 +220,32 @@ export default function Root({ children, math }) {
         {children}
       </form>
       <Modal.Root isOpen={modal}>
+        <Modal.Title>
+          <div className="flex flex-row justify-between">
+            <div className="w-auto">Configurações</div>
+            <Button
+              size="icon"
+              variant="outline"
+              onClick={() => {
+                setTempMathType(mathType);
+                setTempMathTime(mathTime);
+                setTempMathMax(mathMax);
+                setTempMathSize(mathSize);
+                setTempMathInt(mathInt);
+                setModal(false);
+              }}>
+              <X />
+            </Button>
+          </div>
+        </Modal.Title>
         <Modal.Content>
           <div className="flex flex-col gap-2">
             <div>
               <h4 className="mb-2">Tempo Limite</h4>
               <Select.Root
-                value={mathTime}
+                value={tempMathTime}
                 onChange={(event) => {
-                  setMathTime(event.target.value);
+                  setTempMathTime(event.target.value);
                 }}>
                 {[
                   ['15 segundos', '15s'],
@@ -246,9 +272,9 @@ export default function Root({ children, math }) {
                   <Button
                     key={arit}
                     size={'default'}
-                    variant={mathType === arit ? 'primary' : 'outline'}
+                    variant={tempMathType === arit ? 'primary' : 'outline'}
                     onClick={() => {
-                      setMathType(arit);
+                      setTempMathType(arit);
                     }}>
                     {title}
                   </Button>
@@ -258,9 +284,9 @@ export default function Root({ children, math }) {
             <div>
               <h4 className="mt-4 mb-2">Valor máximo</h4>
               <Input
-                value={mathMax}
+                value={tempMathMax}
                 onChange={(e) => {
-                  setMathMax(e.target.value);
+                  setTempMathMax(e.target.value);
                 }}
                 id="valor-maximo"
                 name="valor-maximo"
@@ -272,9 +298,9 @@ export default function Root({ children, math }) {
             <div>
               <h4 className="mt-4 mb-2">Quantidade de termos</h4>
               <Input
-                value={mathSize}
+                value={tempMathSize}
                 onChange={(e) => {
-                  setMathSize(e.target.value);
+                  setTempMathSize(e.target.value);
                 }}
                 id="tamanho-maximo"
                 name="tamanho-maximo"
@@ -294,9 +320,9 @@ export default function Root({ children, math }) {
                   <Button
                     key={key}
                     size={'default'}
-                    variant={mathInt === key ? 'primary' : 'outline'}
+                    variant={tempMathInt === key ? 'primary' : 'outline'}
                     onClick={() => {
-                      setMathInt(key);
+                      setTempMathInt(key);
                     }}>
                     {title}
                   </Button>
@@ -305,14 +331,36 @@ export default function Root({ children, math }) {
             </div>
           </div>
         </Modal.Content>
-        <Modal.Actions>
+        <Modal.Actions className="mt-8">
           <Button
+            className="basis-full"
+            variant="default"
+            onClick={() => {
+              setMathInt(tempMathInt);
+              setMathSize(tempMathSize);
+              setMathMax(tempMathMax);
+              setMathTime(tempMathTime);
+              setMathType(tempMathType);
+              setModal(false);
+            }}>
+            Aplicar
+          </Button>
+          <Button
+            size="icon"
             variant="danger"
             onClick={() => {
-              setModal(false);
-              Reset();
+              setMathType('soma');
+              setTempMathType('soma');
+              setMathTime('1m');
+              setTempMathTime('1m');
+              setMathMax(100);
+              setTempMathMax(100);
+              setMathSize(2);
+              setTempMathSize(2);
+              setMathInt('positive');
+              setTempMathInt('positive');
             }}>
-            Fechar
+            <RotateCcw />
           </Button>
         </Modal.Actions>
       </Modal.Root>
