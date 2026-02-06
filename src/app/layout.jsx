@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import Header from '../components/Header';
+import Header from '../components/body/Header';
+import Footer from '../components/body/Footer';
 
 export default function Root() {
   return (
@@ -10,6 +11,8 @@ export default function Root() {
           <Outlet />
         </div>
       </main>
+      <hr className="border-foreground border-2 my-4" />
+      <Footer />
     </div>
   );
 }

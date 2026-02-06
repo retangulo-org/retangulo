@@ -72,7 +72,7 @@ export default function BlogPost() {
     <Meta
       title={`${post.title} — Gerador de Cálculos Matemáticos — Retangulo.org`}
       canonical={`https://retangulo.org/blog/${slug}`}
-      desc="Resolva cálculos matemáticos aleatórios & melhore seu cálculo mental.">
+      desc={post.desc}>
       <div className="mx-auto p-4 flex flex-col gap-8">
         <div>
           <Button className="!w-auto" variant="outline" onClick={() => navigate('/blog')}>

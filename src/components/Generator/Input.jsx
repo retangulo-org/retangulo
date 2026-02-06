@@ -18,7 +18,7 @@ export default function input() {
     <InputCalc
       value={input}
       onChange={(e) => setInput(e.target.value)}
-      placeholder="Resultado…"
+      placeholder="Digite o resultado"
       required={false}
       autoFocus={false}
       type={localStorage.getItem('keyType') === 'number' ? 'number' : 'text'}

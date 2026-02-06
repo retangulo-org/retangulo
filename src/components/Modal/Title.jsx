@@ -1,3 +1,3 @@
-export default function Title({ children }) {
-  return <h2 className="mb-4">{children}</h2>;
+export default function Title({ children, className }) {
+  return <h2 className={`mb-4 ${className}`}>{children}</h2>;
 }

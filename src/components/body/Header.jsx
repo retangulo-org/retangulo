@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LogoTipo } from '../assets/LogoTipo';
+import { LogoTipo } from '../../assets/LogoTipo';
 import { AlignJustify, X, House, Settings, BookText } from 'lucide-react';
-import { Desktop, Mobile } from './ui/Responsive';
+import { Desktop, Mobile } from './../ui/Responsive';
 
 export default function Header() {
   const navigate = useNavigate();
