@@ -4,6 +4,20 @@ import { LogoTipo } from '../../assets/LogoTipo';
 import { AlignJustify, X, House, Settings, BookText } from 'lucide-react';
 import { Desktop, Mobile } from './../ui/Responsive';
 
+function Forms() {
+  return (
+    <div className="mb-4 py-4 flex">
+      <a
+        href="https://forms.gle/qAvjtweyuU71SWcr6"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="w-full p-4 bg-primary hover:bg-blue-800 rounded-md text-text text-xl text-center">
+        Ajude a melhorar o Retangulo.org! Clique aqui e colabore.
+      </a>
+    </div>
+  );
+}
+
 export default function Header() {
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -87,6 +101,7 @@ export default function Header() {
 
   return (
     <header className="bg-foreground p-4">
+      <Forms />
       <Desktop>
         <PcMenu />
       </Desktop>
