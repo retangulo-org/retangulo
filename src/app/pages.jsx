@@ -6,6 +6,7 @@ import './index.css';
 import Root from './layout';
 import Home from '../pages/Home';
 import Options from '../pages/Options';
+import About from '../pages/About';
 import BlogList from '../pages/blog/BlogList';
 import BlogPost from '../pages/blog/BlogPost';
 import Error from '../pages/Error';
@@ -15,6 +16,7 @@ const router = createBrowserRouter(
     <Route element={<Root />}>
       <Route index element={<Home />} />
       <Route path="/options" element={<Options />} />
+      <Route path="/about" element={<About />} />
       <Route path="/blog" element={<BlogList />} />
       <Route path="/blog/:slug" element={<BlogPost />} />
       <Route path="/*" element={<Error />} />

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LogoTipo } from '../../assets/LogoTipo';
-import { AlignJustify, X, House, Settings, BookText } from 'lucide-react';
+import { AlignJustify, X, House, Settings, BookText, Info, MousePointerClick } from 'lucide-react';
 import { Desktop, Mobile } from './../ui/Responsive';
 
 function Forms() {
@@ -11,8 +11,8 @@ function Forms() {
         href="https://forms.gle/qAvjtweyuU71SWcr6"
         target="_blank"
         rel="noopener noreferrer"
-        className="w-full p-4 bg-primary hover:bg-blue-800 rounded-md text-text text-xl text-center">
-        Ajude a melhorar o Retangulo.org! Clique aqui e colabore.
+        className="w-full flex flex-row justify-center gap-2 p-4 bg-primary hover:bg-blue-800 rounded-md text-text text-xl text-center">
+        Ajude a melhorar o Retangulo.org! Clique aqui e colabore. <MousePointerClick />
       </a>
     </div>
   );
@@ -53,6 +53,10 @@ export default function Header() {
         <Link link="/options">
           <Settings />
           Opções
+        </Link>
+        <Link link="/about">
+          <Info />
+          Sobre
         </Link>
       </>
     );
