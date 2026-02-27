@@ -16,7 +16,7 @@
     "preview": "vite preview",
     "test": "vitest",
     "prettier": "npx prettier . --check --write",
-    "sitemap": "node ./src/scripts/generateSitemap.js"
+    "sitemap": "tsx ./src/scripts/generateSitemap.ts"
   },
   "dependencies": {
     "@mdx-js/react": "^3.1.1",
@@ -32,13 +32,17 @@
     "sitemap": "^9.0.0"
   },
   "devDependencies": {
+    "@types/node": "^25.3.2",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
+    "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.33",
     "prettier": "3.3.3",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
     "vite": "^5.4.10",
     "vitest": "^2.1.3",
     "workbox-window": "^7.1.0"
