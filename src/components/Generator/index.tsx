@@ -6,7 +6,7 @@ import Tags from './Tags';
 import Input from './Input';
 import Confirm from './Confirm';
 import History from './History';
-import Score from './Score.tsx';
+import Score from './Score';
 import Warning from './Warning';
 
 export const Generator = {
