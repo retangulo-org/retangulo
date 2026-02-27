@@ -20,9 +20,7 @@ export default function Root({ children, math }) {
   const [score, setScore] = useState(false);
   const [modal, setModal] = useState(false);
 
-  const [mathType, setMathType] = useState(() => {
-    return localStorage.getItem('mathType') || 'soma';
-  });
+  const [mathType, setMathType] = useState(() => [localStorage.getItem('mathType') || 'soma']);
   const [mathTime, setMathTime] = useState(() => {
     return localStorage.getItem('mathTime') || '1m';
   });
@@ -272,9 +270,9 @@ export default function Root({ children, math }) {
                   <Button
                     key={arit}
                     size={'default'}
-                    variant={tempMathType === arit ? 'primary' : 'outline'}
+                    variant={tempMathType.includes(arit) ? 'primary' : 'outline'}
                     onClick={() => {
-                      setTempMathType(arit);
+                      setTempMathType([arit]);
                     }}>
                     {title}
                   </Button>
