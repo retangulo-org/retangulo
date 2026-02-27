@@ -73,7 +73,7 @@ export default function BlogPost() {
       title={`${post.title} — Gerador de Cálculos Matemáticos — Retangulo.org`}
       canonical={`https://retangulo.org/blog/${slug}`}
       desc={post.desc}>
-      <div className="mx-auto p-4 flex flex-col gap-8">
+      <div className="mx-auto flex flex-col gap-8">
         <div>
           <Button className="!w-auto" variant="outline" onClick={() => navigate('/blog')}>
             <ArrowLeft /> Voltar
