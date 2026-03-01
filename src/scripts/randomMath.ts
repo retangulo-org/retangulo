@@ -50,5 +50,3 @@ export const RandomMath = (
 
   return numbers;
 };
-
-console.log(RandomMath(10, 100, 'positive', ['subt', 'soma', 'mult', 'divi']));

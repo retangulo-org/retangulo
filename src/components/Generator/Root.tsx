@@ -64,8 +64,6 @@ export default function Root({ children, math }: { children: ReactNode; math: bo
 
   const [random, setRandom] = useState<any>(() => RandomMath(mathSize, mathMax, mathInt, mathType));
 
-  console.log(random);
-
   const [result, setResult] = useState<number>(() => Number(eval(random.join(''))));
 
   useEffect(() => {
@@ -207,8 +205,6 @@ export default function Root({ children, math }: { children: ReactNode; math: bo
   }, [stored]);
 
   const output = random.map((char: any) => (char === '*' ? '×' : char === '/' ? '÷' : String(char)));
-
-  console.log('output: ', output);
 
   return (
     <RootContext.Provider
