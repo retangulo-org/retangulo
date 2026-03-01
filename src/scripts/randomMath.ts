@@ -1,4 +1,9 @@
-export const RandomMath = (size: number, max: number, int: 'random' | 'positive' | 'negative', type: Array<string>) => {
+export const RandomMath = (
+  size: number,
+  max: number,
+  int: 'random' | 'positive' | 'negative',
+  type: Array<string>,
+): Array<number | string> => {
   const numbers: (number | string)[] = [];
   const opcoes: string[] = [];
   const types = new Map<string, string>([
