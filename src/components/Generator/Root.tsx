@@ -287,10 +287,12 @@ export default function Root({ children, math }: { children: ReactNode; math: bo
                 ).map(([title, arit]) => (
                   <Button
                     key={arit}
-                    size={'default'}
+                    size="default"
                     variant={tempMathType.includes(arit) ? 'primary' : 'outline'}
                     onClick={() => {
-                      setTempMathType([arit]);
+                      setTempMathType((prev) =>
+                        prev.includes(arit) ? prev.filter((t) => t !== arit) : [...prev, arit],
+                      );
                     }}>
                     {title}
                   </Button>
