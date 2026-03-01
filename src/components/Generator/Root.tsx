@@ -46,9 +46,17 @@ export default function Root({ children, math }: { children: ReactNode; math: bo
   const [score, setScore] = useState<boolean>(false);
   const [modal, setModal] = useState<boolean>(false);
 
-  const [mathType, setMathType] = useState<MathType[]>(() => [
-    (localStorage.getItem('mathType') as MathType) || 'soma',
-  ]);
+  const [mathType, setMathType] = useState<MathType[]>(() => {
+    const stored = localStorage.getItem('mathType');
+
+    if (!stored) return ['soma'];
+
+    try {
+      return JSON.parse(stored) as MathType[];
+    } catch {
+      return ['soma'];
+    }
+  });
   const [mathTime, setMathTime] = useState<MathTime>(() => {
     return (localStorage.getItem('mathTime') as MathTime) || '1m';
   });
@@ -71,7 +79,7 @@ export default function Root({ children, math }: { children: ReactNode; math: bo
   }, [random]);
 
   useEffect(() => {
-    localStorage.setItem('mathType', mathType.toString());
+    localStorage.setItem('mathType', JSON.stringify(mathType));
     localStorage.setItem('mathTime', mathTime);
     localStorage.setItem('mathMax', mathMax.toString());
     localStorage.setItem('mathSize', mathSize.toString());
@@ -287,10 +295,12 @@ export default function Root({ children, math }: { children: ReactNode; math: bo
                 ).map(([title, arit]) => (
                   <Button
                     key={arit}
-                    size={'default'}
+                    size="default"
                     variant={tempMathType.includes(arit) ? 'primary' : 'outline'}
                     onClick={() => {
-                      setTempMathType([arit]);
+                      setTempMathType((prev) =>
+                        prev.includes(arit) ? prev.filter((t) => t !== arit) : [...prev, arit],
+                      );
                     }}>
                     {title}
                   </Button>
